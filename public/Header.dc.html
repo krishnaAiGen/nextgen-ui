@@ -13,11 +13,11 @@
       <span style="font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;font-size:11px">Prototype</span>
       <span>Data state</span>
       <div style="display:flex;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;overflow:hidden;background:var(--surface,#fff)">
-        <sc-if value="{{ isLaunch }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ isLaunch }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ setLaunch }}" style="border:0;padding:3px 10px;font:inherit;font-size:12px;background:var(--brand,#263238);color:#fff;cursor:pointer">Launch · 0 articles</button>
           <button onClick="{{ setMature }}" style="border:0;border-left:1px solid var(--line-strong,#B9C1C9);padding:3px 10px;font:inherit;font-size:12px;background:var(--surface,#fff);color:#1F2A36;cursor:pointer">Mature · 50+ articles</button>
         </sc-if>
-        <sc-if value="{{ isMature }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ isMature }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ setLaunch }}" style="border:0;padding:3px 10px;font:inherit;font-size:12px;background:var(--surface,#fff);color:#1F2A36;cursor:pointer">Launch · 0 articles</button>
           <button onClick="{{ setMature }}" style="border:0;border-left:1px solid var(--line-strong,#B9C1C9);padding:3px 10px;font:inherit;font-size:12px;background:var(--brand,#263238);color:#fff;cursor:pointer">Mature · 50+ articles</button>
         </sc-if>
@@ -128,7 +128,7 @@ class Component extends DCLogic {
   componentWillUnmount() { document.removeEventListener('mousedown', this.onDoc); document.removeEventListener('keydown', this.onEsc); }
   setMode(m) { try { localStorage.setItem('ngiq-mode', m); } catch (e) {} location.reload(); }
   renderVals() {
-    let mature = false; try { mature = localStorage.getItem('ngiq-mode') === 'mature'; } catch (e) {}
+    let mature = true; try { mature = localStorage.getItem('ngiq-mode') !== 'launch'; } catch (e) {}
     const a = this.props.active || '';
     const nav = [['Journals', 'Journals.dc.html', 'journals'], ['Articles', 'Search.dc.html?scope=articles', 'articles'], ['Books & proceedings', 'Journals.dc.html#series', 'series'], ['Calls for papers', 'Authors.dc.html#cfp', 'cfp'], ['For authors', 'Authors.dc.html', 'authors'], ['Policies', 'Authors.dc.html#policies', 'policies'], ['About', 'Home.dc.html#about', 'about']]
       .map(([label, href, k]) => ({ label, href, active: k === a, inactive: k !== a }));

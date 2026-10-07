@@ -31,7 +31,7 @@
       <a href="{{ scopeHref }}" style="font-size:14px;font-weight:500">Read the full aims and scope</a>
     </section>
 
-    <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ mature }}" hint-placeholder-val="{{ true }}">
       <section>
         <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #101B27;padding-bottom:10px">
           <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Latest articles</h2>
@@ -57,7 +57,7 @@
       </section>
     </sc-if>
 
-    <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ launch }}" hint-placeholder-val="{{ false }}">
       <section>
         <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #101B27;padding-bottom:10px">
           <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Now accepting submissions for Volume 1</h2>
@@ -120,7 +120,7 @@
     </div>
     <div>
       <h2 style="margin:0 0 4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27">Editorial board</h2>
-      <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ mature }}" hint-placeholder-val="{{ true }}">
         <sc-for list="{{ board }}" as="b" hint-placeholder-count="3">
           <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:center">
             <span style="width:40px;height:40px;border-radius:50%;background:var(--line-soft,#EEF1F4);color:#3C4854;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0">{{ b.ini }}</span>
@@ -131,7 +131,7 @@
           </div>
         </sc-for>
       </sc-if>
-      <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ launch }}" hint-placeholder-val="{{ false }}">
         <div style="padding:14px 0;display:flex;flex-direction:column;gap:10px">
           <p style="margin:0;font-size:14px;line-height:1.55;color:#1F2A36">Founding appointments are being confirmed. Members are listed once their appointment is accepted. Until then, manuscripts are handled by the Editorial Office under the Publisher’s Editorial Director.</p>
           <dl style="margin:0;display:grid;grid-template-columns:1fr max-content;gap:6px 12px;font-size:13px;border-top:1px solid var(--line,#DCE1E6);padding-top:10px">

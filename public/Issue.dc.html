@@ -20,7 +20,7 @@
 <dc-import name="JournalMasthead" tab="Articles and issues" hint-size="100%,420px"></dc-import>
 <div style="max-width:1280px;margin:0 auto;padding:40px 32px 0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px">
   <main id="main-content" style="min-width:0">
-    <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ mature }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;gap:24px;padding-bottom:24px;border-bottom:2px solid #101B27;flex-wrap:wrap">
         <div style="width:96px;height:128px;background:var(--brand,#263238);border-top:5px solid {{ j.color }};border-radius:2px;display:flex;flex-direction:column;justify-content:space-between;padding:9px;box-sizing:border-box"><span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#fff">{{ j.code }}</span><span style="font-size:9px;color:#C3CFDB">Vol. 1 · Issue 2</span></div>
         <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:240px">
@@ -47,7 +47,7 @@
         </section>
       </sc-for>
     </sc-if>
-    <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ launch }}" hint-placeholder-val="{{ false }}">
       <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:500">Current volume</span>
       <h1 style="margin:6px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:#101B27">Volume 1 (2026)</h1>
       <p style="margin:0;font-size:16px;line-height:1.65;color:#1F2A36;max-width:66ch">{{ j.code }} publishes continuously. Each article is published online as soon as it is accepted, copy-edited and typeset, receives a DOI, and is listed here under Volume 1. Issues are closed at the end of each publication period.</p>
