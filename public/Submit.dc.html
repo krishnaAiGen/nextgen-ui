@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>New submission — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>@keyframes ngiqSlideBack{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}body{margin:0;background:var(--page-2,var(--surface-2,#F5F6F7));color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}input,select,textarea{box-sizing:border-box}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" signed-in="{{ true }}" hint-size="100%,150px"></dc-import>
+<sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+<div style="background:var(--surface,#fff);border-bottom:1px solid var(--line,#DCE1E6)">
+  <div style="max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:260px">
+      <span style="font-size:12px;color:var(--muted,#505C68)">New submission · <span style="font-family:'IBM Plex Mono',monospace">{{ jCode }}</span> · Draft NGIQ-D-2026-0388</span>
+      <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:#101B27">{{ stepTitle }}</h1>
+    </div>
+    <span role="status" style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted,#505C68)"><span style="width:8px;height:8px;border-radius:50%;background:{{ saveDot }}"></span>{{ saveLabel }}</span>
+    <a href="Dashboard.dc.html" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:8px 14px;border-radius:3px;font-size:13px;font-weight:500;text-decoration:none">Save and exit</a>
+  </div>
+</div>
+<div style="max-width:1200px;margin:0 auto;padding:28px 32px 0;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+  <nav aria-label="Submission steps" style="width:240px;flex-shrink:0;position:sticky;top:16px">
+    <ol style="list-style:none;margin:0;padding:0;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="7">
+        <li style="border-bottom:1px solid var(--line-soft,#EEF1F4)">
+          <button onClick="{{ s.go }}" aria-current="{{ s.current }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:0;border-left:3px solid {{ s.bar }};background:{{ s.bg }};font:inherit;text-align:left;cursor:pointer">
+            <span style="width:24px;height:24px;border-radius:50%;flex-shrink:0;animation:{{ s.anim }};transition:background .3s ease,border-color .3s ease;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;background:{{ s.dotBg }};color:{{ s.dotFg }};border:1.5px solid {{ s.dotBorder }}">{{ s.mark }}</span>
+            <span style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:{{ s.weight }};color:#101B27">{{ s.label }}</span><span style="font-size:12px;color:{{ s.subColor }}">{{ s.sub }}</span></span>
+          </button>
+        </li>
+      </sc-for>
+    </ol>
+    <p style="font-size:12px;color:var(--muted,#505C68);line-height:1.5;margin:12px 4px 0">Your draft is saved after every change. You can leave and resume from <a href="Dashboard.dc.html">My submissions</a>.</p>
+  </nav>
+
+  <main id="main-content" style="flex:1;min-width:320px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
+    <div style="padding:28px 32px">
+      <sc-if value="{{ showErrors }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="border:1px solid #E3B3B3;background:#FBEAEA;border-radius:3px;padding:12px 16px;margin-bottom:22px;font-size:14px;color:#5C1414;line-height:1.5"><strong>Complete the highlighted fields to continue.</strong><ul style="margin:6px 0 0;padding-left:18px"><sc-for list="{{ errors }}" as="e"><li>{{ e }}</li></sc-for></ul></div>
+      </sc-if>
+
+      <sc-if value="{{ is1 }}" hint-placeholder-val="{{ true }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:22px;max-width:640px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="f-journal" style="font-size:14px;font-weight:600;color:#101B27">Journal <span style="color:#A52A2A">*</span></label>
+            <select id="f-journal" value="{{ f.journal }}" onChange="{{ on.journal }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><sc-for list="{{ journals }}" as="j"><option value="{{ j.slug }}">{{ j.title }} ({{ j.code }})</option></sc-for></select>
+            <span style="font-size:13px;color:var(--muted,#505C68)">Pre-selected from the journal you came from. <a href="{{ scopeHref }}">Check aims and scope</a></span>
+          </div>
+          <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:6px">
+            <legend style="font-size:14px;font-weight:600;color:#101B27;margin-bottom:6px">Article type <span style="color:#A52A2A">*</span></legend>
+            <sc-for list="{{ typeOpts }}" as="t">
+              <label style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid {{ t.border }};background:{{ t.bg }};border-radius:3px;cursor:pointer">
+                <input type="radio" name="atype" checked="{{ t.on }}" onChange="{{ t.pick }}" style="margin:3px 0 0;accent-color:var(--accent,#B4470F)">
+                <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:500;color:#101B27">{{ t.label }}</span><span style="font-size:12px;color:var(--muted,#505C68)">{{ t.meta }}</span></span>
+              </label>
+            </sc-for>
+          </fieldset>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="f-si" style="font-size:14px;font-weight:600;color:#101B27">Special issue</label>
+            <select id="f-si" value="{{ f.special }}" onChange="{{ on.special }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option value="">Not submitting to a special issue</option><sc-for list="{{ siOpts }}" as="s"><option value="{{ s.id }}">{{ s.theme }}</option></sc-for></select>
+          </div>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:#1F2A36"><input type="checkbox" checked="{{ f.scope }}" onChange="{{ on.scope }}" style="margin:3px 0 0;width:16px;height:16px;accent-color:var(--accent,#B4470F)">I confirm the manuscript falls within the journal’s aims and scope. <span style="color:#A52A2A">*</span></label>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is2 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};max-width:680px">
+          <p style="margin:0 0 16px;font-size:14px;color:#3C4854;line-height:1.55">All items are required. Each links to the policy that explains it.</p>
+          <sc-for list="{{ checklist }}" as="c">
+            <label style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line-soft,#EEF1F4);font-size:14px;line-height:1.5;cursor:pointer">
+              <input type="checkbox" checked="{{ c.on }}" onChange="{{ c.toggle }}" style="margin:3px 0 0;width:16px;height:16px;accent-color:var(--accent,#B4470F);flex-shrink:0">
+              <span style="flex:1;color:#1F2A36">{{ c.t }}</span>
+              <a href="{{ c.href }}" style="font-size:13px;white-space:nowrap">Policy</a>
+            </label>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is3 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:22px;max-width:720px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="f-title" style="font-size:14px;font-weight:600;color:#101B27">Full title <span style="color:#A52A2A">*</span></label>
+            <textarea id="f-title" rows="2" value="{{ f.title }}" onChange="{{ on.title }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;padding:10px 12px;border:1px solid {{ titleBorder }};border-radius:3px;resize:vertical;line-height:1.4"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="f-rt" style="font-size:14px;font-weight:600;color:#101B27">Running title</label>
+            <input id="f-rt" value="{{ f.running }}" onChange="{{ on.running }}" maxlength="70" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px">
+            <span style="font-size:12px;color:var(--muted,#505C68)">Up to 70 characters, shown in page headers.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between"><label for="f-abs" style="font-size:14px;font-weight:600;color:#101B27">Abstract <span style="color:#A52A2A">*</span></label><span aria-live="polite" style="font-size:12px;color:{{ wcColor }};font-variant-numeric:tabular-nums">{{ wordCount }} / 250 words</span></div>
+            <textarea id="f-abs" rows="7" value="{{ f.abstract }}" onChange="{{ on.abstract }}" style="font:inherit;font-size:14px;padding:10px 12px;border:1px solid {{ absBorder }};border-radius:3px;resize:vertical;line-height:1.55"></textarea>
+            <span style="font-size:12px;color:var(--muted,#505C68)">Structured abstract for Research Articles: Background, Methods, Results, Conclusions.</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label for="f-kw" style="font-size:14px;font-weight:600;color:#101B27">Keywords <span style="color:#A52A2A">*</span></label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid {{ kwBorder }};border-radius:3px;min-height:40px;align-items:center">
+              <sc-for list="{{ kwChips }}" as="k"><span style="display:flex;align-items:center;gap:4px;padding:3px 4px 3px 9px;background:var(--line-soft,#EEF1F4);border-radius:2px;font-size:13px">{{ k.t }}<button onClick="{{ k.remove }}" aria-label="Remove keyword {{ k.t }}" style="border:0;background:none;cursor:pointer;font-size:15px;line-height:1;color:#3C4854;padding:0 4px">×</button></span></sc-for>
+              <input id="f-kw" value="{{ kwDraft }}" onChange="{{ onKwDraft }}" onKeyDown="{{ onKwKey }}" placeholder="Type a keyword and press Enter" style="flex:1;min-width:180px;border:0;outline:none;font:inherit;font-size:14px;padding:4px">
+            </div>
+            <span style="font-size:12px;color:var(--muted,#505C68)">3–8 keywords · {{ kwCount }} added</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:14px;font-weight:600;color:#101B27">Language</label><select value="en" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option value="en">English</option></select></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:14px;font-weight:600;color:#101B27">Subject category</label><select value="{{ f.subject }}" onChange="{{ on.subject }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option>Telemedicine and remote monitoring</option><option>Health data science</option><option>Clinical informatics</option><option>Digital therapeutics</option></select></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is4 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <p style="margin:0;font-size:14px;color:#3C4854;line-height:1.5;max-width:60ch">List authors in the order they should appear. Exactly one corresponding author is required; their ORCID iD is mandatory.</p>
+            <div style="display:flex;gap:8px"><button onClick="{{ addMe }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer">Add me as author</button><button onClick="{{ addAuthor }}" style="border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:8px 14px;font:inherit;font-size:13px;font-weight:500;cursor:pointer">+ Add author</button></div>
+          </div>
+          <sc-for list="{{ authors }}" as="a" hint-placeholder-count="2">
+            <fieldset style="border:1px solid {{ a.border }};border-radius:3px;margin:0;padding:0">
+              <legend style="position:absolute;width:1px;height:1px;overflow:hidden">Author {{ a.n }}</legend>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface-3,#FAFBFB);border-bottom:1px solid var(--line,#DCE1E6);flex-wrap:wrap">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted,#505C68)">{{ a.n }}</span>
+                <span style="font-size:14px;font-weight:600;color:#101B27;flex:1">{{ a.display }}</span>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:#1F2A36;cursor:pointer"><input type="radio" name="corr" checked="{{ a.corr }}" onChange="{{ a.setCorr }}" style="accent-color:var(--accent,#B4470F)">Corresponding author</label>
+                <div style="display:flex;gap:4px">
+                  <button onClick="{{ a.up }}" disabled="{{ a.isFirst }}" aria-label="Move author {{ a.n }} up" style="border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:2px;width:28px;height:28px;cursor:pointer;color:#3C4854">↑</button>
+                  <button onClick="{{ a.down }}" disabled="{{ a.isLast }}" aria-label="Move author {{ a.n }} down" style="border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:2px;width:28px;height:28px;cursor:pointer;color:#3C4854">↓</button>
+                  <button onClick="{{ a.remove }}" aria-label="Remove author {{ a.n }}" style="border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:2px;padding:0 10px;height:28px;cursor:pointer;color:#A52A2A;font:inherit;font-size:12px">Remove</button>
+                </div>
+              </div>
+              <div style="padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 16px">
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27">Given name *<input value="{{ a.given }}" onChange="{{ a.onGiven }}" style="font:inherit;font-size:14px;font-weight:400;padding:8px 10px;border:1px solid {{ a.givenBorder }};border-radius:3px"></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27">Family name *<input value="{{ a.family }}" onChange="{{ a.onFamily }}" style="font:inherit;font-size:14px;font-weight:400;padding:8px 10px;border:1px solid {{ a.familyBorder }};border-radius:3px"></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27">Email *<input type="email" value="{{ a.email }}" onChange="{{ a.onEmail }}" style="font:inherit;font-size:14px;font-weight:400;padding:8px 10px;border:1px solid {{ a.emailBorder }};border-radius:3px"></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27;grid-column:span 2">Affiliation *<input value="{{ a.aff }}" onChange="{{ a.onAff }}" placeholder="Start typing to search the ROR registry" style="font:inherit;font-size:14px;font-weight:400;padding:8px 10px;border:1px solid {{ a.affBorder }};border-radius:3px"><span style="font-size:12px;font-weight:400;color:{{ a.rorColor }}">{{ a.rorNote }}</span></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27">Country<input value="{{ a.country }}" onChange="{{ a.onCountry }}" style="font:inherit;font-size:14px;font-weight:400;padding:8px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;color:#101B27">ORCID iD {{ a.orcidReq }}<input value="{{ a.orcid }}" onChange="{{ a.onOrcid }}" placeholder="0000-0000-0000-0000" style="font-family:'IBM Plex Mono',monospace;font-size:13px;padding:8px 10px;border:1px solid {{ a.orcidBorder }};border-radius:3px"><span style="font-size:12px;font-weight:400;color:{{ a.orcidColor }}">{{ a.orcidNote }}</span></label>
+              </div>
+              <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:13px;font-weight:500;color:#101B27">Contribution (CRediT)</span>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ a.roles }}" as="r"><button onClick="{{ r.toggle }}" aria-pressed="{{ r.pressed }}" style="padding:4px 9px;border-radius:2px;font:inherit;font-size:12px;cursor:pointer;border:1px solid {{ r.border }};background:{{ r.bg }};color:{{ r.fg }}">{{ r.label }}</button></sc-for>
+                </div>
+              </div>
+            </fieldset>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is5 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:16px">
+          <label for="f-files" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px;border:1.5px dashed {{ dzBorder }};background:{{ dzBg }};border-radius:3px;cursor:pointer;text-align:center">
+            <span style="font-size:15px;font-weight:600;color:#101B27">Drag files here or <span style="color:var(--accent,#B4470F);text-decoration:underline">browse</span></span>
+            <span style="font-size:13px;color:var(--muted,#505C68)">DOCX, PDF, TEX, ZIP, PNG, TIFF, EPS, CSV · up to 50 MB per file</span>
+            <input id="f-files" type="file" multiple onChange="{{ onPick }}" style="position:absolute;width:1px;height:1px;opacity:0">
+          </label>
+          <sc-for list="{{ reqs }}" as="r">
+            <div style="display:flex;gap:8px;align-items:center;font-size:13px;color:{{ r.fg }}"><span aria-hidden="true">{{ r.icon }}</span>{{ r.t }}</div>
+          </sc-for>
+          <div role="table" aria-label="Uploaded files" style="border:1px solid var(--line,#DCE1E6);border-radius:3px">
+            <div role="row" style="display:grid;grid-template-columns:minmax(0,1fr) 220px 90px 120px;gap:12px;padding:9px 14px;background:var(--surface-3,#FAFBFB);border-bottom:1px solid var(--line,#DCE1E6);font-size:12px;color:var(--muted,#505C68);text-transform:uppercase;letter-spacing:.04em;font-weight:600"><span>File</span><span>File type</span><span>Size</span><span></span></div>
+            <sc-for list="{{ files }}" as="fl" hint-placeholder-count="3">
+              <div role="row" style="display:grid;grid-template-columns:minmax(0,1fr) 220px 90px 120px;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line-soft,#EEF1F4);align-items:center">
+                <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+                  <span style="font-size:14px;color:#101B27;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ fl.name }}</span>
+                  <sc-if value="{{ fl.uploading }}"><div role="progressbar" aria-valuenow="{{ fl.pct }}" aria-valuemin="0" aria-valuemax="100" style="height:4px;background:var(--line-soft,#EEF1F4);border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ fl.pctW }};transition:width .25s linear;background:var(--accent,#B4470F)"></div></div></sc-if>
+                  <sc-if value="{{ fl.isDone }}"><span style="font-size:12px;color:#1E6B3A">Uploaded · checked</span></sc-if>
+                </div>
+                <select value="{{ fl.kind }}" onChange="{{ fl.onKind }}" aria-label="File type for {{ fl.name }}" style="font:inherit;font-size:13px;padding:6px 8px;border:1px solid {{ fl.kindBorder }};border-radius:3px;background:var(--surface,#fff)"><option value="">Choose file type…</option><sc-for list="{{ kinds }}" as="k"><option value="{{ k }}">{{ k }}</option></sc-for></select>
+                <span style="font-size:13px;color:var(--muted,#505C68);font-variant-numeric:tabular-nums">{{ fl.size }}</span>
+                <div style="display:flex;gap:4px;justify-content:flex-end">
+                  <button onClick="{{ fl.up }}" aria-label="Move up" style="border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:2px;width:28px;height:28px;cursor:pointer">↑</button>
+                  <button onClick="{{ fl.remove }}" aria-label="Delete {{ fl.name }}" style="border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:2px;padding:0 8px;height:28px;cursor:pointer;color:#A52A2A;font:inherit;font-size:12px">Delete</button>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noFiles }}"><p style="margin:0;padding:18px 14px;font-size:14px;color:var(--muted,#505C68)">No files uploaded yet.</p></sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is6 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:22px;max-width:720px">
+          <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <legend style="font-size:14px;font-weight:600;color:#101B27;margin-bottom:6px">Funding <span style="color:#A52A2A">*</span></legend>
+            <div style="display:flex;gap:20px;font-size:14px"><label style="display:flex;gap:6px;align-items:center"><input type="radio" name="fund" checked="{{ fundYes }}" onChange="{{ setFundYes }}" style="accent-color:var(--accent,#B4470F)">This work received funding</label><label style="display:flex;gap:6px;align-items:center"><input type="radio" name="fund" checked="{{ fundNo }}" onChange="{{ setFundNo }}" style="accent-color:var(--accent,#B4470F)">No funding</label></div>
+            <sc-if value="{{ fundYes }}"><div style="display:grid;grid-template-columns:2fr 1fr;gap:12px"><input value="{{ f.funder }}" onChange="{{ on.funder }}" aria-label="Funder" placeholder="Funder (searches the Crossref Funder Registry)" style="font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"><input value="{{ f.grant }}" onChange="{{ on.grant }}" aria-label="Grant number" placeholder="Grant number" style="font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></div></sc-if>
+          </fieldset>
+          <div style="display:flex;flex-direction:column;gap:6px"><label for="f-coi" style="font-size:14px;font-weight:600;color:#101B27">Competing interests <span style="color:#A52A2A">*</span></label><textarea id="f-coi" rows="2" value="{{ f.coi }}" onChange="{{ on.coi }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></textarea></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label for="f-eth" style="font-size:14px;font-weight:600;color:#101B27">Ethics approval and consent <span style="color:#A52A2A">*</span></label><textarea id="f-eth" rows="2" value="{{ f.ethics }}" onChange="{{ on.ethics }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></textarea><span style="font-size:12px;color:var(--muted,#505C68)">Name the approving committee and reference number, or state why approval was not required.</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label for="f-data" style="font-size:14px;font-weight:600;color:#101B27">Data availability statement <span style="color:#A52A2A">*</span></label><textarea id="f-data" rows="2" value="{{ f.data }}" onChange="{{ on.data }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></textarea></div>
+          <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:6px">
+            <legend style="font-size:14px;font-weight:600;color:#101B27;margin-bottom:6px">Use of generative AI <span style="color:#A52A2A">*</span></legend>
+            <sc-for list="{{ aiOpts }}" as="o"><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="ai" checked="{{ o.on }}" onChange="{{ o.pick }}" style="accent-color:var(--accent,#B4470F)">{{ o.label }}</label></sc-for>
+          </fieldset>
+          <div style="display:flex;flex-direction:column;gap:6px"><label for="f-pre" style="font-size:14px;font-weight:600;color:#101B27">Preprint</label><input id="f-pre" value="{{ f.preprint }}" onChange="{{ on.preprint }}" placeholder="Preprint DOI, if posted" style="font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600;color:#101B27">Suggested and opposed reviewers</span><textarea rows="2" value="{{ f.reviewers }}" onChange="{{ on.reviewers }}" aria-label="Suggested and opposed reviewers" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px"></textarea><span style="font-size:12px;color:var(--muted,#505C68)">Optional. Name, institution and email; editors are not obliged to use suggestions.</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is7 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:{{ stepAnim }};display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ review }}" as="r">
+            <section style="display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:16px;padding:16px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:start">
+              <h2 style="margin:0;font-size:14px;font-weight:600;color:#101B27;display:flex;gap:8px;align-items:center"><span style="width:18px;height:18px;border-radius:50%;background:{{ r.dot }};color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">{{ r.mark }}</span>{{ r.h }}</h2>
+              <dl style="margin:0;display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:14px"><sc-for list="{{ r.rows }}" as="row"><dt style="color:var(--muted,#505C68)">{{ row.k }}</dt><dd style="margin:0;color:#1F2A36;line-height:1.45">{{ row.v }}</dd></sc-for></dl>
+              <button onClick="{{ r.edit }}" style="border:0;background:none;color:var(--accent,#B4470F);font:inherit;font-size:13px;font-weight:500;cursor:pointer;padding:0">Edit</button>
+            </section>
+          </sc-for>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;margin-top:20px"><input type="checkbox" checked="{{ f.final }}" onChange="{{ on.final }}" style="margin:3px 0 0;width:16px;height:16px;accent-color:var(--accent,#B4470F)">I confirm that all authors have approved this submission and that the information provided is accurate.</label>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;border-top:1px solid var(--line,#DCE1E6);background:var(--surface-3,#FAFBFB)">
+      <button onClick="{{ back }}" disabled="{{ isFirstStep }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:9px 16px;font:inherit;font-size:14px;cursor:pointer;color:#101B27;opacity:{{ backOpacity }}">Back</button>
+      <span style="font-size:13px;color:var(--muted,#505C68)">Step {{ step }} of 7</span>
+      <button onClick="{{ next }}" disabled="{{ busy }}" style="border:0;background:var(--accent,#B4470F);color:#fff;border-radius:3px;padding:10px 20px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">{{ nextLabel }}</button>
+    </div>
+  </main>
+</div>
+</sc-if>
+
+<sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+  <main id="main-content" style="max-width:760px;margin:48px auto 0;padding:0 32px">
+    <div style="background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:36px 40px">
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1E6B3A;background:#E7F3EB;border:1px solid #B9DCC4;padding:4px 10px;border-radius:2px">✓ Submission received</span>
+      <h1 style="margin:16px 0 6px;font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:600;color:#101B27">Thank you. Your manuscript has been submitted.</h1>
+      <p style="margin:0;font-size:15px;color:#3C4854;line-height:1.6">Submission ID <strong style="font-family:'IBM Plex Mono',monospace;color:#101B27">NGIQ-{{ jCode }}-2026-0388</strong> · {{ jTitle }}. A receipt has been sent to a.okafor@example.ac.uk and to all co-authors.</p>
+      <h2 style="margin:28px 0 12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">What happens next</h2>
+      <ol style="list-style:none;margin:0;padding:0;border-left:2px solid var(--line,#DCE1E6);margin-left:8px">
+        <sc-for list="{{ nextSteps }}" as="n">
+          <li style="position:relative;padding:0 0 18px 22px">
+            <span style="position:absolute;left:-7px;top:3px;width:12px;height:12px;border-radius:50%;background:{{ n.dot }};border:2px solid #fff"></span>
+            <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="font-size:15px;font-weight:600;color:#101B27">{{ n.h }}</span><span style="font-size:13px;color:var(--muted,#505C68)">{{ n.t }}</span></div>
+            <p style="margin:4px 0 0;font-size:14px;color:#3C4854;line-height:1.5">{{ n.p }}</p>
+          </li>
+        </sc-for>
+      </ol>
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap"><a href="Dashboard.dc.html?new=1" style="background:var(--accent,#B4470F);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Go to My submissions</a><a href="{{ jHref }}" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:9px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Back to the journal</a></div>
+    </div>
+  </main>
+</sc-if>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startStep&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;],&quot;default&quot;:&quot;1&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const sp = new URLSearchParams(location.search);
+    const roles = ['Conceptualisation', 'Methodology', 'Software', 'Formal analysis', 'Investigation', 'Data curation', 'Writing – original draft', 'Writing – review & editing', 'Supervision', 'Funding acquisition'];
+    this.ROLES = roles;
+    this.uid = 10;
+    this.state = {
+      step: Math.min(7, Math.max(1, parseInt(sp.get('step') || this.props.startStep || '1', 10))), tried: {}, visited: { 1: true }, saving: false, savedAt: 'Saved just now', busy: false, done: false, drag: false, kwDraft: '',
+      f: { journal: sp.get('j') || 'ijdh', type: 'Research Article', special: '', scope: true, check: [true, true, true, false, false, false],
+        title: 'Remote photoplethysmography for continuous heart-rate monitoring in home-based cardiac rehabilitation: a prospective validation study', running: 'rPPG in home cardiac rehabilitation',
+        abstract: 'Background: Home-based cardiac rehabilitation depends on reliable monitoring of exercise intensity, yet chest-strap sensors are frequently abandoned. Methods: We evaluated a camera-based rPPG pipeline against ECG in 112 participants completing supervised home sessions. Results: Mean absolute error was 2.9 bpm at rest and 4.6 bpm during moderate exercise. Conclusions: rPPG is a useful adjunct to contact sensors.',
+        keywords: ['remote photoplethysmography', 'cardiac rehabilitation', 'telemonitoring'], subject: 'Telemedicine and remote monitoring',
+        funding: 'yes', funder: 'National Institute for Health and Care Research', grant: 'NIHR-204117', coi: 'The authors declare no competing interests.', ethics: 'South Central Research Ethics Committee, ref. 25/SC/0142. Written informed consent obtained.', data: '', ai: 'none', preprint: '', reviewers: '', final: false },
+      authors: [
+        { id: 1, given: 'Amara N.', family: 'Okafor', email: 'a.okafor@example.ac.uk', aff: 'University of Southampton', ror: true, country: 'United Kingdom', orcid: '0000-0002-1825-0097', corr: true, roles: ['Conceptualisation', 'Methodology', 'Writing – original draft'] },
+        { id: 2, given: 'Daniel', family: 'Reyes-Morales', email: 'd.reyes@example.ac.uk', aff: 'University of Southampton', ror: true, country: 'United Kingdom', orcid: '0000-0001-5109-372', corr: false, roles: ['Software', 'Formal analysis'] }
+      ],
+      files: [
+        { id: 1, name: 'manuscript_anonymised.docx', size: '412 KB', kind: 'Anonymised manuscript', pct: 100 },
+        { id: 2, name: 'figure1_bland_altman.tiff', size: '2.4 MB', kind: 'Figure', pct: 100 },
+        { id: 3, name: 'supplementary_methods.pdf', size: '840 KB', kind: '', pct: 100 }
+      ]
+    };
+  }
+  componentDidMount() { if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+  touch(patch) {
+    this.setState(Object.assign({ saving: true }, typeof patch === 'function' ? patch(this.state) : patch));
+    clearTimeout(this.st); this.st = setTimeout(() => this.setState({ saving: false, savedAt: 'All changes saved' }), 700);
+  }
+  setF(k, v) { this.touch(s => ({ f: Object.assign({}, s.f, { [k]: v }) })); }
+  setA(id, patch) { this.touch(s => ({ authors: s.authors.map(a => a.id === id ? Object.assign({}, a, patch) : a) })); }
+  addFiles(list) {
+    const kindGuess = n => /title/i.test(n) ? 'Title page' : /cover/i.test(n) ? 'Cover letter' : /\.(png|tiff?|eps|jpe?g)$/i.test(n) ? 'Figure' : /\.(csv|xlsx)$/i.test(n) ? 'Table' : '';
+    const items = list.map(f => ({ id: ++this.uid, name: f.name, size: f.size > 1048576 ? (f.size / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(f.size / 1024)) + ' KB', kind: kindGuess(f.name), pct: 0 }));
+    this.touch(s => ({ files: s.files.concat(items) }));
+    items.forEach(it => { const tick = () => { this.setState(s => ({ files: s.files.map(x => x.id === it.id ? Object.assign({}, x, { pct: Math.min(100, x.pct + 20) }) : x) })); const cur = this.state.files.find(x => x.id === it.id); if (cur && cur.pct < 100) setTimeout(tick, 250); }; setTimeout(tick, 250); });
+  }
+  validate(n) {
+    const { f, authors, files } = this.state; const e = [];
+    const orcidOk = o => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(o);
+    if (n === 1) { if (!f.scope) e.push('Confirm the manuscript is within scope'); }
+    if (n === 2) { if (f.check.some(c => !c)) e.push('Tick all ' + f.check.length + ' requirements (' + f.check.filter(c => !c).length + ' remaining)'); }
+    if (n === 3) { const wc = f.abstract.trim().split(/\s+/).filter(Boolean).length; if (!f.title.trim()) e.push('Enter a title'); if (!wc) e.push('Enter an abstract'); if (wc > 250) e.push('Shorten the abstract to 250 words or fewer'); if (f.keywords.length < 3 || f.keywords.length > 8) e.push('Add between 3 and 8 keywords'); }
+    if (n === 4) { authors.forEach((a, i) => { if (!a.given || !a.family || !a.email || !a.aff) e.push('Author ' + (i + 1) + ': complete name, email and affiliation'); if (a.orcid && !orcidOk(a.orcid)) e.push('Author ' + (i + 1) + ': ORCID iD must be 16 digits in the format 0000-0000-0000-0000'); if (a.corr && !a.orcid) e.push('Author ' + (i + 1) + ': the corresponding author must provide an ORCID iD'); }); if (!authors.some(a => a.corr)) e.push('Select a corresponding author'); }
+    if (n === 5) { const k = files.map(x => x.kind); if (!k.includes('Anonymised manuscript')) e.push('Upload an anonymised manuscript'); if (!k.includes('Title page')) e.push('Upload a title page with author details'); if (files.some(x => !x.kind)) e.push('Choose a file type for every file'); }
+    if (n === 6) { if (!f.data.trim()) e.push('Provide a data availability statement'); if (!f.coi.trim()) e.push('Declare competing interests, or state that there are none'); }
+    if (n === 7) { if (!f.final) e.push('Confirm that all authors have approved the submission'); }
+    return e;
+  }
+  go(n) { this.setState(s => ({ dir: n < s.step ? -1 : 1, step: n, visited: Object.assign({}, s.visited, { [n]: true }) })); window.scrollTo(0, 0); }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return { steps: [], f: {}, on: {} };
+    const s = this.state, f = s.f;
+    const j = D.journal(f.journal);
+    const labels = ['Journal and section', 'Requirements', 'Metadata', 'Authors', 'Files', 'Declarations', 'Review and submit'];
+    const steps = labels.map((label, i) => {
+      const n = i + 1, cur = n === s.step, errs = this.validate(n), visited = s.visited[n] || s.tried[n];
+      const ok = visited && !errs.length && !cur, bad = visited && errs.length && !cur && s.tried[n];
+      return { label, current: cur ? 'step' : 'false', go: () => this.go(n), bar: cur ? 'var(--accent,#B4470F)' : 'transparent', bg: cur ? 'var(--accent-tint,#FDF7F3)' : 'var(--surface,#fff)', weight: cur ? 600 : 500,
+        anim: ok ? 'ngiqPop .45s cubic-bezier(.2,.8,.3,1.2) both' : 'none', mark: ok ? '✓' : bad ? '!' : n, dotBg: ok ? '#1E6B3A' : bad ? '#A52A2A' : cur ? 'var(--accent,#B4470F)' : 'var(--surface,#fff)', dotFg: ok || bad || cur ? '#fff' : '#3C4854', dotBorder: ok ? '#1E6B3A' : bad ? '#A52A2A' : cur ? 'var(--accent,#B4470F)' : 'var(--line-strong,#B9C1C9)',
+        sub: ok ? 'Complete' : bad ? errs.length + ' to fix' : cur ? 'In progress' : visited ? 'Incomplete' : 'Not started', subColor: bad ? '#A52A2A' : 'var(--muted,#505C68)' };
+    });
+    const errors = s.tried[s.step] ? this.validate(s.step) : [];
+    const on = {}; ['journal', 'special', 'title', 'running', 'abstract', 'subject', 'funder', 'grant', 'coi', 'ethics', 'data', 'preprint', 'reviewers'].forEach(k => { on[k] = e => this.setF(k, e.target.value); });
+    on.scope = () => this.setF('scope', !f.scope); on.final = () => this.setF('final', !f.final);
+    const wc = f.abstract.trim().split(/\s+/).filter(Boolean).length;
+    const err = (cond) => s.tried[s.step] && cond ? '#A52A2A' : 'var(--line-strong,#B9C1C9)';
+    const orcidOk = o => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(o);
+    const authors = s.authors.map((a, i, arr) => ({
+      n: i + 1, display: (a.given + ' ' + a.family).trim() || 'New author', given: a.given, family: a.family, email: a.email, aff: a.aff, country: a.country, orcid: a.orcid, corr: a.corr,
+      isFirst: i === 0, isLast: i === arr.length - 1, border: a.corr ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)',
+      givenBorder: err(!a.given), familyBorder: err(!a.family), emailBorder: err(!a.email), affBorder: err(!a.aff),
+      rorNote: a.ror ? '✓ Matched in ROR: ' + a.aff : a.aff ? 'No ROR match selected — the affiliation will be saved as typed' : 'Institution, city', rorColor: a.ror ? '#1E6B3A' : 'var(--muted,#505C68)',
+      orcidReq: a.corr ? '*' : '(optional)', orcidBorder: a.orcid && !orcidOk(a.orcid) ? '#A52A2A' : err(a.corr && !a.orcid),
+      orcidNote: !a.orcid ? 'Required for the corresponding author' : orcidOk(a.orcid) ? '✓ Valid ORCID iD format' : 'Use the 16-digit format 0000-0000-0000-0000', orcidColor: !a.orcid ? 'var(--muted,#505C68)' : orcidOk(a.orcid) ? '#1E6B3A' : '#A52A2A',
+      onGiven: e => this.setA(a.id, { given: e.target.value }), onFamily: e => this.setA(a.id, { family: e.target.value }), onEmail: e => this.setA(a.id, { email: e.target.value }),
+      onAff: e => this.setA(a.id, { aff: e.target.value, ror: false }), onCountry: e => this.setA(a.id, { country: e.target.value }), onOrcid: e => this.setA(a.id, { orcid: e.target.value.trim() }),
+      setCorr: () => this.touch(st => ({ authors: st.authors.map(x => Object.assign({}, x, { corr: x.id === a.id })) })),
+      up: () => this.touch(st => { const l = st.authors.slice(); [l[i - 1], l[i]] = [l[i], l[i - 1]]; return { authors: l }; }),
+      down: () => this.touch(st => { const l = st.authors.slice(); [l[i + 1], l[i]] = [l[i], l[i + 1]]; return { authors: l }; }),
+      remove: () => this.touch(st => ({ authors: st.authors.filter(x => x.id !== a.id) })),
+      roles: this.ROLES.map(r => { const onR = a.roles.includes(r); return { label: r, pressed: onR ? 'true' : 'false', bg: onR ? 'var(--accent-soft,#FBEDE5)' : 'var(--surface,#fff)', fg: onR ? 'var(--accent-dark,#91390C)' : '#3C4854', border: onR ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', toggle: () => this.setA(a.id, { roles: onR ? a.roles.filter(x => x !== r) : a.roles.concat(r) }) }; })
+    }));
+    const kinds = ['Anonymised manuscript', 'Manuscript with author details', 'Title page', 'Figure', 'Table', 'Supplementary file', 'Cover letter'];
+    const kk = s.files.map(x => x.kind);
+    const reqs = [['Anonymised manuscript', kk.includes('Anonymised manuscript')], ['Title page with author details and declarations', kk.includes('Title page')]].map(([t, ok]) => ({ t: (ok ? 'Required: ' : 'Missing required file: ') + t, icon: ok ? '✓' : '!', fg: ok ? '#1E6B3A' : '#8A5300' }));
+    const files = s.files.map((x, i) => ({ name: x.name, size: x.size, kind: x.kind, pct: x.pct, pctW: x.pct + '%', uploading: x.pct < 100, isDone: x.pct >= 100, kindBorder: x.kind ? 'var(--line-strong,#B9C1C9)' : '#D9A441',
+      onKind: e => this.touch(st => ({ files: st.files.map(y => y.id === x.id ? Object.assign({}, y, { kind: e.target.value }) : y) })),
+      up: () => i > 0 && this.touch(st => { const l = st.files.slice(); [l[i - 1], l[i]] = [l[i], l[i - 1]]; return { files: l }; }),
+      remove: () => this.touch(st => ({ files: st.files.filter(y => y.id !== x.id) })) }));
+    const checklistT = ['The manuscript has not been published and is not under consideration elsewhere.', 'All authors have approved the manuscript and agree to its submission.', 'The main manuscript is anonymised for double-blind review.', 'The manuscript follows the journal template and reference style.', 'Ethics approval and consent are reported where human or animal subjects are involved.', 'Use of generative AI tools, if any, is disclosed in the declarations.'];
+    const hrefs = ['publication-ethics', 'publication-ethics', 'peer-review-process', 'author-instructions', 'publication-ethics', 'generative-ai-policy'];
+    const typeMeta = { 'Research Article': '8,000 words · structured abstract 250 words', 'Review': '10,000 words · abstract 250 words', 'Short Communication': '3,000 words · abstract 150 words', 'Case Study': '5,000 words · abstract 200 words', 'Perspective': '3,000 words · abstract 150 words' };
+    const R = (h, n, rows) => { const bad = this.validate(n).length > 0; return { h, rows, dot: bad ? '#A52A2A' : '#1E6B3A', mark: bad ? '!' : '✓', edit: () => this.go(n) }; };
+    const stepTitles = ['Choose journal and article type', 'Confirm submission requirements', 'Title, abstract and keywords', 'Authors and affiliations', 'Upload files', 'Declarations', 'Review and submit'];
+    return {
+      stepAnim: (s.dir < 0 ? 'ngiqSlideBack' : 'ngiqSlideIn') + ' .38s cubic-bezier(.2,.7,.2,1) both', step: s.step, stepTitle: stepTitles[s.step - 1], jCode: j.code, jTitle: j.title, jHref: 'Journal.dc.html?j=' + j.slug, scopeHref: 'JournalPage.dc.html?j=' + j.slug + '&p=aims-scope',
+      saveLabel: s.saving ? 'Saving…' : s.savedAt, saveDot: s.saving ? '#D9A441' : '#1E6B3A',
+      steps, errors, showErrors: errors.length > 0, f, on,
+      is1: s.step === 1, is2: s.step === 2, is3: s.step === 3, is4: s.step === 4, is5: s.step === 5, is6: s.step === 6, is7: s.step === 7,
+      journals: D.journals, siOpts: D.cfps.filter(c => c.j === f.journal && c.status !== 'Closed'),
+      typeOpts: Object.keys(typeMeta).map(t => ({ label: t, meta: typeMeta[t], on: f.type === t, border: f.type === t ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', bg: f.type === t ? 'var(--accent-tint,#FDF7F3)' : 'var(--surface,#fff)', pick: () => this.setF('type', t) })),
+      checklist: checklistT.map((t, i) => ({ t, on: f.check[i], href: 'JournalPage.dc.html?j=' + j.slug + '&p=' + hrefs[i], toggle: () => this.setF('check', f.check.map((c, k) => k === i ? !c : c)) })),
+      titleBorder: err(!f.title.trim()), absBorder: err(!wc || wc > 250), wordCount: wc, wcColor: wc > 250 ? '#A52A2A' : 'var(--muted,#505C68)',
+      kwChips: f.keywords.map(t => ({ t, remove: () => this.setF('keywords', f.keywords.filter(x => x !== t)) })), kwCount: f.keywords.length, kwBorder: err(f.keywords.length < 3 || f.keywords.length > 8),
+      kwDraft: s.kwDraft, onKwDraft: e => this.setState({ kwDraft: e.target.value }),
+      onKwKey: e => { if ((e.key === 'Enter' || e.key === ',') && s.kwDraft.trim()) { e.preventDefault(); if (f.keywords.length < 8 && !f.keywords.includes(s.kwDraft.trim())) this.setF('keywords', f.keywords.concat(s.kwDraft.trim())); this.setState({ kwDraft: '' }); } else if (e.key === 'Backspace' && !s.kwDraft && f.keywords.length) this.setF('keywords', f.keywords.slice(0, -1)); },
+      authors,
+      addAuthor: () => this.touch(st => ({ authors: st.authors.concat({ id: ++this.uid, given: '', family: '', email: '', aff: '', ror: false, country: '', orcid: '', corr: false, roles: [] }) })),
+      addMe: () => this.touch(st => ({ authors: st.authors.some(a => a.email === 'a.okafor@example.ac.uk') ? st.authors : st.authors.concat({ id: ++this.uid, given: 'Amara N.', family: 'Okafor', email: 'a.okafor@example.ac.uk', aff: 'University of Southampton', ror: true, country: 'United Kingdom', orcid: '0000-0002-1825-0097', corr: false, roles: [] }) })),
+      files, noFiles: files.length === 0, kinds, reqs,
+      dzBorder: s.drag ? 'var(--accent,#B4470F)' : 'var(--line-strong,#B9C1C9)', dzBg: s.drag ? 'var(--accent-tint,#FDF7F3)' : 'var(--surface-3,#FAFBFB)',
+      onDragOver: e => { e.preventDefault(); if (!s.drag) this.setState({ drag: true }); }, onDragLeave: () => this.setState({ drag: false }),
+      onDrop: e => { e.preventDefault(); this.setState({ drag: false }); this.addFiles(Array.from(e.dataTransfer.files || [])); },
+      onPick: e => { this.addFiles(Array.from(e.target.files || [])); e.target.value = ''; },
+      fundYes: f.funding === 'yes', fundNo: f.funding === 'no', setFundYes: () => this.setF('funding', 'yes'), setFundNo: () => this.setF('funding', 'no'),
+      aiOpts: [['none', 'No generative AI tools were used'], ['lang', 'Used for language editing only'], ['content', 'Used for content, analysis or images (describe in the manuscript)']].map(([k, label]) => ({ label, on: f.ai === k, pick: () => this.setF('ai', k) })),
+      review: [
+        R('Journal and section', 1, [{ k: 'Journal', v: j.title }, { k: 'Article type', v: f.type }, { k: 'Special issue', v: f.special ? (D.cfps.find(c => c.id === f.special) || {}).theme : 'None' }]),
+        R('Requirements', 2, [{ k: 'Checklist', v: f.check.filter(Boolean).length + ' of ' + f.check.length + ' confirmed' }]),
+        R('Metadata', 3, [{ k: 'Title', v: f.title }, { k: 'Abstract', v: wc + ' words' }, { k: 'Keywords', v: f.keywords.join(', ') }]),
+        R('Authors', 4, [{ k: 'Authors', v: s.authors.map(a => a.given + ' ' + a.family + (a.corr ? ' (corresponding)' : '')).join(', ') }]),
+        R('Files', 5, [{ k: 'Files', v: s.files.length + ' files · ' + s.files.map(x => x.kind || 'untyped').join(', ') }]),
+        R('Declarations', 6, [{ k: 'Funding', v: f.funding === 'yes' ? f.funder + ' (' + f.grant + ')' : 'None' }, { k: 'Data', v: f.data || 'Not provided' }, { k: 'Generative AI', v: f.ai === 'none' ? 'Not used' : 'Disclosed' }])
+      ],
+      isFirstStep: s.step === 1, backOpacity: s.step === 1 ? 0.5 : 1, busy: s.busy,
+      back: () => s.step > 1 && this.go(s.step - 1),
+      nextLabel: s.step === 7 ? (s.busy ? 'Submitting…' : 'Submit manuscript') : 'Save and continue',
+      next: () => {
+        const errs = this.validate(s.step);
+        if (s.step === 7) {
+          const all = [1, 2, 3, 4, 5, 6, 7].filter(n => this.validate(n).length);
+          if (all.length) { const t = {}; all.forEach(n => { t[n] = true; }); this.setState({ tried: Object.assign({}, s.tried, t) }); if (all[0] !== 7) this.go(all[0]); return; }
+          this.setState({ busy: true }); setTimeout(() => { this.setState({ busy: false, done: true }); window.scrollTo(0, 0); }, 1200); return;
+        }
+        if (errs.length) { this.setState({ tried: Object.assign({}, s.tried, { [s.step]: true }) }); window.scrollTo(0, 0); return; }
+        this.go(s.step + 1);
+      },
+      done: s.done, notDone: !s.done,
+      nextSteps: [
+        { h: 'Technical check', t: 'Within 3 working days', p: 'The Editorial Office checks completeness, formatting and similarity. If anything is missing, the submission is returned to you with instructions.', dot: 'var(--accent,#B4470F)' },
+        { h: 'Editorial assessment', t: 'Within 7 days', p: 'An editor assesses scope and suitability for peer review.', dot: 'var(--line-strong,#B9C1C9)' },
+        { h: 'Peer review', t: '4–6 weeks', p: 'At least two independent reviewers assess the anonymised manuscript.', dot: 'var(--line-strong,#B9C1C9)' },
+        { h: 'First decision', t: 'Target 6 weeks from today', p: 'You will receive the decision and reviewer reports by email and in your dashboard.', dot: 'var(--line-strong,#B9C1C9)' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

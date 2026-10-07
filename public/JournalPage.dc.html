@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Journal information — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="journals" hint-size="100%,150px"></dc-import>
+<dc-import name="JournalMasthead" tab="{{ group }}" hint-size="100%,420px"></dc-import>
+<div style="max-width:1280px;margin:0 auto;padding:32px 32px 0;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+  <nav aria-label="Journal pages" style="width:230px;flex-shrink:0;position:sticky;top:16px;font-size:14px">
+    <sc-for list="{{ side }}" as="g" hint-placeholder-count="4">
+      <div style="padding:0 0 16px">
+        <span style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600;padding:0 0 6px 12px">{{ g.group }}</span>
+        <sc-for list="{{ g.links }}" as="l">
+          <a href="{{ l.href }}" aria-current="{{ l.current }}" style="display:block;padding:5px 12px;border-left:2px solid {{ l.bar }};color:{{ l.fg }};font-weight:{{ l.weight }};background:{{ l.bg }};text-decoration:none" style-hover="color:var(--accent,#B4470F)">{{ l.title }}</a>
+        </sc-for>
+      </div>
+    </sc-for>
+  </nav>
+
+  <main id="main-content" style="flex:1;min-width:300px;max-width:720px">
+    <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:500">{{ group }}</span>
+    <h1 style="margin:6px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:36px;line-height:1.15;font-weight:600;color:#101B27;letter-spacing:-.01em">{{ title }}</h1>
+    <p style="margin:0 0 28px;font-size:13px;color:var(--muted,#505C68)">{{ j.title }} · Last updated 1 September 2026</p>
+
+    <sc-if value="{{ isInstructions }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px solid var(--line,#DCE1E6);border-radius:3px;margin-bottom:36px">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line,#DCE1E6);font-size:14px;font-weight:600;color:#101B27">Manuscript templates</div>
+        <sc-for list="{{ templates }}" as="t" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line-soft,#EEF1F4)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 6px;border:1px solid var(--line-strong,#B9C1C9);border-radius:2px;color:#1F2A36;width:44px;text-align:center">{{ t.ext }}</span>
+            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:14px;color:#101B27;font-weight:500">{{ t.name }}</span><span style="font-size:12px;color:var(--muted,#505C68)">{{ t.meta }}</span></div>
+            <a href="{{ t.href }}" style="font-size:13px;font-weight:500">Download</a>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="3">
+      <section id="{{ b.id }}" data-sec="1" style="scroll-margin-top:24px;padding-bottom:12px">
+        <h2 style="margin:0 0 14px;font-family:'Source Serif 4',Georgia,serif;font-size:24px;line-height:1.25;font-weight:600;color:#101B27;display:flex;gap:12px"><span style="color:#6B7682;font-weight:400">{{ b.n }}</span>{{ b.h }}</h2>
+        <sc-for list="{{ b.p }}" as="para">
+          <p style="margin:0 0 16px;font-size:17px;line-height:1.7;color:#1F2A36;text-wrap:pretty">{{ para }}</p>
+        </sc-for>
+        <sc-if value="{{ b.hasUl }}">
+          <ul style="margin:0 0 20px;padding-left:22px;font-size:17px;line-height:1.7;color:#1F2A36">
+            <sc-for list="{{ b.ul }}" as="li"><li style="padding-left:4px;margin-bottom:4px">{{ li }}</li></sc-for>
+          </ul>
+        </sc-if>
+        <sc-if value="{{ b.hasTable }}">
+          <div style="overflow-x:auto;margin:4px 0 24px;border-top:2px solid #101B27">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:520px">
+              <thead><tr>
+                <sc-for list="{{ b.table.head }}" as="th"><th scope="col" style="text-align:left;padding:10px 12px 10px 0;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line-strong,#B9C1C9)">{{ th }}</th></sc-for>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ b.table.rows }}" as="row"><tr>
+                  <sc-for list="{{ row }}" as="cell"><td style="padding:11px 12px 11px 0;border-bottom:1px solid var(--line,#DCE1E6);vertical-align:top;line-height:1.45">{{ cell }}</td></sc-for>
+                </tr></sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.hasSub }}">
+          <sc-for list="{{ b.sub }}" as="s">
+            <div id="{{ s.id }}" data-sec="1" style="scroll-margin-top:24px">
+              <h3 style="margin:8px 0 10px;font-size:18px;font-weight:600;color:#101B27;display:flex;gap:10px"><span style="color:#6B7682;font-weight:400">{{ s.n }}</span>{{ s.h }}</h3>
+              <sc-for list="{{ s.p }}" as="para"><p style="margin:0 0 16px;font-size:17px;line-height:1.7;color:#1F2A36">{{ para }}</p></sc-for>
+            </div>
+          </sc-for>
+        </sc-if>
+      </section>
+    </sc-for>
+
+    <sc-if value="{{ showCalls }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:2px solid #101B27;margin-top:8px">
+        <sc-for list="{{ calls }}" as="c">
+          <div style="padding:16px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;color:var(--muted,#505C68)"><span style="padding:1px 7px;border-radius:2px;font-weight:500;background:{{ c.bg }};color:{{ c.fg }}">{{ c.status }}</span> · Deadline {{ c.deadline }}</span>
+            <span style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27">{{ c.theme }}</span>
+            <span style="font-size:13px;color:var(--muted,#505C68)">Guest editor: {{ c.guest }}</span>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noCalls }}"><p style="font-size:15px;color:#3C4854;padding:16px 0;margin:0;line-height:1.6">There is no thematic call for this journal at present. Regular submissions on any topic within scope are welcome.</p></sc-if>
+      </div>
+    </sc-if>
+
+    <nav aria-label="Previous and next page" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;border-top:1px solid var(--line,#DCE1E6);padding-top:20px">
+      <a href="{{ prev.href }}" style="display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line,#DCE1E6);border-radius:3px;text-decoration:none" style-hover="border-color:var(--accent,#B4470F)"><span style="font-size:12px;color:var(--muted,#505C68)">← Previous</span><span style="font-size:15px;font-weight:500;color:#101B27">{{ prev.title }}</span></a>
+      <a href="{{ next.href }}" style="display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line,#DCE1E6);border-radius:3px;text-align:right;text-decoration:none" style-hover="border-color:var(--accent,#B4470F)"><span style="font-size:12px;color:var(--muted,#505C68)">Next →</span><span style="font-size:15px;font-weight:500;color:#101B27">{{ next.title }}</span></a>
+    </nav>
+  </main>
+
+  <aside style="width:220px;flex-shrink:0;position:sticky;top:16px;display:flex;flex-direction:column;gap:24px">
+    <nav aria-label="On this page">
+      <span style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600;margin-bottom:8px">On this page</span>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+        <a href="{{ t.href }}" style="display:block;font-size:13px;line-height:1.4;padding:5px 0 5px {{ t.indent }};border-left:2px solid {{ t.bar }};color:{{ t.fg }};font-weight:{{ t.weight }};text-decoration:none">{{ t.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:16px;display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:14px;font-weight:600;color:#101B27">Ready to submit?</span>
+      <span style="font-size:13px;color:#3C4854;line-height:1.5">{{ j.code }} accepts submissions year-round.</span>
+      <a href="{{ submitHref }}" style="background:var(--accent,#B4470F);color:#fff;padding:9px 12px;border-radius:3px;font-size:14px;font-weight:500;text-align:center;text-decoration:none">Submit manuscript</a>
+    </div>
+  </aside>
+</div>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: 's1' };
+  componentDidMount() {
+    if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); }
+    this.onScroll = () => {
+      const els = Array.from(document.querySelectorAll('[data-sec]'));
+      let cur = els[0] && els[0].id;
+      for (const el of els) if (el.getBoundingClientRect().top < 140) cur = el.id;
+      if (cur && cur !== this.state.active) this.setState({ active: cur });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return { j: {}, prev: {}, next: {} };
+    const j = D.journal(D.param('j'));
+    const pid = D.param('p') || 'about';
+    const meta = D.pageTitle(pid);
+    document.title = meta.title + ' — ' + j.code + ' — NextGenIQ Press';
+    const blocks = D.pageBlocks(pid, j);
+    const flat = D.pageGroups.flatMap(g => g.items.map(([id, title]) => ({ id, title, href: D.pageHref(id, j.slug) })));
+    const idx = flat.findIndex(f => f.id === pid);
+    const act = this.state.active;
+    const toc = blocks.flatMap(b => [{ id: b.id, label: b.h, indent: '12px' }].concat(b.sub.map(s => ({ id: s.id, label: s.h, indent: '24px' }))))
+      .map(t => Object.assign(t, { href: '#' + t.id, bar: t.id === act ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', fg: t.id === act ? '#101B27' : '#3C4854', weight: t.id === act ? 600 : 400 }));
+    const chip = s => s === 'Open' ? ['#E7F3EB', '#1E6B3A'] : s === 'Closing soon' ? ['#FDF1DE', '#8A5300'] : ['var(--line-soft,#EEF1F4)', '#3C4854'];
+    const calls = D.cfps.filter(c => c.j === j.slug).map(c => { const [bg, fg] = chip(c.status); return Object.assign({}, c, { bg, fg }); });
+    return {
+      j, group: meta.group, title: meta.title, blocks, toc,
+      isInstructions: pid === 'author-instructions',
+      templates: [{ ext: 'DOCX', name: 'Word manuscript template', meta: 'Microsoft Word · 64 KB', href: '#s3' }, { ext: 'ZIP', name: 'LaTeX template and class file', meta: 'LaTeX · Overleaf compatible · 212 KB', href: '#s3' }, { ext: 'DOCX', name: 'Title page and declarations form', meta: 'Microsoft Word · 38 KB', href: '#s6' }],
+      showCalls: pid === 'call-for-papers' || pid === 'special-issues', calls, noCalls: calls.length === 0,
+      side: D.pageGroups.map(g => ({ group: g.group, links: g.items.map(([id, title]) => { const a = id === pid; return { title, href: D.pageHref(id, j.slug), current: a ? 'page' : 'false', bar: a ? 'var(--accent,#B4470F)' : 'transparent', fg: a ? '#101B27' : '#3C4854', weight: a ? 600 : 400, bg: a ? 'var(--surface-2,#F5F6F7)' : 'transparent' }; }) })),
+      prev: flat[(idx - 1 + flat.length) % flat.length], next: flat[(idx + 1) % flat.length],
+      submitHref: 'Submit.dc.html?j=' + j.slug
+    };
+  }
+}
+</script>
+</body>
+</html>

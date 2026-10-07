@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Article — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="articles" hint-size="100%,150px"></dc-import>
+<div style="max-width:1320px;margin:0 auto;padding:16px 32px 0">
+  <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68);flex-wrap:wrap"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><a href="{{ jHref }}">{{ j.title }}</a><span aria-hidden="true">/</span><a href="{{ issueHref }}">Volume {{ a.vol }}, Issue {{ a.issue }}</a></nav>
+</div>
+<sc-if value="{{ retracted }}" hint-placeholder-val="{{ false }}">
+  <div role="alert" style="max-width:1320px;margin:16px auto 0;padding:0 32px">
+    <div style="border:1px solid #E3B3B3;background:#FBEAEA;border-radius:3px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#A52A2A;padding:3px 8px;border-radius:2px">Retracted</span>
+      <div style="font-size:14px;line-height:1.55;color:#5C1414">This article was retracted on 2 September 2026 at the request of the authors after an error was identified in the reference ECG alignment. <a href="#declarations" style="color:#8B1E1E;font-weight:600;text-decoration:underline">Read the retraction notice</a> (doi.org/10.63521/ijdh.2026.0031).</div>
+    </div>
+  </div>
+</sc-if>
+<div style="max-width:1320px;margin:0 auto;padding:24px 32px 0;display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap">
+  <nav aria-label="Article contents" style="width:210px;flex-shrink:0;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto">
+    <span style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600;margin-bottom:8px">Contents</span>
+    <sc-for list="{{ toc }}" as="t" hint-placeholder-count="10">
+      <a href="{{ t.href }}" style="display:block;font-size:13px;line-height:1.4;padding:5px 0 5px 12px;border-left:2px solid {{ t.bar }};color:{{ t.fg }};font-weight:{{ t.weight }};text-decoration:none">{{ t.label }}</a>
+    </sc-for>
+  </nav>
+
+  <main id="main-content" style="flex:1;min-width:300px;max-width:740px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px">
+      <span style="font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em;padding:2px 0">{{ a.type }}</span>
+      <span style="padding:2px 8px;border-radius:2px;background:#FBF1DA;color:#6E4600;border:1px solid #EBD39A;font-weight:500">Open access</span>
+      <a href="#rights" style="padding:2px 8px;border-radius:2px;border:1px solid var(--line,#DCE1E6);color:#1F2A36;font-weight:500">CC BY 4.0</a>
+    </div>
+    <p style="margin:14px 0 0;font-size:14px;color:#3C4854"><a href="{{ jHref }}" style="font-style:italic;font-weight:500">{{ j.title }}</a> · Volume {{ a.vol }}, Issue {{ a.issue }}, pp. {{ a.pages }}</p>
+    <h1 style="margin:10px 0 0;font-family:'Source Serif 4',Georgia,serif;font-size:34px;line-height:1.2;font-weight:600;color:#101B27;letter-spacing:-.01em;text-wrap:pretty;text-decoration:{{ titleDeco }};text-decoration-thickness:1px">{{ a.title }}</h1>
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:15px;color:#101B27">
+      <sc-for list="{{ authors }}" as="au" hint-placeholder-count="4">
+        <span style="display:inline-flex;align-items:baseline;gap:4px"><a href="{{ au.search }}" style="color:#101B27;font-weight:500" style-hover="color:var(--accent,#B4470F)">{{ au.name }}</a><sup style="font-size:11px;color:var(--muted,#505C68)">{{ au.sup }}</sup><sc-if value="{{ au.corr }}"><span title="Corresponding author" aria-label="Corresponding author" style="font-size:12px;color:var(--accent,#B4470F)">✉</span></sc-if><a href="https://orcid.org" aria-label="ORCID iD for {{ au.name }}" style="display:inline-flex;width:14px;height:14px;border-radius:50%;background:#5A8A1F;color:#fff;font-size:8px;font-weight:700;align-items:center;justify-content:center;text-decoration:none;transform:translateY(1px)">iD</a></span>
+      </sc-for>
+    </div>
+    <button onClick="{{ toggleAff }}" aria-expanded="{{ affExpanded }}" style="margin-top:10px;border:0;background:none;padding:0;color:var(--accent,#B4470F);font:inherit;font-size:13px;cursor:pointer">{{ affLabel }}</button>
+    <sc-if value="{{ affOpen }}">
+      <ol style="list-style:none;margin:10px 0 0;padding:12px 14px;background:var(--surface-2,#F5F6F7);border-radius:3px;font-size:13px;line-height:1.6;color:#1F2A36;display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ affs }}" as="af"><li><sup style="color:var(--muted,#505C68)">{{ af.k }}</sup> {{ af.t }}</li></sc-for>
+        <li style="margin-top:6px;color:#3C4854">✉ Corresponding author: <a href="mailto:a.okafor@example.ac.uk">a.okafor@example.ac.uk</a></li>
+      </ol>
+    </sc-if>
+    <dl style="margin:18px 0 0;padding:14px 0;border-top:1px solid var(--line,#DCE1E6);border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-wrap:wrap;gap:6px 24px;font-size:13px">
+      <sc-for list="{{ dates }}" as="d" hint-placeholder-count="4"><div style="display:flex;gap:6px"><dt style="color:var(--muted,#505C68)">{{ d.l }}</dt><dd style="margin:0;color:#1F2A36">{{ d.v }}</dd></div></sc-for>
+      <div style="display:flex;gap:6px;flex-basis:100%;align-items:center;flex-wrap:wrap"><dt style="color:var(--muted,#505C68)">DOI</dt><dd style="margin:0"><a href="#" style="font-family:'IBM Plex Mono',monospace;font-size:13px">https://doi.org/{{ a.doi }}</a></dd>
+        <span style="flex:1"></span>
+        <span style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line,#DCE1E6);border-radius:2px;padding:2px 8px;font-size:12px;color:#1F2A36"><span style="width:8px;height:8px;border-radius:50%;background:{{ crossColor }}"></span>CrossMark · {{ crossLabel }}</span>
+      </div>
+    </dl>
+
+    <section id="highlights" data-sec="1" style="scroll-margin-top:20px;margin-top:28px">
+      <h2 style="margin:0 0 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">Highlights</h2>
+      <ul style="margin:0;padding-left:20px;font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.65;color:#1F2A36">
+        <li>Camera-based rPPG estimated heart rate within 2.9 bpm of ECG at rest in 112 participants.</li>
+        <li>Error increased to 4.6 bpm during moderate exercise and was highest under low illumination.</li>
+        <li>rPPG is suitable as an adjunct to, not a replacement for, contact sensors in home programmes.</li>
+      </ul>
+    </section>
+
+    <section id="graphical" style="margin-top:28px">
+      <h2 style="margin:0 0 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">Graphical abstract</h2>
+      <button onClick="{{ openGA }}" aria-label="Enlarge graphical abstract" style="display:block;width:100%;aspect-ratio:16/7;border:1px solid var(--line,#DCE1E6);border-radius:2px;cursor:zoom-in;background:repeating-linear-gradient(135deg,var(--surface-2,#F5F6F7) 0 10px,var(--line-soft,#EEF1F4) 10px 20px);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">graphical abstract — study design and agreement summary</button>
+    </section>
+
+    <section id="abstract" data-sec="1" style="scroll-margin-top:20px;margin-top:32px">
+      <h2 style="margin:0 0 12px;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Abstract</h2>
+      <p style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.7;color:#1F2A36;text-wrap:pretty">{{ a.abstract }}</p>
+    </section>
+    <section id="keywords" data-sec="1" style="scroll-margin-top:20px;margin-top:24px">
+      <h2 style="margin:0 0 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">Keywords</h2>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ keywords }}" as="k"><li><a href="{{ k.href }}" style="display:inline-block;font-size:13px;padding:4px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:2px;color:#1F2A36" style-hover="border-color:var(--accent,#B4470F);color:var(--accent,#B4470F)">{{ k.t }}</a></li></sc-for>
+      </ul>
+    </section>
+
+    <sc-for list="{{ body }}" as="s" hint-placeholder-count="5">
+      <section id="{{ s.id }}" data-sec="1" style="scroll-margin-top:20px;margin-top:40px">
+        <h2 style="margin:0 0 14px;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27;display:flex;gap:12px"><span style="color:#6B7682;font-weight:400">{{ s.n }}</span>{{ s.h }}</h2>
+        <sc-for list="{{ s.blocks }}" as="b">
+          <sc-if value="{{ b.isP }}">
+            <p style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.7;color:#1F2A36;text-wrap:pretty">{{ b.t }}<sc-for list="{{ b.cites }}" as="c"> <button onClick="{{ c.open }}" aria-label="Reference {{ c.n }}" style="border:0;background:none;padding:0;color:var(--accent,#B4470F);font:inherit;font-family:'IBM Plex Sans',sans-serif;font-size:14px;cursor:pointer">[{{ c.n }}]</button></sc-for></p>
+          </sc-if>
+          <sc-if value="{{ b.isH3 }}">
+            <h3 style="margin:24px 0 10px;font-size:18px;font-weight:600;color:#101B27;display:flex;gap:10px"><span style="color:#6B7682;font-weight:400">{{ b.n }}</span>{{ b.t }}</h3>
+          </sc-if>
+          <sc-if value="{{ b.isEq }}">
+            <div style="display:flex;align-items:center;margin:8px 0 22px;padding:12px 0">
+              <span style="flex:1;text-align:center;font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:20px;color:#101B27">HR<sub style="font-size:13px">est</sub> = 60 · arg max<sub style="font-size:13px">f ∈ [0.7, 3.0]</sub> |S(f)|<sup style="font-size:13px">2</sup></span>
+              <span style="font-size:15px;color:var(--muted,#505C68)">(1)</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ b.isFig }}">
+            <figure id="fig1" style="margin:12px 0 28px;border-top:1px solid var(--line,#DCE1E6);border-bottom:1px solid var(--line,#DCE1E6);padding:16px 0">
+              <button onClick="{{ openFig }}" aria-label="Enlarge Figure 1" style="display:block;width:100%;aspect-ratio:16/9;border:1px solid var(--line,#DCE1E6);border-radius:2px;cursor:zoom-in;background:repeating-linear-gradient(135deg,var(--surface-2,#F5F6F7) 0 10px,var(--line-soft,#EEF1F4) 10px 20px);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">figure 1 — Bland–Altman plots, rest and exercise</button>
+              <figcaption style="margin-top:12px;font-size:14px;line-height:1.55;color:#1F2A36"><strong>Figure 1.</strong> Bland–Altman agreement between rPPG and ECG heart rate at rest (left) and during moderate exercise (right). Dashed lines show 95% limits of agreement.</figcaption>
+              <div style="display:flex;gap:16px;margin-top:8px;font-size:13px;font-weight:500"><button onClick="{{ openFig }}" style="border:0;background:none;padding:0;color:var(--accent,#B4470F);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Open in viewer</button><a href="#fig1">Download high-resolution image (PNG, 2.4 MB)</a></div>
+            </figure>
+          </sc-if>
+          <sc-if value="{{ b.isTable }}">
+            <div id="tab1" style="margin:12px 0 28px">
+              <p style="margin:0 0 8px;font-size:14px;line-height:1.5;color:#1F2A36"><strong>Table 1.</strong> Agreement between rPPG and ECG by condition (n = 112).</p>
+              <div style="overflow-x:auto;border-top:2px solid #101B27;border-bottom:2px solid #101B27">
+                <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:520px;font-variant-numeric:tabular-nums">
+                  <thead><tr>
+                    <th scope="col" style="text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line-strong,#B9C1C9);font-weight:600">Condition</th>
+                    <th scope="col" style="text-align:right;padding:9px 12px;border-bottom:1px solid var(--line-strong,#B9C1C9);font-weight:600">MAE (bpm)</th>
+                    <th scope="col" style="text-align:right;padding:9px 12px;border-bottom:1px solid var(--line-strong,#B9C1C9);font-weight:600">Bias (bpm)</th>
+                    <th scope="col" style="text-align:right;padding:9px 12px;border-bottom:1px solid var(--line-strong,#B9C1C9);font-weight:600">95% LoA</th>
+                    <th scope="col" style="text-align:right;padding:9px 0 9px 12px;border-bottom:1px solid var(--line-strong,#B9C1C9);font-weight:600">ICC</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid var(--line-soft,#EEF1F4)">Rest</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">2.9</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">−0.4</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">−7.1 to 6.3</td><td style="text-align:right;padding:8px 0 8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">0.94</td></tr>
+                    <tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid var(--line-soft,#EEF1F4)">Moderate exercise</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">4.6</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">−1.8</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">−12.6 to 9.0</td><td style="text-align:right;padding:8px 0 8px 12px;border-bottom:1px solid var(--line-soft,#EEF1F4)">0.86</td></tr>
+                    <tr><td style="padding:8px 12px 8px 0">Low illumination (&lt;100 lx)</td><td style="text-align:right;padding:8px 12px">7.2</td><td style="text-align:right;padding:8px 12px">−3.1</td><td style="text-align:right;padding:8px 12px">−19.4 to 13.2</td><td style="text-align:right;padding:8px 0 8px 12px">0.71</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="margin:8px 0 0;font-size:12px;color:var(--muted,#505C68)">MAE, mean absolute error; LoA, limits of agreement; ICC, intraclass correlation coefficient. <a href="#tab1">Download table (CSV)</a></p>
+            </div>
+          </sc-if>
+        </sc-for>
+      </section>
+    </sc-for>
+
+    <section id="declarations" data-sec="1" style="scroll-margin-top:20px;margin-top:48px;border-top:2px solid #101B27;padding-top:20px">
+      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Declarations</h2>
+      <dl style="margin:0;display:flex;flex-direction:column">
+        <sc-for list="{{ decl }}" as="d" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line,#DCE1E6)">
+            <dt style="font-size:14px;font-weight:600;color:#101B27">{{ d.h }}</dt>
+            <dd style="margin:0;font-size:14px;line-height:1.6;color:#1F2A36">{{ d.t }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+    </section>
+
+    <section id="supplementary" style="margin-top:36px">
+      <h2 style="margin:0 0 12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">Supplementary material</h2>
+      <sc-for list="{{ supp }}" as="f">
+        <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--line,#DCE1E6)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 6px;border:1px solid var(--line-strong,#B9C1C9);border-radius:2px;width:40px;text-align:center">{{ f.ext }}</span>
+          <span style="flex:1;font-size:14px;color:#101B27">{{ f.name }}</span>
+          <span style="font-size:12px;color:var(--muted,#505C68)">{{ f.size }}</span>
+          <a href="#supplementary" style="font-size:13px;font-weight:500">Download</a>
+        </div>
+      </sc-for>
+    </section>
+
+    <section id="cite" style="margin-top:36px;background:var(--surface-2,#F5F6F7);border-radius:3px;padding:18px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">How to cite</h2><button onClick="{{ copyPlain }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer">{{ plainCopyLabel }}</button></div>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:#1F2A36">{{ plainCite }}</p>
+    </section>
+
+    <section id="references" data-sec="1" style="scroll-margin-top:20px;margin-top:40px">
+      <h2 style="margin:0 0 12px;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">References</h2>
+      <ol style="list-style:none;margin:0;padding:0">
+        <sc-for list="{{ refs }}" as="r" hint-placeholder-count="8">
+          <li id="{{ r.id }}" style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:8px;padding:10px 8px;border-bottom:1px solid var(--line-soft,#EEF1F4);font-size:14px;line-height:1.55;background:{{ r.bg }};scroll-margin-top:20px">
+            <span style="color:var(--muted,#505C68);font-variant-numeric:tabular-nums">{{ r.n }}.</span>
+            <div><span style="color:#1F2A36">{{ r.t }}</span><div style="display:flex;gap:14px;margin-top:4px;font-size:12px;font-weight:500"><a href="#">Crossref</a><a href="#">Google Scholar</a></div></div>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+
+    <section style="margin-top:40px">
+      <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27">Related articles</h2>
+      <sc-for list="{{ related }}" as="r">
+        <div style="padding:14px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:4px">
+          <a href="{{ r.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:16px;font-weight:600;color:#101B27;line-height:1.4">{{ r.title }}</a>
+          <span style="font-size:13px;color:var(--muted,#505C68)">{{ r.authorLine }} · <em>{{ r.code }}</em> · {{ r.date }}</span>
+        </div>
+      </sc-for>
+    </section>
+  </main>
+
+  <aside aria-label="Article actions" style="width:250px;flex-shrink:0;position:sticky;top:16px;display:flex;flex-direction:column;gap:10px">
+    <sc-if value="{{ pdf }}" hint-placeholder-val="{{ true }}">
+      <a href="#" style="background:var(--brand,#263238);color:#fff;padding:10px 14px;border-radius:3px;font-size:14px;font-weight:500;text-align:center;text-decoration:none">View PDF</a>
+      <a href="#" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:9px 14px;border-radius:3px;font-size:14px;font-weight:500;text-align:center;text-decoration:none">Download PDF · 1.2 MB</a>
+    </sc-if>
+    <sc-if value="{{ noPdf }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px solid var(--line,#DCE1E6);background:var(--surface-2,#F5F6F7);border-radius:3px;padding:12px 14px;font-size:13px;line-height:1.5;color:#1F2A36">The PDF for this article is being prepared. The full text above is the version of record.</div>
+    </sc-if>
+    <div style="position:relative">
+      <button onClick="{{ toggleCite }}" aria-expanded="{{ citeExpanded }}" aria-haspopup="dialog" style="width:100%;border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);color:#101B27;padding:9px 14px;border-radius:3px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between">Cite this article<span aria-hidden="true" style="font-size:10px;color:var(--muted,#505C68)">▼</span></button>
+      <sc-if value="{{ citeOpen }}">
+        <div role="dialog" aria-label="Export citation" style="transform-origin:top right;animation:ngiqDrop .22s ease both;position:absolute;right:0;top:calc(100% + 4px);width:340px;background:var(--surface,#fff);border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;box-shadow:0 8px 24px rgba(16,27,39,.12);z-index:20;padding:14px">
+          <div role="tablist" style="display:flex;gap:4px;border-bottom:1px solid var(--line,#DCE1E6);margin-bottom:10px">
+            <sc-for list="{{ citeTabs }}" as="ct"><button role="tab" aria-selected="{{ ct.sel }}" onClick="{{ ct.pick }}" style="border:0;background:none;padding:6px 8px;font:inherit;font-size:13px;cursor:pointer;font-weight:{{ ct.weight }};border-bottom:2px solid {{ ct.bar }};color:#101B27">{{ ct.label }}</button></sc-for>
+          </div>
+          <pre style="margin:0;max-height:180px;overflow:auto;background:var(--surface-2,#F5F6F7);padding:10px;border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;white-space:pre-wrap;word-break:break-word">{{ citeText }}</pre>
+          <div style="display:flex;gap:8px;margin-top:10px"><button onClick="{{ copyCite }}" style="flex:1;border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:8px;font:inherit;font-size:13px;cursor:pointer">{{ copyLabel }}</button><button onClick="{{ toggleCite }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer">Close</button></div>
+          <span aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden">{{ copyLive }}</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button onClick="{{ share }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);padding:8px;border-radius:3px;font:inherit;font-size:13px;cursor:pointer">{{ shareLabel }}</button>
+      <button onClick="{{ print }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);padding:8px;border-radius:3px;font:inherit;font-size:13px;cursor:pointer">Print</button>
+    </div>
+    <a id="rights" href="{{ licenseHref }}" style="font-size:13px;padding:4px 0">Rights and permissions</a>
+    <div style="border-top:1px solid var(--line,#DCE1E6);padding-top:14px;margin-top:4px">
+      <span style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600;margin-bottom:10px">Metrics</span>
+      <dl style="margin:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3"><div style="display:flex;flex-direction:column"><dd style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#101B27;font-variant-numeric:tabular-nums">{{ m.v }}</dd><dt style="font-size:12px;color:var(--muted,#505C68);order:2">{{ m.l }}</dt></div></sc-for>
+      </dl>
+    </div>
+    <div style="border-top:1px solid var(--line,#DCE1E6);padding-top:14px;margin-top:4px;font-size:13px;line-height:1.5;color:#3C4854">This article is licensed under <a href="{{ licenseHref }}">CC BY 4.0</a>. You may share and adapt it with attribution.</div>
+  </aside>
+</div>
+
+<sc-if value="{{ refPop }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Reference" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);width:min(560px,calc(100vw - 32px));background:var(--surface,#fff);border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;box-shadow:0 8px 24px rgba(16,27,39,.16);padding:16px 18px;z-index:40;font-size:14px;line-height:1.55">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><strong>Reference {{ popRef.n }}</strong><button onClick="{{ closePop }}" aria-label="Close" style="border:0;background:none;font-size:18px;cursor:pointer;color:#3C4854">×</button></div>
+    <p style="margin:0 0 10px">{{ popRef.t }}</p>
+    <div style="display:flex;gap:16px;font-size:13px;font-weight:500"><a href="{{ popRef.href }}" onClick="{{ closePop }}">Go to reference list</a><a href="#">Crossref</a><a href="#">Google Scholar</a></div>
+  </div>
+</sc-if>
+<sc-if value="{{ lightbox }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="Figure viewer" style="animation:ngiqFadeA .25s ease both;position:fixed;inset:0;background:rgba(10,18,27,.86);z-index:50;display:flex;flex-direction:column;padding:24px;box-sizing:border-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:12px"><span style="font-size:14px">{{ lbTitle }}</span><button onClick="{{ closeLb }}" style="border:1px solid #6F88A1;background:transparent;color:#fff;border-radius:3px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer">Close (Esc)</button></div>
+    <div style="animation:ngiqZoom .4s cubic-bezier(.2,.7,.2,1) both;flex:1;background:repeating-linear-gradient(135deg,var(--surface-2,#F5F6F7) 0 10px,var(--line-soft,#EEF1F4) 10px 20px);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted,#505C68)">{{ lbTitle }} — full resolution</div>
+    <p style="color:#E3E9EF;font-size:14px;line-height:1.55;max-width:80ch;margin:12px 0 0">{{ lbCaption }}</p>
+  </div>
+</sc-if>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;retracted&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Article state&quot;},&quot;pdfAvailable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Article state&quot;}}">
+class Component extends DCLogic {
+  state = { active: 'highlights', aff: false, cite: false, fmt: 'bibtex', copied: false, plainCopied: false, shared: false, pop: null, lb: null };
+  componentDidMount() {
+    if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); }
+    this.onScroll = () => { const els = Array.from(document.querySelectorAll('[data-sec]')); let cur = els[0] && els[0].id; for (const el of els) if (el.getBoundingClientRect().top < 140) cur = el.id; if (cur && cur !== this.state.active) this.setState({ active: cur }); };
+    this.onKey = e => { if (e.key === 'Escape') this.setState({ lb: null, cite: false, pop: null }); };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('keydown', this.onKey); }
+  copy(text, key) { try { navigator.clipboard.writeText(text); } catch (e) {} this.setState({ [key]: true }); setTimeout(() => this.setState({ [key]: false }), 2000); }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return { a: {}, j: {}, toc: [], authors: [], body: [], refs: [], popRef: {} };
+    const a = D.articles.find(x => x.id === D.param('id')) || D.articles[0];
+    const j = D.journal(a.j);
+    document.title = a.title + ' — ' + j.code;
+    const retracted = !!this.props.retracted;
+    const pdf = this.props.pdfAvailable !== false;
+    const sups = ['a', 'a,b', 'c', 'b', 'c', 'a'];
+    const authors = a.authors.map((n, i) => ({ name: n, sup: sups[i % sups.length], corr: i === 0, search: 'Search.dc.html?q=' + encodeURIComponent(n) }));
+    const refsRaw = [
+      'Verkruysse W, Svaasand LO, Nelson JS. Remote plethysmographic imaging using ambient light. Opt Express. 2008;16(26):21434–45.',
+      'Poh MZ, McDuff DJ, Picard RW. Non-contact, automated cardiac pulse measurements using video imaging and blind source separation. Opt Express. 2010;18(10):10762–74.',
+      'Wang W, den Brinker AC, Stuijk S, de Haan G. Algorithmic principles of remote PPG. IEEE Trans Biomed Eng. 2017;64(7):1479–91.',
+      'Anderson L, Sharp GA, Norton RJ, et al. Home-based versus centre-based cardiac rehabilitation. Cochrane Database Syst Rev. 2017;6:CD007130.',
+      'de Haan G, Jeanne V. Robust pulse rate from chrominance-based rPPG. IEEE Trans Biomed Eng. 2013;60(10):2878–86.',
+      'Bland JM, Altman DG. Statistical methods for assessing agreement between two methods of clinical measurement. Lancet. 1986;327(8476):307–10.',
+      'McDuff D. Camera measurement of physiological vital signs. ACM Comput Surv. 2023;55(9):1–40.',
+      'Nowara EM, McDuff D, Veeraraghavan A. A meta-analysis of the impact of skin tone and gender on non-contact photoplethysmography measurements. CVPR Workshops. 2020:284–5.'
+    ];
+    const pop = this.state.pop;
+    const refs = refsRaw.map((t, i) => ({ id: 'ref' + (i + 1), n: i + 1, t, bg: pop === i + 1 ? '#FFF8E1' : 'transparent' }));
+    const C = (...ns) => ns.map(n => ({ n, open: () => this.setState({ pop: n }) }));
+    const P = (t, ...c) => ({ isP: true, t, cites: C(...c) });
+    const body = [
+      { id: 'sec1', n: '1', h: 'Introduction', blocks: [P('Remote photoplethysmography estimates the blood-volume pulse from subtle colour changes in facial skin captured by an ordinary camera.', 1, 2), P('Home-based cardiac rehabilitation achieves outcomes comparable to centre-based programmes, but monitoring of exercise intensity remains a barrier to adherence.', 4), P('We assessed whether a consumer-grade camera pipeline could provide clinically acceptable heart-rate estimates during real home sessions.')] },
+      { id: 'sec2', n: '2', h: 'Methods', blocks: [{ isH3: true, n: '2.1', t: 'Participants' }, P('We recruited 112 adults enrolled in a 12-week home-based cardiac rehabilitation programme at two hospitals. Ethics approval and informed consent are described in the Declarations.'), { isH3: true, n: '2.2', t: 'Signal processing' }, P('Face regions were tracked at 30 frames per second and the chrominance signal was band-pass filtered between 0.7 and 3.0 Hz. Heart rate was estimated from the dominant spectral peak (Equation 1).', 3, 5), { isEq: true }, P('Agreement with simultaneous single-lead ECG was assessed with Bland–Altman analysis and intraclass correlation.', 6)] },
+      { id: 'sec3', n: '3', h: 'Results', blocks: [P('Agreement was high at rest and declined during exercise and under low illumination (Table 1; Figure 1).'), { isTable: true }, { isFig: true }] },
+      { id: 'sec4', n: '4', h: 'Discussion', blocks: [P('Our error at rest is consistent with laboratory studies, but exercise and lighting effects were larger than previously reported.', 7), P('Performance did not differ significantly by Fitzpatrick skin type in this sample, although the study was not powered to detect small differences.', 8)] },
+      { id: 'sec5', n: '5', h: 'Conclusions', blocks: [P('Camera-based heart-rate monitoring is accurate enough to support, but not replace, contact sensors in home-based cardiac rehabilitation.')] }
+    ].map(s => Object.assign(s, { blocks: s.blocks.map(b => Object.assign({ isP: false, isH3: false, isEq: false, isFig: false, isTable: false, cites: [] }, b)) }));
+    const act = this.state.active;
+    const toc = [['highlights', 'Highlights'], ['abstract', 'Abstract'], ['keywords', 'Keywords']].concat(body.map(s => [s.id, s.n + '  ' + s.h])).concat([['declarations', 'Declarations'], ['references', 'References'], ['fig1', 'Figure 1'], ['tab1', 'Table 1']])
+      .map(([id, label]) => ({ href: '#' + id, label, bar: id === act ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', fg: id === act ? '#101B27' : '#3C4854', weight: id === act ? 600 : 400 }));
+    const last = n => n.split(' ').slice(-1)[0];
+    const plainCite = a.authors.map(n => last(n) + ' ' + n.split(' ').slice(0, -1).map(x => x[0]).join('')).join(', ') + '. ' + a.title + '. ' + j.title + '. ' + a.year + ';' + a.vol + '(' + a.issue + '):' + a.pages + '. https://doi.org/' + a.doi;
+    const formats = {
+      bibtex: '@article{' + last(a.authors[0]).toLowerCase() + a.year + ',\n  title = {' + a.title + '},\n  author = {' + a.authors.map(n => last(n) + ', ' + n.split(' ').slice(0, -1).join(' ')).join(' and ') + '},\n  journal = {' + j.title + '},\n  volume = {' + a.vol + '},\n  number = {' + a.issue + '},\n  pages = {' + a.pages.replace('–', '--') + '},\n  year = {' + a.year + '},\n  doi = {' + a.doi + '}\n}',
+      ris: 'TY  - JOUR\n' + a.authors.map(n => 'AU  - ' + last(n) + ', ' + n.split(' ').slice(0, -1).join(' ')).join('\n') + '\nTI  - ' + a.title + '\nJO  - ' + j.title + '\nVL  - ' + a.vol + '\nIS  - ' + a.issue + '\nSP  - ' + a.pages.split('–')[0] + '\nEP  - ' + a.pages.split('–')[1] + '\nPY  - ' + a.year + '\nDO  - ' + a.doi + '\nER  - ',
+      endnote: '%0 Journal Article\n' + a.authors.map(n => '%A ' + last(n) + ', ' + n.split(' ').slice(0, -1).join(' ')).join('\n') + '\n%T ' + a.title + '\n%J ' + j.title + '\n%V ' + a.vol + '\n%N ' + a.issue + '\n%P ' + a.pages + '\n%D ' + a.year + '\n%R ' + a.doi,
+      plain: plainCite
+    };
+    const fmt = this.state.fmt;
+    const lbData = this.state.lb === 'ga' ? ['Graphical abstract', 'Study design: 112 participants, home sessions recorded simultaneously with camera and ECG; summary of agreement by condition.'] : ['Figure 1', 'Bland–Altman agreement between rPPG and ECG heart rate at rest (left) and during moderate exercise (right). Dashed lines show 95% limits of agreement.'];
+    return {
+      a, j, retracted, pdf, noPdf: !pdf, titleDeco: retracted ? 'line-through' : 'none',
+      crossColor: retracted ? '#A52A2A' : '#1E6B3A', crossLabel: retracted ? 'Retracted' : 'Current version',
+      jHref: 'Journal.dc.html?j=' + j.slug, issueHref: 'Issue.dc.html?j=' + j.slug, licenseHref: 'JournalPage.dc.html?j=' + j.slug + '&p=copyright-licensing',
+      authors, toc, body, refs,
+      affOpen: this.state.aff, affExpanded: this.state.aff ? 'true' : 'false', affLabel: this.state.aff ? 'Hide affiliations' : 'Show affiliations and author information',
+      toggleAff: () => this.setState(s => ({ aff: !s.aff })),
+      affs: [{ k: 'a', t: 'Department of Cardiology, University Hospital Southampton, Southampton, United Kingdom' }, { k: 'b', t: 'School of Electronics and Computer Science, University of Southampton, Southampton, United Kingdom' }, { k: 'c', t: 'Institute of Biomedical Engineering, Technical University of Munich, Munich, Germany' }],
+      dates: [{ l: 'Received', v: '14 February 2026' }, { l: 'Revised', v: '2 April 2026' }, { l: 'Accepted', v: '20 May 2026' }, { l: 'Published', v: a.date }],
+      keywords: a.keywords.map(t => ({ t, href: 'Search.dc.html?q=' + encodeURIComponent(t) })),
+      decl: [
+        { h: 'Funding', t: 'National Institute for Health and Care Research, grant NIHR-204117. The funder had no role in study design, analysis or the decision to publish.' },
+        { h: 'Competing interests', t: 'The authors declare no competing interests.' },
+        { h: 'Ethics approval', t: 'Approved by the South Central Research Ethics Committee (ref. 25/SC/0142).' },
+        { h: 'Consent', t: 'All participants gave written informed consent, including consent for video recording.' },
+        { h: 'Data availability', t: 'De-identified heart-rate time series and analysis code are available at Zenodo (doi.org/10.5281/zenodo.0000000). Raw video is not shared to protect participant privacy.' },
+        { h: 'Author contributions', t: 'A.N.O.: conceptualisation, methodology, writing – original draft. D.R.-M.: software, formal analysis. L.H.: investigation, data curation. K.W.: supervision, writing – review and editing.' },
+        { h: 'Use of generative AI', t: 'No generative AI tools were used in the preparation of this article.' }
+      ],
+      supp: [{ ext: 'PDF', name: 'Supplementary methods and additional analyses', size: '840 KB' }, { ext: 'CSV', name: 'Per-participant agreement statistics', size: '56 KB' }, { ext: 'MP4', name: 'Example of region-of-interest tracking (de-identified)', size: '12.4 MB' }],
+      plainCite, plainCopyLabel: this.state.plainCopied ? 'Copied' : 'Copy', copyPlain: () => this.copy(plainCite, 'plainCopied'),
+      citeOpen: this.state.cite, citeExpanded: this.state.cite ? 'true' : 'false', toggleCite: () => this.setState(s => ({ cite: !s.cite })),
+      citeTabs: [['bibtex', 'BibTeX'], ['ris', 'RIS'], ['endnote', 'EndNote'], ['plain', 'Text']].map(([k, label]) => ({ label, sel: fmt === k ? 'true' : 'false', weight: fmt === k ? 600 : 400, bar: fmt === k ? 'var(--accent,#B4470F)' : 'transparent', pick: () => this.setState({ fmt: k, copied: false }) })),
+      citeText: formats[fmt], copyLabel: this.state.copied ? 'Copied to clipboard' : 'Copy citation', copyLive: this.state.copied ? 'Citation copied to clipboard' : '',
+      copyCite: () => this.copy(formats[fmt], 'copied'),
+      shareLabel: this.state.shared ? 'Link copied' : 'Share', share: () => this.copy(location.href, 'shared'), print: () => window.print(),
+      metrics: [{ v: a.views.toLocaleString('en-GB'), l: 'Views' }, { v: a.downloads.toLocaleString('en-GB'), l: 'Downloads' }, { v: a.citations, l: 'Citations' }],
+      related: D.articles.filter(x => x.id !== a.id).slice(0, 3).map(x => Object.assign({}, x, { href: 'Article.dc.html?id=' + x.id, code: D.journal(x.j).code, authorLine: D.authorsShort(x.authors) })),
+      refPop: !!pop, popRef: pop ? Object.assign({ href: '#ref' + pop }, refs[pop - 1]) : {}, closePop: () => this.setState({ pop: null }),
+      lightbox: !!this.state.lb, lbTitle: lbData[0], lbCaption: lbData[1], openFig: () => this.setState({ lb: 'fig' }), openGA: () => this.setState({ lb: 'ga' }), closeLb: () => this.setState({ lb: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

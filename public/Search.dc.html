@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Search — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="articles" hint-size="100%,150px"></dc-import>
+<main id="main-content" style="max-width:1280px;margin:0 auto;padding:20px 32px 0">
+  <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><span style="color:#1F2A36">Search</span></nav>
+  <div style="padding:16px 0 0;display:flex;flex-direction:column;gap:14px">
+    <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:#101B27">{{ heading }}</h1>
+    <form onSubmit="{{ onSubmit }}" role="search" style="display:flex;max-width:760px;border:1px solid #6B7682;border-radius:3px;overflow:hidden;height:44px">
+      <input aria-label="Search query" value="{{ q }}" onChange="{{ onQ }}" placeholder="Title, author, keyword or DOI" style="flex:1;border:0;padding:0 14px;font:inherit;font-size:15px;outline:none;min-width:0">
+      <button type="submit" style="border:0;background:var(--brand,#263238);color:#fff;padding:0 22px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">Search</button>
+    </form>
+  </div>
+  <div role="tablist" aria-label="Result type" style="display:flex;gap:4px;border-bottom:1px solid var(--line,#DCE1E6);margin-top:20px">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+      <button role="tab" aria-selected="{{ t.sel }}" onClick="{{ t.pick }}" style="border:0;background:transparent;padding:10px 14px 9px;font:inherit;font-size:14px;cursor:pointer;color:#101B27;font-weight:{{ t.weight }};border-bottom:3px solid {{ t.bar }}">{{ t.label }} <span style="color:var(--muted,#505C68);font-weight:400">({{ t.n }})</span></button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ isArticles }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;padding-top:24px">
+      <aside aria-label="Filters" style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:2px solid #101B27">
+          <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27">Refine results</h2>
+          <sc-if value="{{ anyFilter }}"><button onClick="{{ clearAll }}" style="border:0;background:none;color:var(--accent,#B4470F);font:inherit;font-size:13px;cursor:pointer;padding:0">Clear all</button></sc-if>
+        </div>
+        <sc-for list="{{ facets }}" as="f" hint-placeholder-count="4">
+          <fieldset style="border:0;border-bottom:1px solid var(--line,#DCE1E6);margin:0;padding:14px 0">
+            <legend style="font-size:14px;font-weight:600;color:#101B27;padding:0;margin-bottom:8px;float:left;width:100%">{{ f.label }}</legend>
+            <div style="clear:both;display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ f.opts }}" as="o">
+                <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#1F2A36;padding:4px 0;cursor:pointer">
+                  <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.toggle }}" style="width:16px;height:16px;accent-color:var(--accent,#B4470F);margin:0">
+                  <span style="flex:1">{{ o.label }}</span>
+                  <span style="font-size:12px;color:var(--muted,#505C68);font-variant-numeric:tabular-nums">{{ o.n }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+        </sc-for>
+      </aside>
+      <div style="min-width:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--line-strong,#B9C1C9)">
+          <span aria-live="polite" style="font-size:14px;color:#1F2A36"><strong>{{ resultCount }}</strong> {{ resultWord }}</span>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#3C4854">Sort by
+            <select value="{{ sort }}" onChange="{{ onSort }}" style="font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)">
+              <option value="rel">Relevance</option><option value="new">Newest first</option><option value="cited">Most cited</option><option value="read">Most read</option>
+            </select>
+          </label>
+        </div>
+        <sc-if value="{{ anyFilter }}">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 0">
+            <sc-for list="{{ chips }}" as="c">
+              <button onClick="{{ c.remove }}" aria-label="Remove filter {{ c.label }}" style="display:flex;align-items:center;gap:6px;padding:4px 8px 4px 10px;border:1px solid var(--accent,#B4470F);background:var(--accent-soft,#FBEDE5);color:var(--accent-dark,#91390C);border-radius:2px;font:inherit;font-size:13px;cursor:pointer">{{ c.label }}<span aria-hidden="true" style="font-size:15px;line-height:1">×</span></button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-for list="{{ results }}" as="a" hint-placeholder-count="5">
+          <article style="padding:20px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;gap:10px;align-items:center;font-size:12px;flex-wrap:wrap">
+              <span style="font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em">{{ a.type }}</span>
+              <span style="color:#6E4600;font-weight:500">● Open access</span>
+            </div>
+            <a href="{{ a.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;line-height:1.35;color:#101B27;font-weight:600;text-wrap:pretty" style-hover="color:var(--accent,#B4470F)">{{ a.title }}</a>
+            <span style="font-size:14px;color:#1F2A36">{{ a.authorLine }}</span>
+            <span style="font-size:13px;color:var(--muted,#505C68)"><em style="color:#1F2A36">{{ a.jTitle }}</em> · Vol. {{ a.vol }}, Issue {{ a.issue }}, pp. {{ a.pages }} · Published {{ a.date }}</span>
+            <p style="margin:2px 0 0;font-size:14px;line-height:1.55;color:#3C4854;max-width:80ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ a.abstract }}</p>
+            <div style="display:flex;gap:18px;font-size:13px;font-weight:500;margin-top:4px;flex-wrap:wrap;align-items:center">
+              <a href="{{ a.href }}">Full text</a><a href="{{ a.href }}">PDF (1.2 MB)</a><a href="{{ a.href }}">Abstract</a>
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:12px;color:var(--muted,#505C68)">https://doi.org/{{ a.doi }}</span>
+            </div>
+          </article>
+        </sc-for>
+        <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px 0;max-width:62ch;display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:#101B27">{{ emptyTitle }}</h2>
+            <p style="margin:0;font-size:15px;line-height:1.6;color:#1F2A36">{{ emptyBody }}</p>
+            <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#1F2A36">
+              <li><button onClick="{{ toJournals }}" style="border:0;background:none;padding:0;color:var(--accent,#B4470F);font:inherit;cursor:pointer">See {{ nJournals }} matching journals</button></li>
+              <li><button onClick="{{ toPages }}" style="border:0;background:none;padding:0;color:var(--accent,#B4470F);font:inherit;cursor:pointer">See {{ nPages }} matching author-guidance pages</button></li>
+              <li><a href="Authors.dc.html#cfp">Browse open calls for papers</a></li>
+            </ul>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasResults }}">
+          <nav aria-label="Pagination" style="display:flex;gap:6px;align-items:center;padding:24px 0;font-size:14px">
+            <span style="padding:6px 10px;color:#6B7682">Previous</span>
+            <span aria-current="page" style="padding:6px 11px;border:1px solid #101B27;border-radius:2px;font-weight:600">1</span>
+            <span style="padding:6px 10px;color:#6B7682">Next</span>
+            <span style="margin-left:auto;font-size:13px;color:var(--muted,#505C68)">Showing 1–{{ resultCount }} of {{ resultCount }}</span>
+          </nav>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isJournals }}" hint-placeholder-val="{{ false }}">
+    <div style="padding-top:8px;max-width:900px">
+      <sc-for list="{{ journalResults }}" as="j">
+        <div style="display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line,#DCE1E6)">
+          <div style="width:52px;height:70px;flex-shrink:0;background:var(--brand,#263238);border-top:3px solid {{ j.color }};border-radius:2px;display:flex;align-items:flex-end;padding:5px;box-sizing:border-box;color:#fff;font-family:'Source Serif 4',Georgia,serif;font-size:11px;font-weight:600">{{ j.code }}</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <a href="{{ j.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27">{{ j.title }}</a>
+            <span style="font-size:13px;color:var(--muted,#505C68)">{{ j.subject }} · ISSN applied for · Open access</span>
+            <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4854">{{ j.scope }}</p>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noJournals }}"><p style="padding:32px 0;font-size:15px;color:#1F2A36">No journal titles or scopes match this search. <a href="Journals.dc.html">Browse all ten journals</a>.</p></sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPages }}" hint-placeholder-val="{{ false }}">
+    <div style="padding-top:8px;max-width:900px">
+      <sc-for list="{{ pageResults }}" as="p">
+        <div style="padding:16px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:12px;color:var(--muted,#505C68);text-transform:uppercase;letter-spacing:.05em;font-weight:600">{{ p.group }}</span>
+          <a href="{{ p.href }}" style="font-size:17px;font-weight:600;color:#101B27">{{ p.title }}</a>
+          <span style="font-size:14px;line-height:1.55;color:#3C4854">{{ p.snippet }}</span>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noPages }}"><p style="padding:32px 0;font-size:15px;color:#1F2A36">No author-guidance pages match this search. <a href="Authors.dc.html">Go to For Authors</a>.</p></sc-if>
+    </div>
+  </sc-if>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const sp = new URLSearchParams(location.search);
+    const scope = sp.get('scope');
+    this.state = { q: sp.get('q') || '', applied: sp.get('q') || '', tab: scope === 'journals' ? 'journals' : scope === 'pages' ? 'pages' : 'articles', sort: 'rel', f: { journal: sp.get('j') ? [sp.get('j')] : [], type: [], year: [], access: [] } };
+  }
+  componentDidMount() { if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+  toggle(k, v) { this.setState(s => { const cur = s.f[k]; const nx = cur.includes(v) ? cur.filter(x => x !== v) : cur.concat(v); return { f: Object.assign({}, s.f, { [k]: nx }) }; }); }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return { tabs: [], facets: [], results: [] };
+    const mature = D.isMature();
+    const { applied, tab, sort, f } = this.state;
+    const ql = applied.trim().toLowerCase();
+    const match = s => !ql || ql.split(/\s+/).every(w => s.toLowerCase().includes(w));
+    const base = (mature ? D.articles : []).map(a => { const j = D.journal(a.j); return Object.assign({}, a, { jTitle: j.title, code: j.code, href: 'Article.dc.html?id=' + a.id, authorLine: D.authorsShort(a.authors) }); })
+      .filter(a => match([a.title, a.abstract, a.keywords.join(' '), a.authors.join(' '), a.doi, a.jTitle].join(' ')));
+    const pass = (a, skip) => (skip === 'journal' || !f.journal.length || f.journal.includes(a.j)) && (skip === 'type' || !f.type.length || f.type.includes(a.type)) && (skip === 'year' || !f.year.length || f.year.includes(String(a.year))) && (skip === 'access' || !f.access.length || f.access.includes(a.access));
+    let results = base.filter(a => pass(a));
+    if (sort === 'new') results.sort((a, b) => b.doi.localeCompare(a.doi));
+    if (sort === 'cited') results.sort((a, b) => b.citations - a.citations);
+    if (sort === 'read') results.sort((a, b) => b.views - a.views);
+    const mk = (key, label, all, lab) => ({ label, opts: all.map(v => ({ v, label: lab ? lab(v) : v, n: base.filter(a => pass(a, key) && String(key === 'journal' ? a.j : key === 'year' ? a.year : a[key]) === v).length, on: f[key].includes(v), toggle: () => this.toggle(key, v) })).filter(o => o.n > 0 || o.on || !mature) });
+    const facets = [
+      mk('journal', 'Journal', D.journals.map(j => j.slug), v => D.journal(v).code + ' · ' + D.journal(v).subject),
+      mk('type', 'Article type', ['Research Article', 'Review', 'Short Communication', 'Case Study', 'Perspective', 'Editorial']),
+      mk('year', 'Year', ['2026']),
+      mk('access', 'Access', ['Open access'])
+    ];
+    const chips = [].concat(...Object.keys(f).map(k => f[k].map(v => ({ label: k === 'journal' ? D.journal(v).code : v, remove: () => this.toggle(k, v) }))));
+    const journalResults = D.journals.filter(j => match(j.title + ' ' + j.scope + ' ' + j.subject + ' ' + j.code)).map(j => Object.assign({}, j, { href: 'Journal.dc.html?j=' + j.slug }));
+    const pj = D.journal(f.journal[0]);
+    const pageResults = D.pageGroups.flatMap(g => g.items.map(([id, title]) => { const bl = D.pageBlocks(id, pj); const text = bl.map(b => b.p.join(' ') + ' ' + b.ul.join(' ')).join(' '); return { group: g.group, title, href: D.pageHref(id, pj.slug), text, snippet: (bl[0] && bl[0].p[0]) || '' }; })).filter(p => match(p.title + ' ' + p.text));
+    const tabDef = [['articles', 'Articles', results.length], ['journals', 'Journals', journalResults.length], ['pages', 'Author guidance', pageResults.length]];
+    return {
+      q: this.state.q, sort,
+      heading: applied ? 'Results for “' + applied + '”' : 'Search all content',
+      onQ: e => this.setState({ q: e.target.value }),
+      onSubmit: e => { e.preventDefault(); this.setState({ applied: this.state.q }); },
+      onSort: e => this.setState({ sort: e.target.value }),
+      tabs: tabDef.map(([k, label, n]) => ({ label, n, sel: tab === k ? 'true' : 'false', weight: tab === k ? 600 : 500, bar: tab === k ? 'var(--accent,#B4470F)' : 'transparent', pick: () => this.setState({ tab: k }) })),
+      isArticles: tab === 'articles', isJournals: tab === 'journals', isPages: tab === 'pages',
+      facets, chips, anyFilter: chips.length > 0, clearAll: () => this.setState({ f: { journal: [], type: [], year: [], access: [] } }),
+      results, resultCount: results.length, resultWord: results.length === 1 ? 'article' : 'articles',
+      hasResults: results.length > 0, noResults: results.length === 0,
+      emptyTitle: mature ? 'No articles match your search' : 'No published articles yet match this search',
+      emptyBody: mature ? 'Check the spelling, use fewer keywords, or remove a filter.' : 'NextGenIQ Press journals opened for submissions in 2026, and articles will be searchable here from the day they are published. Journals and author guidance matching your search are listed in the other tabs.',
+      nJournals: journalResults.length, nPages: pageResults.length,
+      toJournals: () => this.setState({ tab: 'journals' }), toPages: () => this.setState({ tab: 'pages' }),
+      journalResults, noJournals: journalResults.length === 0,
+      pageResults: pageResults.slice(0, 22), noPages: pageResults.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>

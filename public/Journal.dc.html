@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Journal — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="journals" hint-size="100%,150px"></dc-import>
+<dc-import name="JournalMasthead" tab="home" hint-size="100%,420px"></dc-import>
+<main id="main-content" style="max-width:1280px;margin:0 auto;padding:40px 32px 0;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:48px;min-width:0">
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Aims and scope</h2>
+      <p style="margin:0;font-size:16px;line-height:1.7;color:#1F2A36;max-width:68ch;text-wrap:pretty">{{ j.title }} publishes rigorous, reproducible research in {{ subjLower }}. The journal considers original research articles, reviews, short communications, case studies and perspectives on topics including:</p>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px;max-width:72ch">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="6">
+          <li style="font-size:13px;padding:4px 10px;border:1px solid var(--line,#DCE1E6);border-radius:2px;color:#1F2A36;background:var(--surface-3,#FAFBFB)">{{ t }}</li>
+        </sc-for>
+      </ul>
+      <a href="{{ scopeHref }}" style="font-size:14px;font-weight:500">Read the full aims and scope</a>
+    </section>
+
+    <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+      <section>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #101B27;padding-bottom:10px">
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Latest articles</h2>
+          <a href="{{ searchHref }}" style="font-size:14px">All articles in {{ j.code }}</a>
+        </div>
+        <sc-for list="{{ latest }}" as="a" hint-placeholder-count="4">
+          <article style="padding:18px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;gap:10px;font-size:12px"><span style="font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em">{{ a.type }}</span><span style="color:#6E4600;font-weight:500">● Open access</span></div>
+            <a href="{{ a.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.35;color:#101B27;font-weight:600">{{ a.title }}</a>
+            <span style="font-size:14px">{{ a.authorLine }}</span>
+            <span style="font-size:13px;color:var(--muted,#505C68)">Vol. {{ a.vol }}, Issue {{ a.issue }}, pp. {{ a.pages }} · {{ a.date }} · <span style="font-family:'IBM Plex Mono',monospace;font-size:12px">doi.org/{{ a.doi }}</span></span>
+          </article>
+        </sc-for>
+        <div style="margin-top:24px;display:flex;gap:20px;border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:20px;align-items:center;flex-wrap:wrap">
+          <div style="width:64px;height:86px;background:var(--brand,#263238);border-top:4px solid {{ j.color }};border-radius:2px;display:flex;align-items:flex-end;padding:6px;box-sizing:border-box;color:#fff;font-family:'Source Serif 4',Georgia,serif;font-size:12px;font-weight:600">{{ j.code }}</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:200px">
+            <span style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#505C68)">Current issue</span>
+            <span style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27">Volume 1, Issue 2 · June 2026</span>
+            <span style="font-size:13px;color:var(--muted,#505C68)">14 articles · Editorial, Research Articles, Reviews</span>
+          </div>
+          <a href="{{ issueHref }}" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:9px 16px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">View issue</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
+      <section>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #101B27;padding-bottom:10px">
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Now accepting submissions for Volume 1</h2>
+          <a href="{{ cfpHref }}" style="font-size:14px">Call for papers</a>
+        </div>
+        <p style="margin:16px 0 0;font-size:15px;line-height:1.65;color:#1F2A36;max-width:68ch">Articles are published online as soon as they are accepted and typeset, and are assigned to Volume 1 (2026). The first articles will appear here and in the <a href="{{ issueHref }}">current issue</a> on publication.</p>
+        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:1px solid var(--line,#DCE1E6);border-radius:3px">
+          <sc-for list="{{ promises }}" as="p" hint-placeholder-count="3">
+            <div style="padding:18px 20px;border-right:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:13px;color:var(--muted,#505C68)">{{ p.l }}</span>
+              <span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#101B27">{{ p.v }}</span>
+              <span style="font-size:13px;color:#3C4854;line-height:1.45">{{ p.d }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasCall }}">
+          <div style="margin-top:20px;padding:18px 20px;border:1px solid var(--line,#DCE1E6);border-left:0;border-right:0;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;color:var(--muted,#505C68)"><span style="padding:1px 7px;border-radius:2px;font-weight:500;background:#E7F3EB;color:#1E6B3A">Thematic call</span> · Deadline {{ call.deadline }}</span>
+            <span style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27">{{ call.theme }}</span>
+            <span style="font-size:13px;color:var(--muted,#505C68)">Guest editor: {{ call.guest }}</span>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <section>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #101B27;padding-bottom:10px">
+        <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:#101B27">Article types</h2>
+        <a href="{{ typesHref }}" style="font-size:14px">Full requirements</a>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:560px">
+          <thead><tr>
+            <th scope="col" style="text-align:left;padding:10px 12px 10px 0;font-size:12px;color:var(--muted,#505C68);font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line-strong,#B9C1C9)">Type</th>
+            <th scope="col" style="text-align:left;padding:10px 12px;font-size:12px;color:var(--muted,#505C68);font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line-strong,#B9C1C9)">Words</th>
+            <th scope="col" style="text-align:left;padding:10px 12px;font-size:12px;color:var(--muted,#505C68);font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line-strong,#B9C1C9)">Abstract</th>
+            <th scope="col" style="text-align:left;padding:10px 0 10px 12px;font-size:12px;color:var(--muted,#505C68);font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line-strong,#B9C1C9)">Review</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{ types }}" as="r" hint-placeholder-count="6">
+              <tr>
+                <td style="padding:11px 12px 11px 0;border-bottom:1px solid var(--line,#DCE1E6);font-weight:500;color:#101B27">{{ r.0 }}</td>
+                <td style="padding:11px 12px;border-bottom:1px solid var(--line,#DCE1E6);font-variant-numeric:tabular-nums">{{ r.1 }}</td>
+                <td style="padding:11px 12px;border-bottom:1px solid var(--line,#DCE1E6);color:#3C4854">{{ r.2 }}</td>
+                <td style="padding:11px 0 11px 12px;border-bottom:1px solid var(--line,#DCE1E6);color:#3C4854">{{ r.4 }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <aside style="display:flex;flex-direction:column;gap:32px">
+    <div style="border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:20px;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:15px;font-weight:600;color:#101B27">Submit to {{ j.code }}</h2>
+      <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4854">No submission fee and no APC during the launch period. Drafts save automatically and can be resumed from your dashboard.</p>
+      <a href="{{ submitHref }}" style="background:var(--accent,#B4470F);color:#fff;padding:10px 16px;border-radius:3px;font-size:14px;font-weight:500;text-align:center;text-decoration:none">Submit manuscript</a>
+      <a href="{{ guideHref }}" style="font-size:13px;text-align:center">Read the author instructions first</a>
+    </div>
+    <div>
+      <h2 style="margin:0 0 4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27">Editorial board</h2>
+      <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ board }}" as="b" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:center">
+            <span style="width:40px;height:40px;border-radius:50%;background:var(--line-soft,#EEF1F4);color:#3C4854;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0">{{ b.ini }}</span>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:14px;font-weight:600;color:#101B27">{{ b.name }}</span>
+              <span style="font-size:12px;color:var(--muted,#505C68)">{{ b.role }} · {{ b.aff }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:14px 0;display:flex;flex-direction:column;gap:10px">
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#1F2A36">Founding appointments are being confirmed. Members are listed once their appointment is accepted. Until then, manuscripts are handled by the Editorial Office under the Publisher’s Editorial Director.</p>
+          <dl style="margin:0;display:grid;grid-template-columns:1fr max-content;gap:6px 12px;font-size:13px;border-top:1px solid var(--line,#DCE1E6);padding-top:10px">
+            <dt style="color:#3C4854">Editor-in-Chief</dt><dd style="margin:0;color:var(--muted,#505C68)">Appointment pending</dd>
+            <dt style="color:#3C4854">Senior Editors</dt><dd style="margin:0;color:var(--muted,#505C68)">Recruiting</dd>
+            <dt style="color:#3C4854">Associate Editors</dt><dd style="margin:0;color:var(--muted,#505C68)">Recruiting</dd>
+          </dl>
+          <a href="{{ boardHref }}" style="font-size:13px;font-weight:500">Apply to join the board</a>
+        </div>
+      </sc-if>
+    </div>
+    <nav aria-label="Journal information">
+      <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27">Journal information</h2>
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+        <div style="padding:12px 0;border-bottom:1px solid var(--line,#DCE1E6)">
+          <span style="font-size:12px;font-weight:600;color:#3C4854">{{ g.group }}</span>
+          <ul style="list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px">
+            <sc-for list="{{ g.links }}" as="l"><li><a href="{{ l.href }}" style="font-size:13px">{{ l.title }}</a></li></sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </nav>
+  </aside>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return { j: {} };
+    const j = D.journal(D.param('j'));
+    document.title = j.title + ' — NextGenIQ Press';
+    const mature = D.isMature();
+    const P = id => 'JournalPage.dc.html?j=' + j.slug + '&p=' + id;
+    const pool = D.articles.filter(a => a.j === j.slug).concat(D.articles.filter(a => a.j !== j.slug));
+    const call = D.cfps.find(c => c.j === j.slug && c.status !== 'Closed');
+    return {
+      j, mature, launch: !mature, subjLower: j.subject.toLowerCase(),
+      topics: j.scope.replace(/\.$/, '').split(/, (?:and )?/).map(t => t.charAt(0).toUpperCase() + t.slice(1)),
+      latest: pool.slice(0, 4).map(a => Object.assign({}, a, { href: 'Article.dc.html?id=' + a.id, authorLine: D.authorsShort(a.authors) })),
+      promises: [{ l: 'Fees', v: 'None', d: 'No submission fee or APC for manuscripts submitted during the launch period.' }, { l: 'Target first decision', v: '6 weeks', d: 'From submission, with a technical check within 3 working days.' }, { l: 'After acceptance', v: '3 weeks', d: 'To online publication with a registered DOI.' }],
+      hasCall: !!call, call: call || {},
+      types: D.typesTable.rows,
+      board: [{ ini: 'HA', name: 'Prof. Helen Achterberg', role: 'Editor-in-Chief', aff: 'Leiden University Medical Center' }, { ini: 'RM', name: 'Dr Rahul Mehta', role: 'Senior Editor', aff: 'University of Toronto' }, { ini: 'CS', name: 'Dr Chiara Santoro', role: 'Senior Editor', aff: 'Politecnico di Milano' }],
+      groups: D.pageGroups.map(g => ({ group: g.group, links: g.items.map(([id, title]) => ({ title, href: D.pageHref(id, j.slug) })) })),
+      scopeHref: P('aims-scope'), typesHref: P('article-types'), cfpHref: P('call-for-papers'), boardHref: P('editorial-board'), guideHref: P('author-instructions'),
+      submitHref: 'Submit.dc.html?j=' + j.slug, issueHref: 'Issue.dc.html?j=' + j.slug, searchHref: 'Search.dc.html?scope=articles&j=' + j.slug
+    };
+  }
+}
+</script>
+</body>
+</html>

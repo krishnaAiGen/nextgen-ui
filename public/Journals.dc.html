@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Journals — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="journals" hint-size="100%,150px"></dc-import>
+<main id="main-content" style="max-width:1280px;margin:0 auto;padding:20px 32px 0">
+  <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><span style="color:#1F2A36">Journals</span></nav>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;padding:20px 0 24px;border-bottom:1px solid var(--line,#DCE1E6)">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:38px;font-weight:600;color:#101B27;letter-spacing:-.01em">Journals</h1>
+      <p style="margin:0;font-size:16px;line-height:1.6;color:#3C4854;max-width:66ch">Ten open-access journals with double-blind peer review and continuous publication. All accept submissions year-round.</p>
+    </div>
+    <div role="group" aria-label="View" style="display:flex;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;overflow:hidden">
+      <button onClick="{{ setList }}" aria-pressed="{{ listPressed }}" style="border:0;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;background:{{ listBg }};color:{{ listFg }}">A–Z list</button>
+      <button onClick="{{ setSubj }}" aria-pressed="{{ subjPressed }}" style="border:0;border-left:1px solid var(--line-strong,#B9C1C9);padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;background:{{ subjBg }};color:{{ subjFg }}">By subject</button>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;padding:16px 0;align-items:center">
+    <span style="font-size:13px;color:var(--muted,#505C68);margin-right:4px">Subject</span>
+    <sc-for list="{{ chips }}" as="c" hint-placeholder-count="8">
+      <button onClick="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:2px;font:inherit;font-size:13px;cursor:pointer;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ c.color }}"></span>{{ c.label }}</button>
+    </sc-for>
+  </div>
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="1">
+    <section style="margin-top:8px">
+      <sc-if value="{{ g.showHead }}">
+        <h2 style="margin:24px 0 0;display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27"><span style="width:9px;height:9px;border-radius:50%;background:{{ g.color }}"></span>{{ g.label }}</h2>
+      </sc-if>
+      <div role="table" aria-label="Journals" style="display:flex;flex-direction:column">
+        <sc-if value="{{ g.first }}">
+          <div role="row" style="display:grid;grid-template-columns:72px minmax(0,1fr) 90px 150px 120px;gap:20px;padding:10px 0;border-bottom:1px solid var(--line-strong,#B9C1C9);font-size:12px;color:var(--muted,#505C68);text-transform:uppercase;letter-spacing:.05em">
+            <span role="columnheader">Cover</span><span role="columnheader">Journal</span><span role="columnheader">Code</span><span role="columnheader">ISSN</span><span role="columnheader"></span>
+          </div>
+        </sc-if>
+        <sc-for list="{{ g.items }}" as="j">
+          <div role="row" style="display:grid;grid-template-columns:72px minmax(0,1fr) 90px 150px 120px;gap:20px;padding:18px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:start">
+            <a href="{{ j.href }}" tabindex="-1" aria-hidden="true" style="width:72px;height:96px;background:var(--brand,#263238);border-top:4px solid {{ j.color }};border-radius:2px;display:flex;flex-direction:column;justify-content:space-between;padding:7px;box-sizing:border-box;text-decoration:none"><span style="font-family:'Source Serif 4',Georgia,serif;font-size:15px;font-weight:600;color:#fff">{{ j.code }}</span><span style="font-size:6px;line-height:1.3;color:#C3CFDB">{{ j.title }}</span></a>
+            <div role="cell" style="display:flex;flex-direction:column;gap:6px;min-width:0">
+              <a href="{{ j.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27;line-height:1.3">{{ j.title }}</a>
+              <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4854;max-width:72ch">{{ j.scope }}</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px">
+                <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3C4854;padding:1px 8px;border:1px solid var(--line,#DCE1E6);border-radius:2px"><span style="width:7px;height:7px;border-radius:50%;background:{{ j.color }}"></span>{{ j.subject }}</span>
+                <span style="font-size:12px;padding:1px 8px;border-radius:2px;background:#FBF1DA;color:#6E4600;border:1px solid #EBD39A">Open access</span>
+                <span style="font-size:12px;color:#3C4854;padding:1px 8px;border:1px solid var(--line,#DCE1E6);border-radius:2px">Double-blind</span>
+              </div>
+            </div>
+            <span role="cell" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#1F2A36;padding-top:4px">{{ j.code }}</span>
+            <span role="cell" style="font-size:13px;color:var(--muted,#505C68);padding-top:4px">Applied for</span>
+            <div role="cell" style="display:flex;flex-direction:column;gap:6px;padding-top:2px;font-size:14px;font-weight:500">
+              <a href="{{ j.href }}">Journal home</a>
+              <a href="{{ j.submit }}">Submit</a>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+
+  <section id="series" style="margin-top:72px">
+    <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27;border-bottom:2px solid #101B27;padding-bottom:10px">Book series and proceedings</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));column-gap:48px">
+      <sc-for list="{{ series }}" as="s" hint-placeholder-count="4">
+        <div style="padding:20px 0;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;color:var(--muted,#505C68)"><span style="font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em">{{ s.kind }}</span> · <span style="font-family:'IBM Plex Mono',monospace">{{ s.code }}</span></span>
+          <span style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27">{{ s.title }}</span>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#3C4854;max-width:62ch">{{ s.desc }}</p>
+          <div style="display:flex;gap:16px;font-size:14px;font-weight:500;margin-top:4px"><a href="Authors.dc.html#editors">{{ s.cta }}</a><span style="font-weight:400;font-size:13px;color:var(--muted,#505C68)">{{ s.id }}: applied for</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'list', subj: 'all' };
+  componentDidMount() { if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+  renderVals() {
+    const D = window.NGIQ;
+    if (!D) return {};
+    const { view, subj } = this.state;
+    const on = v => v ? ['var(--brand,#263238)', '#fff'] : ['var(--surface,#fff)', '#1F2A36'];
+    const keys = Object.keys(D.SUBJ);
+    const chips = [{ k: 'all', label: 'All subjects', color: 'var(--line-strong,#B9C1C9)' }].concat(keys.map(k => ({ k, label: D.SUBJ[k].label, color: D.SUBJ[k].c }))).map(c => {
+      const a = subj === c.k;
+      return Object.assign(c, { pressed: a ? 'true' : 'false', bg: a ? 'var(--accent-soft,#FBEDE5)' : 'var(--surface,#fff)', fg: a ? 'var(--accent-dark,#91390C)' : '#1F2A36', border: a ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', pick: () => this.setState({ subj: c.k }) });
+    });
+    const items = D.journals.filter(j => subj === 'all' || j.sk === subj).slice().sort((a, b) => a.title.localeCompare(b.title))
+      .map(j => Object.assign({}, j, { href: 'Journal.dc.html?j=' + j.slug, submit: 'Submit.dc.html?j=' + j.slug }));
+    let groups;
+    if (view === 'list') groups = [{ label: '', showHead: false, first: true, items }];
+    else groups = keys.map(k => ({ label: D.SUBJ[k].label, color: D.SUBJ[k].c, showHead: true, first: false, items: items.filter(j => j.sk === k) })).filter(g => g.items.length);
+    const [lb, lf] = on(view === 'list'); const [sb, sf] = on(view === 'subj');
+    return {
+      chips, groups, listBg: lb, listFg: lf, subjBg: sb, subjFg: sf,
+      listPressed: view === 'list' ? 'true' : 'false', subjPressed: view === 'subj' ? 'true' : 'false',
+      setList: () => this.setState({ view: 'list' }), setSubj: () => this.setState({ view: 'subj' }),
+      series: [
+        { kind: 'Book series', code: 'ISRI', id: 'ISSN', title: 'International Series in Research and Innovation', desc: 'Peer-reviewed monographs and edited volumes on research methods, innovation systems and applied science.', cta: 'Propose a volume' },
+        { kind: 'Book series', code: 'LNISI', id: 'ISSN', title: 'Lecture Notes in Interdisciplinary Science and Innovation', desc: 'Concise volumes presenting emerging interdisciplinary topics for researchers and graduate students.', cta: 'Propose a volume' },
+        { kind: 'Proceedings', code: 'NGIQ-LNCSE', id: 'ISBN', title: 'Lecture Notes in Computer Science and Engineering', desc: 'Peer-reviewed proceedings of conferences and workshops in computer science and engineering, in-person or online.', cta: 'Publish your conference' },
+        { kind: 'Proceedings', code: 'NGIQ-LNMR', id: 'ISBN', title: 'Lecture Notes in Multidisciplinary Research', desc: 'Proceedings of multidisciplinary conferences, with DOIs at paper level and open access for all papers.', cta: 'Publish your conference' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

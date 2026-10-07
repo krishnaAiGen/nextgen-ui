@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Sign in — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:var(--page-2,var(--surface-2,#F5F6F7));color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" hint-size="100%,150px"></dc-import>
+<main id="main-content" style="max-width:960px;margin:56px auto 0;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:0;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;box-sizing:border-box">
+  <section style="padding:36px 40px;border-right:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:18px">
+    <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Sign in</h1>
+    <p style="margin:-8px 0 0;font-size:14px;color:#3C4854;line-height:1.5">One account for submitting, reviewing and tracking manuscripts across all NextGenIQ Press journals.</p>
+    <a href="Dashboard.dc.html" onClick="{{ markAuth }}" style="display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;padding:10px;font-size:14px;font-weight:500;color:#101B27;text-decoration:none"><span style="width:18px;height:18px;border-radius:50%;background:#5A8A1F;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">iD</span>Sign in with ORCID</a>
+    <div style="display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted,#505C68)"><span style="flex:1;height:1px;background:var(--line,#DCE1E6)"></span>or with email<span style="flex:1;height:1px;background:var(--line,#DCE1E6)"></span></div>
+    <form onSubmit="{{ onSubmit }}" novalidate style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <label for="si-email" style="font-size:13px;font-weight:500;color:#101B27">Email address</label>
+        <input id="si-email" type="email" autocomplete="email" value="{{ email }}" onChange="{{ onEmail }}" aria-invalid="{{ emailInvalid }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid {{ emailBorder }};border-radius:3px">
+        <sc-if value="{{ emailErr }}"><span style="font-size:13px;color:#A52A2A">Enter the email address you registered with</span></sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;justify-content:space-between"><label for="si-pw" style="font-size:13px;font-weight:500;color:#101B27">Password</label><a href="#" style="font-size:13px">Forgot password?</a></div>
+        <input id="si-pw" type="password" autocomplete="current-password" value="{{ pw }}" onChange="{{ onPw }}" aria-invalid="{{ pwInvalid }}" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid {{ pwBorder }};border-radius:3px">
+        <sc-if value="{{ pwErr }}"><span style="font-size:13px;color:#A52A2A">Enter your password</span></sc-if>
+      </div>
+      <button type="submit" style="border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:11px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">{{ btnLabel }}</button>
+    </form>
+  </section>
+  <section style="padding:36px 40px;display:flex;flex-direction:column;gap:14px;background:var(--surface-3,#FAFBFB)">
+    <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:#101B27">New to NextGenIQ Press?</h2>
+    <p style="margin:0;font-size:14px;color:#3C4854;line-height:1.55">Create an account to submit a manuscript or register as a reviewer. You can hold both roles with one account.</p>
+    <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.8;color:#1F2A36">
+      <li>Save drafts and resume at any time</li>
+      <li>Track every submission’s status and decisions</li>
+      <li>Link your ORCID iD to receive review recognition</li>
+    </ul>
+    <a href="Dashboard.dc.html" style="margin-top:6px;border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:10px;text-align:center;font-size:14px;font-weight:500;color:#101B27;text-decoration:none">Create an account</a>
+    <p style="margin:auto 0 0;font-size:12px;color:var(--muted,#505C68);line-height:1.5">By signing in you agree to the <a href="Authors.dc.html#policies">terms of use</a> and <a href="Authors.dc.html#policies">privacy policy</a>.</p>
+  </section>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { email: 'a.okafor@example.ac.uk', pw: '', tried: false, busy: false };
+  renderVals() {
+    const { email, pw, tried, busy } = this.state;
+    const eBad = tried && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email), pBad = tried && !pw;
+    return {
+      markAuth: () => { try { localStorage.setItem('ngiq-auth', '1'); } catch (e) {} },
+      email, pw, onEmail: e => this.setState({ email: e.target.value }), onPw: e => this.setState({ pw: e.target.value }),
+      emailErr: eBad, pwErr: pBad, emailInvalid: eBad ? 'true' : 'false', pwInvalid: pBad ? 'true' : 'false',
+      emailBorder: eBad ? '#A52A2A' : 'var(--line-strong,#B9C1C9)', pwBorder: pBad ? '#A52A2A' : 'var(--line-strong,#B9C1C9)', btnLabel: busy ? 'Signing in…' : 'Sign in',
+      onSubmit: e => { e.preventDefault(); const ok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && pw; this.setState({ tried: true }); if (ok) { this.setState({ busy: true }); setTimeout(() => { try { localStorage.setItem('ngiq-auth', '1'); } catch (e) {} location.href = 'Dashboard.dc.html'; }, 600); } }
+    };
+  }
+}
+</script>
+</body>
+</html>

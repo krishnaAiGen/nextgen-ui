@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>My submissions — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:var(--page-2,var(--surface-2,#F5F6F7));color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" signed-in="{{ true }}" hint-size="100%,150px"></dc-import>
+<main id="main-content" style="max-width:1280px;margin:0 auto;padding:28px 32px 0">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:13px;color:var(--muted,#505C68)">Signed in as Amara N. Okafor · ORCID 0000-0002-1825-0097</span>
+      <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:#101B27">My submissions</h1>
+    </div>
+    <a href="Submit.dc.html" style="background:var(--accent,#B4470F);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">New submission</a>
+  </div>
+  <sc-if value="{{ justSubmitted }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="margin-top:18px;border:1px solid #B9DCC4;background:#E7F3EB;color:#1E6B3A;border-radius:3px;padding:12px 16px;font-size:14px">Submission NGIQ-IJDH-2026-0388 received. A receipt has been emailed to you and your co-authors.</div>
+  </sc-if>
+  <div role="tablist" style="display:flex;gap:4px;border-bottom:1px solid var(--line,#DCE1E6);margin-top:20px">
+    <sc-for list="{{ roleTabs }}" as="t"><button role="tab" aria-selected="{{ t.sel }}" onClick="{{ t.pick }}" style="border:0;background:transparent;padding:10px 14px 9px;font:inherit;font-size:14px;cursor:pointer;color:#101B27;font-weight:{{ t.weight }};border-bottom:3px solid {{ t.bar }}">{{ t.label }} <span style="color:var(--muted,#505C68);font-weight:400">({{ t.n }})</span></button></sc-for>
+  </div>
+
+  <sc-if value="{{ isAuthor }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;padding:16px 0">
+      <sc-for list="{{ filters }}" as="fl"><button onClick="{{ fl.pick }}" aria-pressed="{{ fl.pressed }}" style="padding:5px 11px;border-radius:2px;font:inherit;font-size:13px;cursor:pointer;border:1px solid {{ fl.border }};background:{{ fl.bg }};color:{{ fl.fg }}">{{ fl.label }} · {{ fl.n }}</button></sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start">
+      <div style="background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:620px">
+          <thead><tr style="background:var(--surface-3,#FAFBFB)">
+            <th scope="col" style="text-align:left;padding:10px 14px;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line,#DCE1E6)">Manuscript</th>
+            <th scope="col" style="text-align:left;padding:10px 14px;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line,#DCE1E6)">Status</th>
+            <th scope="col" style="text-align:left;padding:10px 14px;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line,#DCE1E6)">Updated</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+              <tr onClick="{{ r.select }}" style="cursor:pointer;background:{{ r.bg }}" style-hover="background:var(--surface-3,#FAFBFB)">
+                <td style="padding:14px;border-bottom:1px solid var(--line-soft,#EEF1F4);border-left:3px solid {{ r.bar }}">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">{{ r.id }} · {{ r.code }}</span>
+                    <button onClick="{{ r.select }}" style="border:0;background:none;padding:0;text-align:left;font:inherit;font-family:'Source Serif 4',Georgia,serif;font-size:16px;font-weight:600;color:#101B27;line-height:1.35;cursor:pointer">{{ r.title }}</button>
+                    <span style="font-size:12px;color:var(--muted,#505C68)">{{ r.type }} · Submitted {{ r.submitted }}</span>
+                  </div>
+                </td>
+                <td style="padding:14px;border-bottom:1px solid var(--line-soft,#EEF1F4);vertical-align:top"><span style="display:inline-block;font-size:12px;font-weight:500;padding:2px 8px;border-radius:2px;white-space:nowrap;background:{{ r.chipBg }};color:{{ r.chipFg }};border:1px solid {{ r.chipBorder }}">{{ r.status }}</span><sc-if value="{{ r.hasAction }}"><div style="font-size:12px;color:#8A5300;margin-top:6px">{{ r.action }}</div></sc-if></td>
+                <td style="padding:14px;border-bottom:1px solid var(--line-soft,#EEF1F4);vertical-align:top;font-size:13px;color:#3C4854;white-space:nowrap">{{ r.updated }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+
+      <aside aria-label="Submission detail" style="animation:{{ panelAnim }};background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;position:sticky;top:16px">
+        <div style="padding:18px 20px;border-bottom:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">{{ sel.id }}</span>
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:#101B27;line-height:1.35">{{ sel.title }}</h2>
+          <span style="font-size:13px;color:#3C4854">{{ sel.jTitle }} · {{ sel.type }}</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <sc-for list="{{ sel.actions }}" as="ac"><a href="{{ ac.href }}" style="font-size:13px;font-weight:500;padding:7px 12px;border-radius:3px;text-decoration:none;background:{{ ac.bg }};color:{{ ac.fg }};border:1px solid {{ ac.border }}">{{ ac.label }}</a></sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ sel.hasLetter }}">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--line,#DCE1E6);background:#FFFBF2">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:14px;font-weight:600;color:#101B27">Decision: major revision</span><span style="font-size:12px;color:var(--muted,#505C68)">28 September 2026</span></div>
+            <p style="margin:0;font-size:13px;line-height:1.6;color:#1F2A36">Dear Dr Okafor, both reviewers found the study well designed but requested additional analysis by skin type and lighting condition, and clarification of how motion artefacts were excluded. Please submit your revision by <strong>27 November 2026</strong>, with a point-by-point response.</p>
+            <div style="display:grid;grid-template-rows:{{ letterRows }};transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)"><div style="overflow:hidden">
+              <div style="padding-top:10px;font-size:13px;line-height:1.6;color:#1F2A36;display:flex;flex-direction:column;gap:8px;opacity:{{ letterOp }};transition:opacity .35s ease .1s">
+                <p style="margin:0"><strong>Reviewer 1.</strong> The validation design is appropriate. Please report agreement stratified by Fitzpatrick skin type and add a sensitivity analysis excluding sessions with more than 20% motion-flagged frames.</p>
+                <p style="margin:0"><strong>Reviewer 2.</strong> Clarify the illumination thresholds and provide the per-participant Bland–Altman data as supplementary material. The discussion should temper claims about clinical readiness.</p>
+                <p style="margin:0">Sincerely,<br>Editorial Office, International Journal of Digital Health</p>
+              </div>
+            </div></div>
+            <button onClick="{{ toggleLetter }}" aria-expanded="{{ letterAria }}" style="border:0;background:none;padding:0;margin-top:8px;color:var(--accent,#B4470F);font:inherit;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px">{{ letterLabel }}<span aria-hidden="true" style="display:inline-block;transition:transform .3s ease;transform:{{ letterCaret }}">▾</span></button>
+          </div>
+        </sc-if>
+        <div style="padding:16px 20px">
+          <h3 style="margin:0 0 12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68)">Status history</h3>
+          <ol style="list-style:none;margin:0;padding:0">
+            <sc-for list="{{ sel.timeline }}" as="t">
+              <li style="display:grid;grid-template-columns:18px minmax(0,1fr);gap:12px;animation:{{ t.anim }};animation-delay:{{ t.delay }}">
+                <div style="display:flex;flex-direction:column;align-items:center"><span style="width:12px;height:12px;border-radius:50%;margin-top:3px;background:{{ t.dot }};border:2px solid {{ t.ring }};box-sizing:border-box"></span><span style="flex:1;width:1px;background:{{ t.line }};min-height:18px;transform-origin:top;animation:{{ t.lineAnim }};animation-delay:{{ t.lineDelay }}"></span></div>
+                <div style="padding-bottom:14px;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:{{ t.weight }};color:{{ t.fg }}">{{ t.h }}</span><span style="font-size:12px;color:var(--muted,#505C68)">{{ t.d }}</span></div>
+              </li>
+            </sc-for>
+          </ol>
+        </div>
+        <div style="padding:14px 20px;border-top:1px solid var(--line,#DCE1E6);font-size:13px;color:#3C4854;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600">Co-authors</span>
+          <span>{{ sel.coauthors }}</span>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isReviewer }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:12px;padding-top:20px;max-width:900px">
+      <sc-for list="{{ invites }}" as="iv">
+        <div style="background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:18px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+          <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;color:var(--muted,#505C68)"><span style="font-family:'IBM Plex Mono',monospace">{{ iv.id }}</span> · {{ iv.code }} · Double-blind</span>
+            <span style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:#101B27;line-height:1.35">{{ iv.title }}</span>
+            <span style="font-size:13px;color:#3C4854">{{ iv.note }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <span style="font-size:12px;font-weight:500;padding:2px 8px;border-radius:2px;background:{{ iv.chipBg }};color:{{ iv.chipFg }}">{{ iv.status }}</span>
+            <sc-if value="{{ iv.pending }}"><div style="display:flex;gap:8px"><button onClick="{{ iv.decline }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer">Decline</button><button onClick="{{ iv.accept }}" style="border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:7px 14px;font:inherit;font-size:13px;font-weight:500;cursor:pointer">Accept · due {{ iv.due }}</button></div></sc-if>
+            <sc-if value="{{ iv.active }}"><div style="display:flex;gap:8px"><a href="#" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:7px 12px;font-size:13px;color:#101B27;text-decoration:none">Download manuscript</a><a href="#" style="background:var(--accent,#B4470F);color:#fff;border-radius:3px;padding:7px 14px;font-size:13px;font-weight:500;text-decoration:none">Continue review</a></div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:14px 20px;font-size:14px">
+        <span>Available for new review invitations</span>
+        <button role="switch" aria-checked="{{ availAria }}" onClick="{{ toggleAvail }}" style="width:40px;height:22px;border-radius:11px;border:0;cursor:pointer;position:relative;background:{{ availBg }}"><span style="position:absolute;top:3px;left:{{ availLeft }};width:16px;height:16px;border-radius:50%;background:var(--surface,#fff)"></span></button>
+      </div>
+    </div>
+  </sc-if>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.isNew = new URLSearchParams(location.search).get('new') === '1';
+    this.state = { tab: new URLSearchParams(location.search).get('tab') === 'reviewer' ? 'reviewer' : 'author', filter: 'all', sel: this.isNew ? 'NGIQ-IJDH-2026-0388' : 'NGIQ-IJDH-2026-0142', inv: { r1: 'pending', r2: 'active' }, avail: true };
+  }
+  renderVals() {
+    const S = {
+      'Draft': ['var(--surface-2,#F5F6F7)', '#3C4854', 'var(--line,#DCE1E6)'], 'Submitted': ['var(--line-soft,#EEF1F4)', '#1F2A36', 'var(--line-strong,#B9C1C9)'], 'Under review': ['var(--accent-soft,#FBEDE5)', 'var(--accent-dark,#91390C)', '#B7CDEA'],
+      'Revisions requested': ['#FDF1DE', '#8A5300', '#EBCB98'], 'Accepted': ['#E7F3EB', '#1E6B3A', '#B9DCC4'], 'In production': ['#E6F2F2', '#145E5E', '#A9D3D3'],
+      'Published': ['#1E6B3A', '#FFFFFF', '#1E6B3A'], 'Rejected': ['#FBEAEA', '#A52A2A', '#E3B3B3'], 'Withdrawn': ['var(--surface-2,#F5F6F7)', 'var(--muted,#505C68)', 'var(--line,#DCE1E6)']
+    };
+    const subs = [
+      { id: 'NGIQ-IJDH-2026-0142', code: 'IJDH', jTitle: 'International Journal of Digital Health', type: 'Research Article', title: 'Remote photoplethysmography for continuous heart-rate monitoring in home-based cardiac rehabilitation', submitted: '3 Aug 2026', updated: '28 Sep 2026', status: 'Revisions requested', action: 'Revision due 27 Nov 2026', co: 'Daniel Reyes-Morales, Lena Hoffmann, Kenji Watanabe', stage: 3, letter: true },
+      { id: 'NGIQ-IJIC-2026-0207', code: 'IJIC', jTitle: 'International Journal of Intelligent Computing', type: 'Research Article', title: 'Federated fine-tuning of clinical language models under label scarcity', submitted: '2 Sep 2026', updated: '19 Sep 2026', status: 'Under review', co: 'Priya Raman, Tomasz Nowak', stage: 2 },
+      { id: 'NGIQ-IJDS-2026-0098', code: 'IJDS', jTitle: 'International Journal of Digital Society', type: 'Short Communication', title: 'Older adults’ trust in app-only banking: a two-country survey', submitted: '21 Jun 2026', updated: '30 Sep 2026', status: 'In production', action: 'Proof expected by 10 Oct 2026', co: 'Fiona MacLeod', stage: 5 },
+      { id: 'NGIQ-D-2026-0391', code: 'IJQT', jTitle: 'International Journal of Quantum Technologies', type: 'Review', title: 'Untitled draft', submitted: '—', updated: '5 Oct 2026', status: 'Draft', action: 'Step 3 of 7 complete', co: 'None added', stage: 0, draft: true },
+      { id: 'NGIQ-IJMR-2026-0051', code: 'IJMR', jTitle: 'International Journal of Multidisciplinary Research', type: 'Research Article', title: 'Seasonal variation in wearable step counts across 14 countries', submitted: '8 May 2026', updated: '24 Jun 2026', status: 'Rejected', co: 'Karin Vos', stage: -1 }
+    ];
+    if (this.isNew) subs.unshift({ id: 'NGIQ-IJDH-2026-0388', code: 'IJDH', jTitle: 'International Journal of Digital Health', type: 'Research Article', title: 'Remote photoplethysmography for continuous heart-rate monitoring in home-based cardiac rehabilitation: a prospective validation study', submitted: '7 Oct 2026', updated: '7 Oct 2026', status: 'Submitted', action: 'Technical check within 3 working days', co: 'Daniel Reyes-Morales', stage: 1 });
+    const { filter, tab } = this.state;
+    const groups = { all: () => true, action: s => ['Revisions requested', 'Draft'].includes(s.status), progress: s => ['Submitted', 'Under review', 'Accepted', 'In production'].includes(s.status), closed: s => ['Published', 'Rejected', 'Withdrawn'].includes(s.status) };
+    const fl = [['all', 'All'], ['action', 'Needs your action'], ['progress', 'In progress'], ['closed', 'Completed']].map(([k, label]) => { const a = filter === k; return { label, n: subs.filter(groups[k]).length, pressed: a ? 'true' : 'false', bg: a ? 'var(--accent-soft,#FBEDE5)' : 'var(--surface,#fff)', fg: a ? 'var(--accent-dark,#91390C)' : '#1F2A36', border: a ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', pick: () => this.setState({ filter: k }) }; });
+    const list = subs.filter(groups[filter]);
+    const rows = list.map(s => { const [bg, fg, bd] = S[s.status]; const on = s.id === this.state.sel; return Object.assign({}, s, { chipBg: bg, chipFg: fg, chipBorder: bd, hasAction: !!s.action, bg: on ? 'var(--accent-tint,#FDF7F3)' : 'var(--surface,#fff)', bar: on ? 'var(--accent,#B4470F)' : 'transparent', select: () => this.setState(st => st.sel === s.id ? null : { sel: s.id, selCount: (st.selCount || 0) + 1, letter: false }) }); });
+    const cur = subs.find(s => s.id === this.state.sel) || subs[0];
+    const flipA = (this.state.selCount || 0) % 2 === 0;
+    const stages = [['Draft started', ''], ['Submitted', cur.submitted], ['Under review', cur.stage >= 2 ? 'Reviewers assigned 9 Sep 2026' : ''], ['Decision', cur.stage === 3 ? 'Major revision · 28 Sep 2026' : cur.stage >= 4 ? 'Accepted' : ''], ['Accepted', cur.stage >= 4 ? '12 Sep 2026' : ''], ['In production', cur.stage >= 5 ? 'Copy-editing in progress' : ''], ['Published', '']];
+    const timeline = cur.stage === -1
+      ? [{ h: 'Submitted', d: cur.submitted }, { h: 'Under review', d: '2 reviewers' }, { h: 'Rejected', d: cur.updated + ' · decision letter available' }].map((t, i, a) => Object.assign(t, { dot: i === a.length - 1 ? '#A52A2A' : '#1E6B3A', ring: i === a.length - 1 ? '#A52A2A' : '#1E6B3A', line: i === a.length - 1 ? 'transparent' : 'var(--line-strong,#B9C1C9)', weight: i === a.length - 1 ? 600 : 400, fg: '#101B27' }))
+      : stages.slice(cur.stage === 3 ? 0 : 0).filter((_, i) => !(cur.stage !== 3 && i === 3)).map((t, i, a) => {
+        const idx = cur.stage === 3 ? i : (i >= 3 ? i + 1 : i);
+        const target = cur.stage === 3 ? 3 : cur.stage;
+        const done = idx < target || (idx === 0), now = idx === target;
+        return { h: t[0], d: now && !t[1] ? 'Current stage' : t[1] || (done ? 'Complete' : 'Upcoming'), dot: now ? 'var(--accent,#B4470F)' : done ? '#1E6B3A' : 'var(--surface,#fff)', ring: now ? 'var(--accent,#B4470F)' : done ? '#1E6B3A' : 'var(--line-strong,#B9C1C9)', line: i === a.length - 1 ? 'transparent' : 'var(--line,#DCE1E6)', weight: now ? 600 : 400, fg: done || now ? '#101B27' : 'var(--muted,#505C68)' };
+      });
+    const prim = (label, href) => ({ label, href, bg: 'var(--accent,#B4470F)', fg: '#fff', border: 'var(--accent,#B4470F)' }), sec = (label, href) => ({ label, href, bg: 'var(--surface,#fff)', fg: '#101B27', border: 'var(--line-strong,#B9C1C9)' });
+    const actions = cur.draft ? [prim('Resume draft', 'Submit.dc.html?j=ijqt&step=3'), sec('Delete draft', '#')]
+      : cur.status === 'Revisions requested' ? [prim('Submit revision', '#'), sec('Message editorial office', '#')]
+      : cur.status === 'In production' ? [sec('View accepted manuscript', '#'), sec('Message editorial office', '#')]
+      : cur.status === 'Rejected' ? [sec('View decision letter', '#')]
+      : [sec('View submission', '#'), sec('Withdraw', '#')];
+    const iv = this.state.inv;
+    const invDef = [
+      { k: 'r1', id: 'NGIQ-IJIC-2026-0233', code: 'IJIC', title: 'Contrastive pre-training for low-resource clinical named-entity recognition', note: 'Invited 4 Oct 2026 by the Associate Editor · Response requested by 11 Oct 2026', due: '1 Nov 2026' },
+      { k: 'r2', id: 'NGIQ-IJDH-2026-0176', code: 'IJDH', title: 'Usability of a voice-based symptom checker among adults over 70', note: 'Accepted 22 Sep 2026 · Review due 13 Oct 2026 · Draft saved', due: '13 Oct 2026' }
+    ];
+    const invites = invDef.map(d => { const st = iv[d.k]; const m = { pending: ['Invitation', 'var(--accent-soft,#FBEDE5)', 'var(--accent-dark,#91390C)'], active: ['Review in progress', '#FDF1DE', '#8A5300'], declined: ['Declined', 'var(--surface-2,#F5F6F7)', 'var(--muted,#505C68)'] }[st];
+      return Object.assign({}, d, { status: m[0], chipBg: m[1], chipFg: m[2], pending: st === 'pending', active: st === 'active', accept: () => this.setState({ inv: Object.assign({}, iv, { [d.k]: 'active' }) }), decline: () => this.setState({ inv: Object.assign({}, iv, { [d.k]: 'declined' }) }) }); });
+    return {
+      justSubmitted: this.isNew,
+      roleTabs: [['author', 'As author', subs.length], ['reviewer', 'As reviewer', 2]].map(([k, label, n]) => ({ label, n, sel: tab === k ? 'true' : 'false', weight: tab === k ? 600 : 500, bar: tab === k ? 'var(--accent,#B4470F)' : 'transparent', pick: () => this.setState({ tab: k }) })),
+      isAuthor: tab === 'author', isReviewer: tab === 'reviewer',
+      filters: fl, rows,
+      panelAnim: (flipA ? 'ngiqFadeA' : 'ngiqFadeB') + ' .4s ease both',
+      letterRows: this.state.letter ? '1fr' : '0fr', letterOp: this.state.letter ? 1 : 0, letterAria: this.state.letter ? 'true' : 'false', letterCaret: this.state.letter ? 'rotate(180deg)' : 'none',
+      letterLabel: this.state.letter ? 'Hide full letter' : 'Read full letter and 2 reviewer reports', toggleLetter: () => this.setState(st => ({ letter: !st.letter })),
+      sel: Object.assign({}, cur, { timeline: timeline.map((t, i) => Object.assign({}, t, { anim: (flipA ? 'ngiqFadeA' : 'ngiqFadeB') + ' .4s ease both', delay: (120 + i * 90) + 'ms', lineAnim: (flipA ? 'ngiqGrowA' : 'ngiqGrowB') + ' .35s ease both', lineDelay: (200 + i * 90) + 'ms' })), actions, hasLetter: !!cur.letter, coauthors: cur.co }),
+      invites, availAria: this.state.avail ? 'true' : 'false', availBg: this.state.avail ? 'var(--accent,#B4470F)' : 'var(--line-strong,#B9C1C9)', availLeft: this.state.avail ? '21px' : '3px', toggleAvail: () => this.setState(s => ({ avail: !s.avail }))
+    };
+  }
+}
+</script>
+</body>
+</html>

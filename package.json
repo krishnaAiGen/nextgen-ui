@@ -1,0 +1,16 @@
+{
+  "name": "nextgen-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NextGenIQ Press — Journal Portal UI mockups (static Design Canvas site)",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs",
+    "build": "node scripts/build.mjs",
+    "deploy": "vercel deploy --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
