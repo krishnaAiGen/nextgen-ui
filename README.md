@@ -67,7 +67,7 @@ public/                 # deployed as-is (Vercel output directory)
 ├── Footer.dc.html      # shared, pulled in via <dc-import>
 ├── …                    # Article, Authors, Dashboard, Issue, Journal,
 │                        # JournalMasthead, JournalPage, Journals, Profile,
-│                        # Search, SignIn, Submit
+│                        # ProposeJournal, Search, SignIn, Submit
 ├── support.js          # Design Canvas runtime (generated — do not edit)
 ├── image-slot.js       # <image-slot> custom element
 ├── data.js             # mock journal/article content
@@ -85,5 +85,5 @@ design-sources/         # not deployed: original uploads, canvas thumbnail
 ### Pages
 
 `Home` · `Journals` · `Journal` · `JournalPage` · `JournalMasthead` · `Issue` ·
-`Article` · `Search` · `Authors` · `Submit` · `Dashboard` · `Profile` ·
-`SignIn` — plus the shared `Header` and `Footer` components.
+`Article` · `Search` · `Authors` · `Submit` · `ProposeJournal` · `Dashboard` ·
+`Profile` · `SignIn` — plus the shared `Header` and `Footer` components.

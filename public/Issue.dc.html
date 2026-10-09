@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
 <script src="data.js"></script>
-<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}</style>
+<style>body{margin:0;background:var(--page,#fff);color:var(--ink-2,#1F2A36);font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#1D5DA8);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#1D5DA8);outline-offset:2px}</style>
 <script src="theme.js"></script>
 <script src="motion.js"></script>
 </helmet>
@@ -20,24 +20,24 @@
 <dc-import name="JournalMasthead" tab="Articles and issues" hint-size="100%,420px"></dc-import>
 <div style="max-width:1280px;margin:0 auto;padding:40px 32px 0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px">
   <main id="main-content" style="min-width:0">
-    <sc-if value="{{ mature }}" hint-placeholder-val="{{ true }}">
-      <div style="display:flex;gap:24px;padding-bottom:24px;border-bottom:2px solid #101B27;flex-wrap:wrap">
-        <div style="width:96px;height:128px;background:var(--brand,#263238);border-top:5px solid {{ j.color }};border-radius:2px;display:flex;flex-direction:column;justify-content:space-between;padding:9px;box-sizing:border-box"><span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#fff">{{ j.code }}</span><span style="font-size:9px;color:#C3CFDB">Vol. 1 · Issue 2</span></div>
+    <sc-if value="{{ mature }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:24px;padding-bottom:24px;border-bottom:2px solid var(--accent,#0B7265);flex-wrap:wrap">
+        <div style="width:96px;height:128px;background:var(--brand,#0F2B46);border-top:5px solid {{ j.color }};border-radius:2px;display:flex;flex-direction:column;justify-content:space-between;padding:9px;box-sizing:border-box"><span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#fff">{{ j.code }}</span><span style="font-size:9px;color:#C3CFDB">Vol. 1 · Issue 2</span></div>
         <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:240px">
           <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:500">Current issue</span>
-          <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:#101B27">Volume 1, Issue 2</h1>
-          <span style="font-size:14px;color:#3C4854">June 2026 · {{ count }} articles · Published continuously 1 May – 30 June 2026</span>
+          <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:var(--ink,#101B27)">Volume 1, Issue 2</h1>
+          <span style="font-size:14px;color:var(--ink-3,#3C4854)">June 2026 · {{ count }} articles · Published continuously 1 May – 30 June 2026</span>
           <div style="display:flex;gap:16px;font-size:14px;font-weight:500;margin-top:4px"><a href="#archive">Previous issues</a><a href="Authors.dc.html#alerts">Get issue alerts</a></div>
         </div>
       </div>
       <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
         <section style="margin-top:32px">
-          <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:1px solid var(--line-strong,#B9C1C9);display:flex;justify-content:space-between">{{ s.name }}<span style="font-weight:400;color:var(--muted,#505C68);letter-spacing:0;text-transform:none">{{ s.n }}</span></h2>
+          <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink,#101B27);padding-bottom:10px;border-bottom:1px solid var(--line-strong,#B9C1C9);display:flex;justify-content:space-between">{{ s.name }}<span style="font-weight:400;color:var(--muted,#505C68);letter-spacing:0;text-transform:none">{{ s.n }}</span></h2>
           <sc-for list="{{ s.items }}" as="a">
             <article style="padding:16px 0;border-bottom:1px solid var(--line,#DCE1E6);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px">
               <div style="display:flex;flex-direction:column;gap:5px">
-                <div style="display:flex;gap:10px;font-size:12px"><span style="font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em">{{ a.type }}</span><span style="color:#6E4600;font-weight:500">● Open access</span></div>
-                <a href="{{ a.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.35;color:#101B27;font-weight:600">{{ a.title }}</a>
+                <div style="display:flex;gap:10px;font-size:12px"><span style="font-weight:600;color:var(--warm,#B5400F);text-transform:uppercase;letter-spacing:.05em">{{ a.type }}</span><span style="color:#6E4600;font-weight:500">● Open access</span></div>
+                <a href="{{ a.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.35;color:var(--ink,#101B27);font-weight:600">{{ a.title }}</a>
                 <span style="font-size:14px">{{ a.authorLine }}</span>
                 <span style="font-size:13px;color:var(--muted,#505C68)">pp. {{ a.pages }} · {{ a.date }} · <span style="font-family:'IBM Plex Mono',monospace;font-size:12px">doi.org/{{ a.doi }}</span></span>
               </div>
@@ -47,32 +47,32 @@
         </section>
       </sc-for>
     </sc-if>
-    <sc-if value="{{ launch }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ launch }}" hint-placeholder-val="{{ true }}">
       <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:500">Current volume</span>
-      <h1 style="margin:6px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:#101B27">Volume 1 (2026)</h1>
-      <p style="margin:0;font-size:16px;line-height:1.65;color:#1F2A36;max-width:66ch">{{ j.code }} publishes continuously. Each article is published online as soon as it is accepted, copy-edited and typeset, receives a DOI, and is listed here under Volume 1. Issues are closed at the end of each publication period.</p>
+      <h1 style="margin:6px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:32px;font-weight:600;color:var(--ink,#101B27)">Volume 1 (2026)</h1>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:var(--ink-2,#1F2A36);max-width:66ch">{{ j.code }} publishes continuously. Each article is published online as soon as it is accepted, copy-edited and typeset, receives a DOI, and is listed here under Volume 1. Issues are closed at the end of each publication period.</p>
       <div style="margin-top:28px;border-top:2px solid #101B27">
         <sc-for list="{{ appear }}" as="r" hint-placeholder-count="3">
           <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line,#DCE1E6)">
-            <span style="font-size:13px;font-weight:600;color:#3C4854;text-transform:uppercase;letter-spacing:.05em">{{ r.h }}</span>
-            <span style="font-size:15px;line-height:1.55;color:#1F2A36">{{ r.p }}</span>
+            <span style="font-size:13px;font-weight:600;color:var(--warm,#B5400F);text-transform:uppercase;letter-spacing:.05em">{{ r.h }}</span>
+            <span style="font-size:15px;line-height:1.55;color:var(--ink-2,#1F2A36)">{{ r.p }}</span>
           </div>
         </sc-for>
       </div>
       <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
-        <a href="{{ submitHref }}" style="background:var(--accent,#B4470F);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Submit to Volume 1</a>
-        <a href="Authors.dc.html#alerts" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:9px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Notify me when articles are published</a>
+        <a href="{{ submitHref }}" style="background:var(--accent,#1D5DA8);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Submit to Volume 1</a>
+        <a href="Authors.dc.html#alerts" style="border:1px solid var(--line-strong,#B9C1C9);color:var(--ink,#101B27);padding:9px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Notify me when articles are published</a>
       </div>
     </sc-if>
   </main>
   <aside id="archive" style="display:flex;flex-direction:column;gap:12px">
-    <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#101B27;padding-bottom:10px;border-bottom:2px solid #101B27">Issue archive</h2>
+    <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink,#101B27);padding-bottom:10px;border-bottom:2px solid var(--accent,#0B7265)">Issue archive</h2>
     <div style="display:flex;flex-direction:column">
-      <span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:#101B27;padding:8px 0">2026</span>
-      <span style="font-size:13px;font-weight:600;color:#3C4854;padding:4px 0 8px">Volume 1</span>
+      <span style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:600;color:var(--ink,#101B27);padding:8px 0">2026</span>
+      <span style="font-size:13px;font-weight:600;color:var(--ink-3,#3C4854);padding:4px 0 8px">Volume 1</span>
       <sc-for list="{{ archive }}" as="i" hint-placeholder-count="2">
         <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-left:2px solid {{ i.bar }};background:{{ i.bg }};font-size:14px">
-          <span style="color:#101B27;font-weight:{{ i.weight }}">{{ i.label }}</span>
+          <span style="color:var(--ink,#101B27);font-weight:{{ i.weight }}">{{ i.label }}</span>
           <span style="color:var(--muted,#505C68);font-size:13px">{{ i.meta }}</span>
         </div>
       </sc-for>
@@ -94,7 +94,7 @@ class Component extends DCLogic {
     const by = ids => ids.map(id => D.articles.find(a => a.id === id)).map(a => Object.assign({}, a, { href: 'Article.dc.html?id=' + a.id, authorLine: D.authorsShort(a.authors) }));
     const sections = [{ name: 'Editorial', ids: ['a9'] }, { name: 'Research Articles', ids: ['a1', 'a2', 'a5', 'a7', 'a11'] }, { name: 'Reviews', ids: ['a3', 'a12'] }, { name: 'Short Communications and Perspectives', ids: ['a6', 'a10'] }]
       .map(s => { const items = by(s.ids); return { name: s.name, items, n: items.length + (items.length === 1 ? ' article' : ' articles') }; });
-    const cur = { bar: 'var(--accent,#B4470F)', bg: 'var(--surface-2,#F5F6F7)', weight: 600 }, oth = { bar: 'var(--line,#DCE1E6)', bg: 'transparent', weight: 400 };
+    const cur = { bar: 'var(--accent,#1D5DA8)', bg: 'var(--surface-2,#F5F6F7)', weight: 600 }, oth = { bar: 'var(--line,#DCE1E6)', bg: 'transparent', weight: 400 };
     return {
       j, mature, launch: !mature, sections, count: sections.reduce((n, s) => n + s.items.length, 0),
       appear: [{ h: 'On acceptance', p: 'The accepted manuscript is listed under Articles in press with its DOI.' }, { h: 'On publication', p: 'The typeset version of record replaces it, with full text, PDF and citation export.' }, { h: 'At issue close', p: 'Articles are grouped by section into the issue table of contents.' }],

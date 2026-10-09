@@ -11,22 +11,30 @@
     { id: 'petrolgold', name: 'Midnight and gold', brand: '#12395C', accent: '#9A6400', dark: '#7C5000', soft: '#FBF1DA', tint: '#FDF9EF' },
     { id: 'blackred', name: 'Black and red', brand: '#151515', accent: '#C0262D', dark: '#9E1F25', soft: '#FBE8E9', tint: '#FEF6F6' },
     { id: 'navy', name: 'Institutional navy', brand: '#0F2B46', accent: '#1D5DA8', dark: '#174C8A', soft: '#E8F0FA', tint: '#F5F8FC' },
-    { id: 'teal', name: 'Ink and teal', brand: '#0E2F33', accent: '#0B6B6B', dark: '#08524F', soft: '#E3F1F0', tint: '#F3F9F8' }
+    { id: 'teal', name: 'Ink and teal', brand: '#0B1416', accent: '#0C8375', dark: '#0A685C', soft: '#CDF0E7', tint: '#EDFAF5', warm: '#C2410C' }
   ];
-  var DEFAULT_THEME = 'slateorange'; // Slate and copper — keep in sync with the var() fallbacks in the .dc.html pages
-  var DIM = { '--page': '#C4CCD4', '--page-2': '#BAC3CC', '--surface': '#D7DDE3', '--surface-2': '#C9D1D9', '--surface-3': '#CFD6DD', '--line': '#A9B3BD', '--line-soft': '#B9C2CB', '--line-strong': '#8C98A4', '--muted': '#3B4753' };
+  var DARK = { '--page': '#121619', '--page-2': '#0E1114', '--surface': '#1A2024', '--surface-2': '#15191C', '--surface-3': '#171C20', '--line': '#2A3237', '--line-soft': '#232A2F', '--line-strong': '#3B454C', '--muted': '#9AA7B2', '--ink': '#E8EDF1', '--ink-2': '#D6DDE3', '--ink-3': '#B8C2CB' };
   function isDim() { try { return localStorage.getItem('ngiq-dim') === '1'; } catch (e) { return false; } }
-  function byId(id) { return T.filter(function (x) { return x.id === id; })[0]; }
   function apply(id) {
-    var t = byId(id) || byId(DEFAULT_THEME) || T[0];
+    var t = T.filter(function (x) { return x.id === id; })[0] || T[0];
     var s = document.documentElement.style, dim = isDim();
-    s.setProperty('--brand', t.brand); s.setProperty('--accent', dim ? t.dark : t.accent); s.setProperty('--accent-dark', t.dark);
-    s.setProperty('--accent-soft', dim ? '#C2CEE0' : t.soft); s.setProperty('--accent-tint', dim ? '#CDD6E2' : t.tint);
-    Object.keys(DIM).forEach(function (k) { if (dim) s.setProperty(k, DIM[k]); else s.removeProperty(k); });
+    if (dim) {
+      s.setProperty('--brand', 'color-mix(in oklab, ' + t.accent + ' 26%, #1B2226)');
+      s.setProperty('--accent', 'color-mix(in oklab, ' + t.accent + ' 65%, white)');
+      s.setProperty('--accent-dark', 'color-mix(in oklab, ' + t.accent + ' 50%, white)');
+      s.setProperty('--accent-soft', 'color-mix(in oklab, ' + t.accent + ' 24%, #15191C)');
+      s.setProperty('--accent-tint', 'color-mix(in oklab, ' + t.accent + ' 10%, #121619)');
+      s.setProperty('--warm', 'color-mix(in oklab, ' + (t.warm || '#B5400F') + ' 65%, white)');
+    } else {
+      s.setProperty('--brand', t.brand); s.setProperty('--accent', t.accent); s.setProperty('--accent-dark', t.dark);
+      s.setProperty('--accent-soft', t.soft); s.setProperty('--accent-tint', t.tint);
+      s.setProperty('--warm', t.warm || '#B5400F');
+    }
+    Object.keys(DARK).forEach(function (k) { if (dim) s.setProperty(k, DARK[k]); else s.removeProperty(k); });
     return t.id;
   }
-  var cur = DEFAULT_THEME;
-  try { cur = localStorage.getItem('ngiq-theme') || DEFAULT_THEME; } catch (e) {}
+  var cur = 'teal';
+  try { cur = localStorage.getItem('ngiq-theme') || 'teal'; } catch (e) {}
   window.NGIQ_THEMES = { list: T, current: apply(cur), set: function (id) { try { localStorage.setItem('ngiq-theme', id); } catch (e) {} this.current = apply(id); },
     dim: isDim, setDim: function (on) { try { localStorage.setItem('ngiq-dim', on ? '1' : '0'); } catch (e) {} apply(this.current); } };
 })();

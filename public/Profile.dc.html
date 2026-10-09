@@ -14,87 +14,87 @@
 <script src="data.js"></script>
 <script src="theme.js"></script>
 <script src="motion.js"></script>
-<style>body{margin:0;background:var(--page-2,#F5F6F7);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}input,select,textarea{box-sizing:border-box}html{scroll-behavior:smooth}</style>
+<style>body{margin:0;background:var(--page-2,#F5F6F7);color:var(--ink-2,#1F2A36);font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#1D5DA8);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#1D5DA8);outline-offset:2px}input,select,textarea{box-sizing:border-box}html{scroll-behavior:smooth}</style>
 </helmet>
 <dc-import name="Header" signed-in="{{ true }}" hint-size="100%,150px"></dc-import>
 <div style="max-width:1200px;margin:0 auto;padding:20px 32px 0">
-  <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><a href="Dashboard.dc.html">My account</a><span aria-hidden="true">/</span><span style="color:#1F2A36">Profile</span></nav>
+  <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><a href="Dashboard.dc.html">My account</a><span aria-hidden="true">/</span><span style="color:var(--ink-2,#1F2A36)">Profile</span></nav>
   <div style="display:flex;align-items:center;gap:20px;padding:20px 0 24px;flex-wrap:wrap">
     <div style="position:relative">
-      <span style="width:72px;height:72px;border-radius:50%;background:var(--accent-soft,#FBEDE5);color:var(--accent,#B4470F);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">{{ initials }}</span>
+      <span style="width:72px;height:72px;border-radius:50%;background:var(--accent-soft,#E8F0FA);color:var(--accent,#1D5DA8);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">{{ initials }}</span>
       <label style="position:absolute;right:-4px;bottom:-4px;background:var(--surface,#fff);border:1px solid var(--line-strong,#B9C1C9);border-radius:12px;padding:2px 8px;font-size:11px;cursor:pointer">Change<input type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0"></label>
     </div>
     <div style="display:flex;flex-direction:column;gap:4px;flex:1">
-      <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:600;color:#101B27">{{ displayName }}</h1>
-      <span style="font-size:14px;color:#3C4854">{{ f.affiliation }} · {{ f.country }}</span>
+      <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:600;color:var(--ink,#101B27)">{{ displayName }}</h1>
+      <span style="font-size:14px;color:var(--ink-3,#3C4854)">{{ f.affiliation }} · {{ f.country }}</span>
       <span style="display:flex;gap:8px;align-items:center;font-size:13px"><span style="width:14px;height:14px;border-radius:50%;background:#5A8A1F;color:#fff;font-size:8px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">iD</span><a href="#orcid" style="font-family:'IBM Plex Mono',monospace">{{ f.orcid }}</a><span style="color:#1E6B3A;font-size:12px">✓ Verified</span></span>
     </div>
-    <a href="Dashboard.dc.html" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);color:#101B27;padding:9px 16px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">My submissions</a>
+    <a href="Dashboard.dc.html" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);color:var(--ink,#101B27);padding:9px 16px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">My submissions</a>
   </div>
 </div>
 <div style="max-width:1200px;margin:0 auto;padding:0 32px 100px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
   <nav aria-label="Profile sections" style="width:220px;flex-shrink:0;position:sticky;top:16px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:6px 0">
-    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6"><a href="{{ n.href }}" style="display:block;padding:9px 16px;font-size:14px;color:#1F2A36;text-decoration:none;border-left:3px solid transparent" style-hover="background:var(--surface-2,#F5F6F7);border-left:3px solid var(--accent,#B4470F)">{{ n.t }}</a></sc-for>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6"><a href="{{ n.href }}" style="display:block;padding:9px 16px;font-size:14px;color:var(--ink-2,#1F2A36);text-decoration:none;border-left:3px solid transparent" style-hover="background:var(--surface-2,#F5F6F7);border-left:3px solid var(--accent,#1D5DA8)">{{ n.t }}</a></sc-for>
     <div style="border-top:1px solid var(--line,#DCE1E6);margin-top:6px;padding-top:6px"><button onClick="{{ signOut }}" style="width:100%;text-align:left;border:0;background:none;padding:9px 16px;font:inherit;font-size:14px;color:#A52A2A;cursor:pointer">Sign out</button></div>
   </nav>
   <main id="main-content" style="flex:1;min-width:320px;display:flex;flex-direction:column;gap:20px">
     <section id="personal" style="scroll-margin-top:20px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
-      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:#101B27">Personal details</h2><span style="font-size:13px;color:var(--muted,#505C68)">Shown to editors and, after publication, on your articles.</span></div>
+      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:var(--ink,#101B27)">Personal details</h2><span style="font-size:13px;color:var(--muted,#505C68)">Shown to editors and, after publication, on your articles.</span></div>
       <div style="padding:20px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Title<select value="{{ f.title }}" onChange="{{ on.title }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option>Dr</option><option>Prof.</option><option>Mr</option><option>Ms</option><option>Mx</option><option value="">None</option></select></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Given name *<input value="{{ f.given }}" onChange="{{ on.given }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ givenBorder }};border-radius:3px;background:var(--surface,#fff)"></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Family name *<input value="{{ f.family }}" onChange="{{ on.family }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ familyBorder }};border-radius:3px;background:var(--surface,#fff)"></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Email *<input type="email" value="{{ f.email }}" onChange="{{ on.email }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ emailBorder }};border-radius:3px;background:var(--surface,#fff)"><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">Changing your email sends a verification link to the new address.</span></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Phone<input value="{{ f.phone }}" onChange="{{ on.phone }}" placeholder="Optional" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27;grid-column:1/-1">Short biography<textarea rows="3" value="{{ f.bio }}" onChange="{{ on.bio }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;resize:vertical;background:var(--surface,#fff)"></textarea><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">{{ bioCount }} / 600 characters</span></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Title<select value="{{ f.title }}" onChange="{{ on.title }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option>Dr</option><option>Prof.</option><option>Mr</option><option>Ms</option><option>Mx</option><option value="">None</option></select></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Given name *<input value="{{ f.given }}" onChange="{{ on.given }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ givenBorder }};border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Family name *<input value="{{ f.family }}" onChange="{{ on.family }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ familyBorder }};border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Email *<input type="email" value="{{ f.email }}" onChange="{{ on.email }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid {{ emailBorder }};border-radius:3px;background:var(--surface,#fff)"><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">Changing your email sends a verification link to the new address.</span></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Phone<input value="{{ f.phone }}" onChange="{{ on.phone }}" placeholder="Optional" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27);grid-column:1/-1">Short biography<textarea rows="3" value="{{ f.bio }}" onChange="{{ on.bio }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;resize:vertical;background:var(--surface,#fff)"></textarea><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">{{ bioCount }} / 600 characters</span></label>
       </div>
     </section>
 
     <section id="affiliation" style="scroll-margin-top:20px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
-      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:#101B27">Affiliation and identifiers</h2></div>
+      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:var(--ink,#101B27)">Affiliation and identifiers</h2></div>
       <div style="padding:20px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27;grid-column:span 2">Institution *<input value="{{ f.affiliation }}" onChange="{{ on.affiliation }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><span style="font-size:12px;font-weight:400;color:#1E6B3A">✓ Matched in ROR</span></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Department<input value="{{ f.department }}" onChange="{{ on.department }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Country<input value="{{ f.country }}" onChange="{{ on.country }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27);grid-column:span 2">Institution *<input value="{{ f.affiliation }}" onChange="{{ on.affiliation }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><span style="font-size:12px;font-weight:400;color:#1E6B3A">✓ Matched in ROR</span></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Department<input value="{{ f.department }}" onChange="{{ on.department }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Country<input value="{{ f.country }}" onChange="{{ on.country }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
         <div id="orcid" style="grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line,#DCE1E6);border-radius:3px;background:var(--surface-3,#FAFBFB);flex-wrap:wrap">
           <span style="width:28px;height:28px;border-radius:50%;background:#5A8A1F;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">iD</span>
-          <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:#101B27">ORCID iD connected</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#3C4854">https://orcid.org/{{ f.orcid }}</span></div>
-          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1F2A36"><input type="checkbox" checked="{{ f.orcidSync }}" onChange="{{ on.orcidSync }}" style="accent-color:var(--accent,#B4470F)">Add published articles and reviews to my ORCID record</label>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:var(--ink,#101B27)">ORCID iD connected</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-3,#3C4854)">https://orcid.org/{{ f.orcid }}</span></div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2,#1F2A36)"><input type="checkbox" checked="{{ f.orcidSync }}" onChange="{{ on.orcidSync }}" style="accent-color:var(--accent,#1D5DA8)">Add published articles and reviews to my ORCID record</label>
           <button onClick="{{ disconnect }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer">Disconnect</button>
         </div>
       </div>
     </section>
 
     <section id="interests" style="scroll-margin-top:20px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
-      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:#101B27">Research interests and reviewing</h2><span style="font-size:13px;color:var(--muted,#505C68)">Editors use these to match you with manuscripts.</span></div>
+      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:var(--ink,#101B27)">Research interests and reviewing</h2><span style="font-size:13px;color:var(--muted,#505C68)">Editors use these to match you with manuscripts.</span></div>
       <div style="padding:20px 24px;display:flex;flex-direction:column;gap:18px">
         <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font-size:13px;font-weight:500;color:#101B27">Keywords</span>
+          <span style="font-size:13px;font-weight:500;color:var(--ink,#101B27)">Keywords</span>
           <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;align-items:center;background:var(--surface,#fff)">
-            <sc-for list="{{ kw }}" as="k"><span style="display:flex;align-items:center;gap:4px;padding:3px 4px 3px 9px;background:var(--line-soft,#EEF1F4);border-radius:2px;font-size:13px;animation:ngiqRise .25s ease both">{{ k.t }}<button onClick="{{ k.remove }}" aria-label="Remove {{ k.t }}" style="border:0;background:none;cursor:pointer;font-size:15px;line-height:1;color:#3C4854;padding:0 4px">×</button></span></sc-for>
+            <sc-for list="{{ kw }}" as="k"><span style="display:flex;align-items:center;gap:4px;padding:3px 4px 3px 9px;background:var(--line-soft,#EEF1F4);border-radius:2px;font-size:13px;animation:ngiqRise .25s ease both">{{ k.t }}<button onClick="{{ k.remove }}" aria-label="Remove {{ k.t }}" style="border:0;background:none;cursor:pointer;font-size:15px;line-height:1;color:var(--ink-3,#3C4854);padding:0 4px">×</button></span></sc-for>
             <input value="{{ kwDraft }}" onChange="{{ onKwDraft }}" onKeyDown="{{ onKwKey }}" aria-label="Add keyword" placeholder="Add a keyword and press Enter" style="flex:1;min-width:180px;border:0;outline:none;font:inherit;font-size:14px;padding:4px;background:transparent">
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font-size:13px;font-weight:500;color:#101B27">Journals I can review for</span>
+          <span style="font-size:13px;font-weight:500;color:var(--ink,#101B27)">Journals I can review for</span>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
             <sc-for list="{{ jChips }}" as="c"><button onClick="{{ c.toggle }}" aria-pressed="{{ c.pressed }}" style="padding:5px 10px;border-radius:2px;font:inherit;font-size:13px;cursor:pointer;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};transition:background .2s,border-color .2s">{{ c.code }}</button></sc-for>
           </div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px;border:1px solid var(--line,#DCE1E6);border-radius:3px;flex-wrap:wrap">
-          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:#101B27">Available for review invitations</span><span style="font-size:13px;color:var(--muted,#505C68)">{{ availNote }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:var(--ink,#101B27)">Available for review invitations</span><span style="font-size:13px;color:var(--muted,#505C68)">{{ availNote }}</span></div>
           <button role="switch" aria-checked="{{ availAria }}" aria-label="Available for review invitations" onClick="{{ on.available }}" style="width:42px;height:24px;border-radius:12px;border:0;cursor:pointer;position:relative;padding:0;background:{{ availBg }};transition:background .2s"><span style="position:absolute;top:3px;left:{{ availLeft }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s"></span></button>
         </div>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27;max-width:320px">Maximum reviews per quarter<select value="{{ f.maxReviews }}" onChange="{{ on.maxReviews }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option></select></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27);max-width:320px">Maximum reviews per quarter<select value="{{ f.maxReviews }}" onChange="{{ on.maxReviews }}" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option></select></label>
       </div>
     </section>
 
     <section id="notifications" style="scroll-margin-top:20px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
-      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:#101B27">Notifications and alerts</h2><span style="font-size:13px;color:var(--muted,#505C68)">Messages about your own submissions and reviews are always sent.</span></div>
+      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:var(--ink,#101B27)">Notifications and alerts</h2><span style="font-size:13px;color:var(--muted,#505C68)">Messages about your own submissions and reviews are always sent.</span></div>
       <div style="padding:8px 24px 16px">
         <sc-for list="{{ notifs }}" as="n">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line-soft,#EEF1F4)">
-            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:500;color:#101B27">{{ n.t }}</span><span style="font-size:13px;color:var(--muted,#505C68)">{{ n.d }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:500;color:var(--ink,#101B27)">{{ n.t }}</span><span style="font-size:13px;color:var(--muted,#505C68)">{{ n.d }}</span></div>
             <button role="switch" aria-checked="{{ n.aria }}" aria-label="{{ n.t }}" onClick="{{ n.toggle }}" style="width:42px;height:24px;border-radius:12px;border:0;cursor:pointer;position:relative;padding:0;flex-shrink:0;background:{{ n.bg }};transition:background .2s"><span style="position:absolute;top:3px;left:{{ n.left }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s"></span></button>
           </div>
         </sc-for>
@@ -102,15 +102,15 @@
     </section>
 
     <section id="security" style="scroll-margin-top:20px;background:var(--surface,#fff);border:1px solid var(--line,#DCE1E6);border-radius:3px">
-      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:#101B27">Password and security</h2></div>
+      <div style="padding:16px 24px;border-bottom:1px solid var(--line,#DCE1E6)"><h2 style="margin:0;font-size:17px;font-weight:600;color:var(--ink,#101B27)">Password and security</h2></div>
       <form onSubmit="{{ onPw }}" novalidate style="padding:20px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end">
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">Current password<input type="password" value="{{ pw.cur }}" onChange="{{ pwOn.cur }}" autocomplete="current-password" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
-        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:#101B27">New password<input type="password" value="{{ pw.next }}" onChange="{{ pwOn.next }}" autocomplete="new-password" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><div style="height:4px;background:var(--line-soft,#EEF1F4);border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ pwStrW }};background:{{ pwStrC }};transition:width .3s,background .3s"></div></div><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">{{ pwStrL }}</span></label>
-        <button type="submit" style="border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:10px 16px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;justify-self:start;margin-bottom:22px">Update password</button>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Current password<input type="password" value="{{ pw.cur }}" onChange="{{ pwOn.cur }}" autocomplete="current-password" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"></label>
+        <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">New password<input type="password" value="{{ pw.next }}" onChange="{{ pwOn.next }}" autocomplete="new-password" style="font:inherit;font-size:14px;font-weight:400;padding:9px 10px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><div style="height:4px;background:var(--line-soft,#EEF1F4);border-radius:2px;overflow:hidden"><div style="height:100%;width:{{ pwStrW }};background:{{ pwStrC }};transition:width .3s,background .3s"></div></div><span style="font-size:12px;font-weight:400;color:var(--muted,#505C68)">{{ pwStrL }}</span></label>
+        <button type="submit" style="border:0;background:var(--accent-dark,#0A685C);color:#fff;border-radius:3px;padding:10px 16px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;justify-self:start;margin-bottom:22px">Update password</button>
         <sc-if value="{{ pwMsg }}"><div role="status" style="grid-column:1/-1;font-size:13px;color:{{ pwMsgColor }}">{{ pwMsgText }}</div></sc-if>
       </form>
       <div style="padding:0 24px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line-soft,#EEF1F4);padding-top:16px">
-        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:#101B27">Delete account</span><span style="font-size:13px;color:var(--muted,#505C68)">Published articles and completed reviews are retained as part of the scholarly record.</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:var(--ink,#101B27)">Delete account</span><span style="font-size:13px;color:var(--muted,#505C68)">Published articles and completed reviews are retained as part of the scholarly record.</span></div>
         <button style="border:1px solid #E3B3B3;background:var(--surface,#fff);color:#A52A2A;border-radius:3px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer">Request deletion</button>
       </div>
     </section>
@@ -119,9 +119,9 @@
 <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface,#fff);border-top:1px solid var(--line-strong,#B9C1C9);box-shadow:0 -8px 24px rgba(16,27,39,.10);animation:ngiqRise .25s ease both">
     <div style="max-width:1200px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;gap:12px">
-      <span style="flex:1;font-size:14px;color:#1F2A36">{{ dirtyText }}</span>
+      <span style="flex:1;font-size:14px;color:var(--ink-2,#1F2A36)">{{ dirtyText }}</span>
       <button onClick="{{ discard }}" style="border:1px solid var(--line-strong,#B9C1C9);background:var(--surface,#fff);border-radius:3px;padding:9px 16px;font:inherit;font-size:14px;cursor:pointer">Discard</button>
-      <button onClick="{{ save }}" style="border:0;background:var(--accent,#B4470F);color:#fff;border-radius:3px;padding:10px 18px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">{{ saveLabel }}</button>
+      <button onClick="{{ save }}" style="border:0;background:var(--accent,#1D5DA8);color:#fff;border-radius:3px;padding:10px 18px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">{{ saveLabel }}</button>
     </div>
   </div>
 </sc-if>
@@ -148,7 +148,7 @@ class Component extends DCLogic {
     on.orcidSync = () => this.setF('orcidSync', !f.orcidSync); on.available = () => this.setF('available', !f.available);
     const bad = c => this.state.tried && c ? '#A52A2A' : 'var(--line-strong,#B9C1C9)';
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email);
-    const sw = v => ({ aria: v ? 'true' : 'false', bg: v ? 'var(--accent,#B4470F)' : '#8C98A4', left: v ? '21px' : '3px' });
+    const sw = v => ({ aria: v ? 'true' : 'false', bg: v ? 'var(--accent,#1D5DA8)' : '#8C98A4', left: v ? '21px' : '3px' });
     const changes = Object.keys(f).filter(k => JSON.stringify(f[k]) !== JSON.stringify(this.base[k])).length;
     const p = this.state.pw.next; const score = (p.length >= 10) + /[A-Z]/.test(p) + /[0-9]/.test(p) + /[^A-Za-z0-9]/.test(p);
     return {
@@ -158,7 +158,7 @@ class Component extends DCLogic {
       kw: f.keywords.map(t => ({ t, remove: () => this.setF('keywords', f.keywords.filter(x => x !== t)) })),
       kwDraft: this.state.kwDraft, onKwDraft: e => this.setState({ kwDraft: e.target.value }),
       onKwKey: e => { const v = this.state.kwDraft.trim(); if (e.key === 'Enter' && v) { e.preventDefault(); if (!f.keywords.includes(v)) this.setF('keywords', f.keywords.concat(v)); this.setState({ kwDraft: '' }); } },
-      jChips: (D ? D.journals : []).map(j => { const a = f.journals.includes(j.slug); return { code: j.code, pressed: a ? 'true' : 'false', bg: a ? 'var(--accent-soft,#FBEDE5)' : 'var(--surface,#fff)', fg: a ? 'var(--accent-dark,#91390C)' : '#1F2A36', border: a ? 'var(--accent,#B4470F)' : 'var(--line,#DCE1E6)', toggle: () => this.setF('journals', a ? f.journals.filter(x => x !== j.slug) : f.journals.concat(j.slug)) }; }),
+      jChips: (D ? D.journals : []).map(j => { const a = f.journals.includes(j.slug); return { code: j.code, pressed: a ? 'true' : 'false', bg: a ? 'var(--accent-soft,#E8F0FA)' : 'var(--surface,#fff)', fg: a ? 'var(--accent-dark,#174C8A)' : 'var(--ink-2,#1F2A36)', border: a ? 'var(--accent,#1D5DA8)' : 'var(--line,#DCE1E6)', toggle: () => this.setF('journals', a ? f.journals.filter(x => x !== j.slug) : f.journals.concat(j.slug)) }; }),
       availAria: sw(f.available).aria, availBg: sw(f.available).bg, availLeft: sw(f.available).left,
       availNote: f.available ? 'Editors can send you invitations in your selected journals.' : 'You will not receive new invitations. Reviews in progress are unaffected.',
       notifs: [['toc', 'New issue tables of contents', 'For journals you selected above'], ['cfp', 'Calls for papers', 'New thematic calls and special issues'], ['news', 'Publisher news', 'Policy updates and announcements'], ['digest', 'Weekly digest', 'One email summarising your submissions and reviews']].map(([k, t, d]) => Object.assign({ t, d, toggle: () => this.setF('notif', Object.assign({}, f.notif, { [k]: !f.notif[k] })) }, sw(f.notif[k]))),

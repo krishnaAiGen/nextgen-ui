@@ -176,8 +176,7 @@ window.NGIQ = (function () {
   return {
     SUBJ, journals, articles, cfps, news, pageGroups, pages, typesTable,
     journal: s => journals.find(j => j.slug === (s || '').toLowerCase()) || journals[0],
-    // Mature is the default state; only an explicit 'launch' choice opts out.
-    isMature: () => { try { return localStorage.getItem('ngiq-mode') !== 'launch'; } catch (e) { return true; } },
+    isMature: () => { try { return localStorage.getItem('ngiq-mode') === 'mature'; } catch (e) { return false; } },
     param: k => new URLSearchParams(location.search).get(k),
     pageBlocks(id, j) {
       const src = pages[id] || pages['about'];

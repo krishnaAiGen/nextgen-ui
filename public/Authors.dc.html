@@ -12,20 +12,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
 <script src="data.js"></script>
-<style>body{margin:0;background:var(--page,#fff);color:#1F2A36;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#B4470F);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#B4470F);outline-offset:2px}html{scroll-behavior:smooth}</style>
+<style>body{margin:0;background:var(--page,#fff);color:var(--ink-2,#1F2A36);font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#1D5DA8);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#1D5DA8);outline-offset:2px}html{scroll-behavior:smooth}</style>
 <script src="theme.js"></script>
 <script src="motion.js"></script>
 </helmet>
 <dc-import name="Header" active="authors" hint-size="100%,150px"></dc-import>
-<div style="background:var(--surface-2,#F5F6F7);border-bottom:1px solid var(--line,#DCE1E6)">
+<div style="background:linear-gradient(135deg,var(--accent-tint,#F3F9F8) 25%,var(--accent-soft,#CDF0E7));border-bottom:1px solid var(--line,#DCE1E6)">
   <div style="max-width:1280px;margin:0 auto;padding:20px 32px 36px">
-    <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><span style="color:#1F2A36">For authors</span></nav>
-    <h1 style="margin:18px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:600;color:#101B27;letter-spacing:-.01em">For authors</h1>
-    <p style="margin:0;font-size:17px;line-height:1.6;color:#3C4854;max-width:64ch">Everything you need to prepare and submit a manuscript to a NextGenIQ Press journal: scope, article types, templates, fees, ethics requirements and open calls.</p>
+    <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><span style="color:var(--ink-2,#1F2A36)">For authors</span></nav>
+    <h1 style="margin:18px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:600;color:var(--ink,#101B27);letter-spacing:-.01em">For authors</h1>
+    <p style="margin:0;font-size:17px;line-height:1.6;color:var(--ink-3,#3C4854);max-width:64ch">Everything you need to prepare and submit a manuscript to a NextGenIQ Press journal: scope, article types, templates, fees, ethics requirements and open calls.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:28px;border:1px solid var(--line,#DCE1E6);background:var(--surface,#fff);border-radius:3px">
       <sc-for list="{{ quick }}" as="q" hint-placeholder-count="4">
         <a href="{{ q.href }}" style="padding:16px 18px;border-right:1px solid var(--line,#DCE1E6);display:flex;flex-direction:column;gap:4px;text-decoration:none" style-hover="background:var(--surface-3,#FAFBFB)">
-          <span style="font-size:15px;font-weight:600;color:#101B27">{{ q.h }}</span>
+          <span style="font-size:15px;font-weight:600;color:var(--ink,#101B27)">{{ q.h }}</span>
           <span style="font-size:13px;color:var(--muted,#505C68);line-height:1.45">{{ q.p }}</span>
         </a>
       </sc-for>
@@ -35,31 +35,31 @@
 <div style="max-width:1280px;margin:0 auto;padding:40px 32px 0;display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap">
   <nav aria-label="On this page" style="width:200px;flex-shrink:0;position:sticky;top:16px">
     <span style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#505C68);font-weight:600;margin-bottom:8px">On this page</span>
-    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="9"><a href="{{ n.href }}" style="display:block;font-size:14px;padding:6px 0 6px 12px;border-left:2px solid var(--line,#DCE1E6);color:#3C4854" style-hover="color:var(--accent,#B4470F);border-left:2px solid var(--accent,#B4470F)">{{ n.label }}</a></sc-for>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="9"><a href="{{ n.href }}" style="display:block;font-size:14px;padding:6px 0 6px 12px;border-left:2px solid var(--line,#DCE1E6);color:var(--ink-3,#3C4854)" style-hover="color:var(--accent,#1D5DA8);border-left:2px solid var(--accent,#1D5DA8)">{{ n.label }}</a></sc-for>
   </nav>
   <main id="main-content" style="flex:1;min-width:300px;max-width:880px;display:flex;flex-direction:column;gap:64px">
     <section id="steps" style="scroll-margin-top:20px">
-      <h2 style="margin:0 0 6px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Submitting in seven steps</h2>
-      <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#3C4854;max-width:66ch">The submission system saves your progress after every step. Most authors complete it in 20–30 minutes once files are prepared.</p>
+      <h2 style="margin:0 0 6px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Submitting in seven steps</h2>
+      <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:var(--ink-3,#3C4854);max-width:66ch">The submission system saves your progress after every step. Most authors complete it in 20–30 minutes once files are prepared.</p>
       <ol style="list-style:none;margin:0;padding:0;border-top:2px solid #101B27">
         <sc-for list="{{ steps }}" as="s" hint-placeholder-count="7">
           <li style="display:grid;grid-template-columns:40px 220px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:baseline">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted,#505C68)">{{ s.n }}</span>
-            <span style="font-size:15px;font-weight:600;color:#101B27">{{ s.h }}</span>
-            <span style="font-size:14px;line-height:1.55;color:#3C4854">{{ s.p }}</span>
+            <span style="font-size:15px;font-weight:600;color:var(--ink,#101B27)">{{ s.h }}</span>
+            <span style="font-size:14px;line-height:1.55;color:var(--ink-3,#3C4854)">{{ s.p }}</span>
           </li>
         </sc-for>
       </ol>
-      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap"><a href="Submit.dc.html" style="background:var(--accent,#B4470F);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Start a submission</a><a href="SignIn.dc.html" style="border:1px solid var(--line-strong,#B9C1C9);color:#101B27;padding:9px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Resume a draft</a></div>
+      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap"><a href="Submit.dc.html" style="background:var(--accent,#1D5DA8);color:#fff;padding:10px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Start a submission</a><a href="SignIn.dc.html" style="border:1px solid var(--line-strong,#B9C1C9);color:var(--ink,#101B27);padding:9px 18px;border-radius:3px;font-size:14px;font-weight:500;text-decoration:none">Resume a draft</a></div>
     </section>
 
     <section id="templates" style="scroll-margin-top:20px">
-      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Templates and checklist</h2>
+      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Templates and checklist</h2>
       <div style="border:1px solid var(--line,#DCE1E6);border-radius:3px">
         <sc-for list="{{ templates }}" as="t" hint-placeholder-count="4">
           <div style="display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line-soft,#EEF1F4)">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 6px;border:1px solid var(--line-strong,#B9C1C9);border-radius:2px;width:44px;text-align:center">{{ t.ext }}</span>
-            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:14px;font-weight:500;color:#101B27">{{ t.name }}</span><span style="font-size:12px;color:var(--muted,#505C68)">{{ t.meta }}</span></div>
+            <div style="flex:1;display:flex;flex-direction:column"><span style="font-size:14px;font-weight:500;color:var(--ink,#101B27)">{{ t.name }}</span><span style="font-size:12px;color:var(--muted,#505C68)">{{ t.meta }}</span></div>
             <a href="#templates" style="font-size:13px;font-weight:500">Download</a>
           </div>
         </sc-for>
@@ -67,7 +67,7 @@
     </section>
 
     <section id="types" style="scroll-margin-top:20px">
-      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Article types</h2>
+      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Article types</h2>
       <div style="overflow-x:auto;border-top:2px solid #101B27">
         <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:640px">
           <thead><tr><sc-for list="{{ typesHead }}" as="h"><th scope="col" style="text-align:left;padding:10px 12px 10px 0;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line-strong,#B9C1C9)">{{ h }}</th></sc-for></tr></thead>
@@ -77,8 +77,8 @@
     </section>
 
     <section id="apc" style="scroll-margin-top:20px">
-      <h2 style="margin:0 0 6px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Open access and fees</h2>
-      <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#3C4854;max-width:66ch">All articles are published open access under CC BY 4.0. Authors retain copyright.</p>
+      <h2 style="margin:0 0 6px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Open access and fees</h2>
+      <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:var(--ink-3,#3C4854);max-width:66ch">All articles are published open access under CC BY 4.0. Authors retain copyright.</p>
       <div style="overflow-x:auto;border-top:2px solid #101B27">
         <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:560px">
           <thead><tr>
@@ -87,21 +87,21 @@
             <th scope="col" style="text-align:left;padding:10px 0 10px 12px;font-size:12px;color:var(--muted,#505C68);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line-strong,#B9C1C9)">APC</th>
           </tr></thead>
           <tbody><sc-for list="{{ journals }}" as="j"><tr>
-            <td style="padding:10px 12px 10px 0;border-bottom:1px solid var(--line,#DCE1E6)"><a href="{{ j.href }}" style="color:#101B27">{{ j.title }}</a> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">{{ j.code }}</span></td>
+            <td style="padding:10px 12px 10px 0;border-bottom:1px solid var(--line,#DCE1E6)"><a href="{{ j.href }}" style="color:var(--ink,#101B27)">{{ j.title }}</a> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted,#505C68)">{{ j.code }}</span></td>
             <td style="padding:10px 12px;border-bottom:1px solid var(--line,#DCE1E6)">None</td>
             <td style="padding:10px 0 10px 12px;border-bottom:1px solid var(--line,#DCE1E6)">None during launch period</td>
           </tr></sc-for></tbody>
         </table>
       </div>
-      <p style="margin:14px 0 0;font-size:14px;line-height:1.6;color:#3C4854;max-width:72ch">Any future APC will be announced at least six months in advance and will not apply to manuscripts already submitted. Waivers will apply to authors in low- and lower-middle-income countries; editors are not informed of waiver requests.</p>
+      <p style="margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--ink-3,#3C4854);max-width:72ch">Any future APC will be announced at least six months in advance and will not apply to manuscripts already submitted. Waivers will apply to authors in low- and lower-middle-income countries; editors are not informed of waiver requests.</p>
     </section>
 
     <section id="cfp" style="scroll-margin-top:20px">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:12px">
-        <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Calls for papers and special issues</h2>
+        <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Calls for papers and special issues</h2>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <label style="font-size:13px;color:#3C4854;display:flex;gap:6px;align-items:center">Journal <select value="{{ cfpJ }}" onChange="{{ onCfpJ }}" style="font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option value="all">All journals</option><sc-for list="{{ journals }}" as="j"><option value="{{ j.slug }}">{{ j.code }}</option></sc-for></select></label>
-          <label style="font-size:13px;color:#3C4854;display:flex;gap:6px;align-items:center"><input type="checkbox" checked="{{ showClosed }}" onChange="{{ toggleClosed }}" style="accent-color:var(--accent,#B4470F)">Show closed</label>
+          <label style="font-size:13px;color:var(--ink-3,#3C4854);display:flex;gap:6px;align-items:center">Journal <select value="{{ cfpJ }}" onChange="{{ onCfpJ }}" style="font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;background:var(--surface,#fff)"><option value="all">All journals</option><sc-for list="{{ journals }}" as="j"><option value="{{ j.slug }}">{{ j.code }}</option></sc-for></select></label>
+          <label style="font-size:13px;color:var(--ink-3,#3C4854);display:flex;gap:6px;align-items:center"><input type="checkbox" checked="{{ showClosed }}" onChange="{{ toggleClosed }}" style="accent-color:var(--accent,#1D5DA8)">Show closed</label>
         </div>
       </div>
       <div role="table" style="border-top:2px solid #101B27">
@@ -109,23 +109,23 @@
         <sc-for list="{{ cfps }}" as="c" hint-placeholder-count="5">
           <div role="row" style="display:grid;grid-template-columns:80px minmax(0,1fr) 130px 140px;gap:16px;padding:14px 0;border-bottom:1px solid var(--line,#DCE1E6);align-items:baseline">
             <span role="cell" style="font-family:'IBM Plex Mono',monospace;font-size:13px">{{ c.code }}</span>
-            <div role="cell" style="display:flex;flex-direction:column;gap:4px"><a href="{{ c.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:#101B27;line-height:1.35">{{ c.theme }}</a><span style="font-size:13px;color:var(--muted,#505C68)">Guest editor: {{ c.guest }}</span></div>
+            <div role="cell" style="display:flex;flex-direction:column;gap:4px"><a href="{{ c.href }}" style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:var(--ink,#101B27);line-height:1.35">{{ c.theme }}</a><span style="font-size:13px;color:var(--muted,#505C68)">Guest editor: {{ c.guest }}</span></div>
             <span role="cell" style="display:flex;flex-direction:column;gap:4px;align-items:flex-start"><span style="font-size:12px;padding:2px 8px;border-radius:2px;font-weight:500;background:{{ c.bg }};color:{{ c.fg }}">{{ c.status }}</span><span style="font-size:11px;padding:1px 7px;border-radius:2px;font-weight:600;background:{{ c.dlBg }};color:{{ c.dlFg }};animation:{{ c.pulse }}">{{ c.daysLeft }}</span></span>
-            <span role="cell" style="font-size:14px;color:#1F2A36">{{ c.deadline }}</span>
+            <span role="cell" style="font-size:14px;color:var(--ink-2,#1F2A36)">{{ c.deadline }}</span>
           </div>
         </sc-for>
-        <sc-if value="{{ noCfps }}"><p style="padding:20px 0;margin:0;font-size:14px;color:#3C4854">No open calls for this journal. Regular submissions within scope are welcome at any time.</p></sc-if>
+        <sc-if value="{{ noCfps }}"><p style="padding:20px 0;margin:0;font-size:14px;color:var(--ink-3,#3C4854)">No open calls for this journal. Regular submissions within scope are welcome at any time.</p></sc-if>
       </div>
-      <p style="margin:14px 0 0;font-size:14px;color:#3C4854">Planning a special issue? <a href="#editors">Read the guest-editor guidance and submit a proposal</a>.</p>
+      <p style="margin:14px 0 0;font-size:14px;color:var(--ink-3,#3C4854)">Planning a special issue? <a href="#editors">Read the guest-editor guidance and submit a proposal</a>.</p>
     </section>
 
     <section id="policies" style="scroll-margin-top:20px">
-      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:#101B27">Policies and ethics</h2>
+      <h2 style="margin:0 0 16px;font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;color:var(--ink,#101B27)">Policies and ethics</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));column-gap:40px">
         <sc-for list="{{ policyGroups }}" as="g" hint-placeholder-count="3">
           <div>
-            <span style="display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#3C4854;font-weight:600;padding-bottom:8px;border-bottom:2px solid #101B27">{{ g.h }}</span>
-            <sc-for list="{{ g.items }}" as="p"><a href="{{ p.href }}" style="display:block;padding:10px 0;border-bottom:1px solid var(--line,#DCE1E6);font-size:14px;color:#101B27" style-hover="color:var(--accent,#B4470F)">{{ p.t }}</a></sc-for>
+            <span style="display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3,#3C4854);font-weight:600;padding-bottom:8px;border-bottom:2px solid var(--accent,#0B7265)">{{ g.h }}</span>
+            <sc-for list="{{ g.items }}" as="p"><a href="{{ p.href }}" style="display:block;padding:10px 0;border-bottom:1px solid var(--line,#DCE1E6);font-size:14px;color:var(--ink,#101B27)" style-hover="color:var(--accent,#1D5DA8)">{{ p.t }}</a></sc-for>
           </div>
         </sc-for>
       </div>
@@ -133,39 +133,39 @@
 
     <section id="reviewers" style="scroll-margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;border-top:2px solid #101B27;padding-top:24px">
       <div style="display:flex;flex-direction:column;gap:8px">
-        <h2 style="margin:0;font-size:18px;font-weight:600;color:#101B27">For reviewers</h2>
-        <p style="margin:0;font-size:14px;line-height:1.6;color:#3C4854">Register your subject expertise and availability. Completed reviews are recognised on your ORCID record.</p>
+        <h2 style="margin:0;font-size:18px;font-weight:600;color:var(--ink,#101B27)">For reviewers</h2>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink-3,#3C4854)">Register your subject expertise and availability. Completed reviews are recognised on your ORCID record.</p>
         <a href="JournalPage.dc.html?j=ijdh&amp;p=reviewer-guidelines" style="font-size:14px;font-weight:500">Reviewer guidelines</a>
         <a href="SignIn.dc.html" style="font-size:14px;font-weight:500">Become a reviewer</a>
       </div>
       <div id="editors" style="display:flex;flex-direction:column;gap:8px;scroll-margin-top:20px">
-        <h2 style="margin:0;font-size:18px;font-weight:600;color:#101B27">For editors</h2>
-        <p style="margin:0;font-size:14px;line-height:1.6;color:#3C4854">Apply to join an editorial board, propose a special issue, or propose a book volume or conference proceedings.</p>
+        <h2 style="margin:0;font-size:18px;font-weight:600;color:var(--ink,#101B27)">For editors</h2>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink-3,#3C4854)">Apply to join an editorial board, propose a special issue, or propose a book volume or conference proceedings.</p>
         <a href="JournalPage.dc.html?j=ijdh&amp;p=special-issue-guidelines" style="font-size:14px;font-weight:500">Special issue guidelines</a>
         <a href="JournalPage.dc.html?j=ijdh&amp;p=editorial-board" style="font-size:14px;font-weight:500">Join an editorial board</a>
       </div>
       <div id="librarians" style="display:flex;flex-direction:column;gap:8px;scroll-margin-top:20px">
-        <h2 style="margin:0;font-size:18px;font-weight:600;color:#101B27">For librarians</h2>
-        <p style="margin:0;font-size:14px;line-height:1.6;color:#3C4854">Indexing status, persistent identifiers, licensing and preservation arrangements for every title.</p>
+        <h2 style="margin:0;font-size:18px;font-weight:600;color:var(--ink,#101B27)">For librarians</h2>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink-3,#3C4854)">Indexing status, persistent identifiers, licensing and preservation arrangements for every title.</p>
         <a href="JournalPage.dc.html?j=ijdh&amp;p=indexing" style="font-size:14px;font-weight:500">Indexing and abstracting</a>
         <a href="JournalPage.dc.html?j=ijdh&amp;p=copyright-licensing" style="font-size:14px;font-weight:500">Licensing</a>
       </div>
     </section>
 
     <section id="alerts" style="scroll-margin-top:20px;border:1px solid var(--line,#DCE1E6);border-radius:3px;padding:24px">
-      <h2 style="margin:0 0 6px;font-size:18px;font-weight:600;color:#101B27">Email alerts</h2>
-      <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#3C4854">Receive new tables of contents and calls for papers for the journals you choose. Unsubscribe at any time.</p>
+      <h2 style="margin:0 0 6px;font-size:18px;font-weight:600;color:var(--ink,#101B27)">Email alerts</h2>
+      <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:var(--ink-3,#3C4854)">Receive new tables of contents and calls for papers for the journals you choose. Unsubscribe at any time.</p>
       <sc-if value="{{ alertDone }}" hint-placeholder-val="{{ false }}">
         <div role="status" style="border:1px solid #B9DCC4;background:#E7F3EB;color:#1E6B3A;border-radius:3px;padding:12px 14px;font-size:14px">Check your inbox: we sent a confirmation link to {{ email }}. Alerts start once you confirm.</div>
       </sc-if>
       <sc-if value="{{ alertForm }}" hint-placeholder-val="{{ true }}">
         <form onSubmit="{{ onAlert }}" novalidate style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start">
           <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:240px">
-            <label for="al-email" style="font-size:13px;font-weight:500;color:#101B27">Email address</label>
+            <label for="al-email" style="font-size:13px;font-weight:500;color:var(--ink,#101B27)">Email address</label>
             <input id="al-email" type="email" value="{{ email }}" onChange="{{ onEmail }}" aria-invalid="{{ emailInvalid }}" aria-describedby="al-err" style="font:inherit;font-size:14px;padding:9px 12px;border:1px solid {{ emailBorder }};border-radius:3px">
             <sc-if value="{{ hasErr }}"><span id="al-err" style="font-size:13px;color:#A52A2A">Enter an email address in the format name@example.org</span></sc-if>
           </div>
-          <button type="submit" style="margin-top:22px;border:0;background:var(--brand,#263238);color:#fff;border-radius:3px;padding:10px 18px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">Subscribe</button>
+          <button type="submit" style="margin-top:22px;border:0;background:var(--accent-dark,#0A685C);color:#fff;border-radius:3px;padding:10px 18px;font:inherit;font-size:14px;font-weight:500;cursor:pointer">Subscribe</button>
         </form>
       </sc-if>
     </section>
@@ -180,10 +180,10 @@ class Component extends DCLogic {
   renderVals() {
     const D = window.NGIQ;
     if (!D) return {};
-    const chip = s => s === 'Open' ? ['#E7F3EB', '#1E6B3A'] : s === 'Closing soon' ? ['#FDF1DE', '#8A5300'] : ['var(--line-soft,#EEF1F4)', '#3C4854'];
+    const chip = s => s === 'Open' ? ['#E7F3EB', '#1E6B3A'] : s === 'Closing soon' ? ['#FDF1DE', '#8A5300'] : ['var(--line-soft,#EEF1F4)', 'var(--ink-3,#3C4854)'];
     const { cfpJ, showClosed } = this.state;
     const cfps = D.cfps.filter(c => (cfpJ === 'all' || c.j === cfpJ) && (showClosed || c.status !== 'Closed')).sort((a, b) => a.sortKey - b.sortKey)
-      .map(c => { const [bg, fg] = chip(c.status); const j = D.journal(c.j); const k = String(c.sortKey), dl = Math.ceil((new Date(+k.slice(0, 4), +k.slice(4, 6) - 1, +k.slice(6, 8)) - new Date()) / 864e5), soon = dl > 0 && dl <= 30; return Object.assign({}, c, { daysLeft: dl > 0 ? dl + (dl === 1 ? ' day left' : ' days left') : 'Deadline passed', dlBg: soon ? '#FBEAEA' : 'var(--surface-2,#F5F6F7)', dlFg: soon ? '#A52A2A' : '#3C4854', pulse: soon ? 'ngiqPulse 1.8s ease-in-out infinite' : 'none', bg, fg, code: j.code, href: 'JournalPage.dc.html?j=' + j.slug + '&p=call-for-papers' }); });
+      .map(c => { const [bg, fg] = chip(c.status); const j = D.journal(c.j); const k = String(c.sortKey), dl = Math.ceil((new Date(+k.slice(0, 4), +k.slice(4, 6) - 1, +k.slice(6, 8)) - new Date()) / 864e5), soon = dl > 0 && dl <= 30; return Object.assign({}, c, { daysLeft: dl > 0 ? dl + (dl === 1 ? ' day left' : ' days left') : 'Deadline passed', dlBg: soon ? '#FBEAEA' : 'var(--surface-2,#F5F6F7)', dlFg: soon ? '#A52A2A' : 'var(--ink-3,#3C4854)', pulse: soon ? 'ngiqPulse 1.8s ease-in-out infinite' : 'none', bg, fg, code: j.code, href: 'JournalPage.dc.html?j=' + j.slug + '&p=call-for-papers' }); });
     const pp = id => 'JournalPage.dc.html?j=ijdh&p=' + id;
     return {
       quick: [{ h: 'Find a journal', p: 'Ten journals, all open access', href: 'Journals.dc.html' }, { h: 'Prepare your manuscript', p: 'Templates and article-type limits', href: '#templates' }, { h: 'Fees', p: 'No APC during the launch period', href: '#apc' }, { h: 'Track a submission', p: 'Sign in to your author dashboard', href: 'SignIn.dc.html' }],

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Propose a new journal — NextGenIQ Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<style>body{margin:0;background:var(--page,#fff);color:var(--ink-2,#1F2A36);font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent,#1D5DA8);text-decoration:none}a:hover{text-decoration:underline}*:focus-visible{outline:2px solid var(--accent,#1D5DA8);outline-offset:2px}</style>
+<script src="theme.js"></script>
+<script src="motion.js"></script>
+</helmet>
+<dc-import name="Header" active="journals" hint-size="100%,150px"></dc-import>
+<div style="background:linear-gradient(135deg,var(--accent-tint,#F3F9F8) 25%,var(--accent-soft,#CDF0E7));border-bottom:1px solid var(--line,#DCE1E6)">
+  <div style="max-width:1280px;margin:0 auto;padding:20px 32px 36px">
+    <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:13px;color:var(--muted,#505C68)"><a href="Home.dc.html">Home</a><span aria-hidden="true">/</span><a href="Journals.dc.html">Journals</a><span aria-hidden="true">/</span><span style="color:var(--ink-2,#1F2A36)">Propose a new journal</span></nav>
+    <h1 style="margin:18px 0 10px;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:600;color:var(--ink,#101B27);letter-spacing:-.01em">Propose a new journal</h1>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:var(--ink-3,#3C4854);max-width:70ch;text-wrap:pretty">NextGenIQ Press welcomes proposals for new open-access journals in digital, computational and interdisciplinary science. Proposals are reviewed quarterly by the Editorial Director and the publishing committee.</p>
+  </div>
+</div>
+<main id="main-content" style="max-width:1280px;margin:0 auto;padding:40px 32px 80px;display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap">
+  <div style="flex:1;min-width:320px;max-width:720px">
+    <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="border:1px solid #B9DCC4;background:#E7F3EB;border-radius:3px;padding:24px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:#1E6B3A">Proposal received</span>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:var(--ink-2,#1F2A36)">Thank you. Your proposal has been assigned reference <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">NGIQ-NJ-2026-041</span>. The Editorial Office will acknowledge it within 5 working days and you will receive a decision after the next quarterly review.</p>
+        <div style="display:flex;gap:14px;font-size:14px;font-weight:500"><a href="Journals.dc.html">Browse current journals</a><a href="Home.dc.html">Back to home</a></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ onSubmit }}" novalidate="{{ true }}" style="display:flex;flex-direction:column;gap:36px">
+        <section style="display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:var(--ink,#101B27);border-bottom:2px solid var(--accent,#0B7265);padding-bottom:10px">1 · The journal</h2>
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Proposed journal title <span style="color:var(--warm,#C2410C)">*</span>
+            <input value="{{ vTitle }}" onChange="{{ oTitle }}" placeholder="e.g. International Journal of Climate Informatics" style="border:1px solid {{ bTitle }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Subject area <span style="color:var(--warm,#C2410C)">*</span>
+            <select value="{{ vSubject }}" onChange="{{ oSubject }}" style="border:1px solid {{ bSubject }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+              <option value="">Select a subject area</option>
+              <sc-for list="{{ subjects }}" as="s"><option value="{{ s }}">{{ s }}</option></sc-for>
+              <option value="Other">Other / interdisciplinary</option>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Aims and scope (max 300 words) <span style="color:var(--warm,#C2410C)">*</span>
+            <textarea value="{{ vScope }}" onChange="{{ oScope }}" rows="6" placeholder="What will the journal publish, and for whom?" style="border:1px solid {{ bScope }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27);resize:vertical"></textarea>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Rationale — the gap this journal fills
+            <textarea value="{{ vWhy }}" onChange="{{ oWhy }}" rows="4" placeholder="Why is a new journal needed? Which existing journals are closest, and how does this differ?" style="border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27);resize:vertical"></textarea>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27);max-width:280px">Expected submissions in year one
+            <input type="number" min="0" value="{{ vVolume }}" onChange="{{ oVolume }}" placeholder="e.g. 80" style="border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+          </label>
+        </section>
+        <section style="display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:var(--ink,#101B27);border-bottom:2px solid var(--accent,#0B7265);padding-bottom:10px">2 · Proposed Editor-in-Chief</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Full name and title <span style="color:var(--warm,#C2410C)">*</span>
+              <input value="{{ vEic }}" onChange="{{ oEic }}" placeholder="Prof. …" style="border:1px solid {{ bEic }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Affiliation
+              <input value="{{ vAff }}" onChange="{{ oAff }}" placeholder="Institution, country" style="border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">ORCID iD
+              <input value="{{ vOrcid }}" onChange="{{ oOrcid }}" placeholder="0000-0000-0000-0000" style="border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;padding:10px 12px;font:inherit;font-family:'IBM Plex Mono',monospace;font-size:13px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+            </label>
+          </div>
+        </section>
+        <section style="display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:var(--ink,#101B27);border-bottom:2px solid var(--accent,#0B7265);padding-bottom:10px">3 · Your details</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Your name <span style="color:var(--warm,#C2410C)">*</span>
+              <input value="{{ vName }}" onChange="{{ oName }}" style="border:1px solid {{ bName }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink,#101B27)">Email address <span style="color:var(--warm,#C2410C)">*</span>
+              <input type="email" value="{{ vEmail }}" onChange="{{ oEmail }}" placeholder="name@institution.edu" style="border:1px solid {{ bEmail }};border-radius:3px;padding:10px 12px;font:inherit;font-size:14px;background:var(--surface,#fff);color:var(--ink,#101B27)">
+            </label>
+          </div>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--ink-2,#1F2A36);cursor:pointer">
+            <input type="checkbox" checked="{{ vAgree }}" onChange="{{ oAgree }}" style="margin-top:3px">
+            <span>I confirm the proposed Editor-in-Chief is aware of this proposal, and that the journal would operate under NextGenIQ Press <a href="JournalPage.dc.html?j=ijdh&amp;p=publication-ethics">publication ethics</a> and open-access policies.</span>
+          </label>
+        </section>
+        <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" style="border:1px solid #E3B3B3;background:#FBEAEA;border-radius:3px;padding:12px 16px;font-size:14px;color:#5C1414">{{ errText }}</div>
+        </sc-if>
+        <div style="display:flex;gap:14px;align-items:center">
+          <button type="submit" style="border:0;background:var(--warm,#C2410C);color:#fff;border-radius:3px;padding:11px 22px;font:inherit;font-size:15px;font-weight:600;cursor:pointer">Submit proposal</button>
+          <span style="font-size:13px;color:var(--muted,#505C68)">Fields marked <span style="color:var(--warm,#C2410C)">*</span> are required.</span>
+        </div>
+      </form>
+    </sc-if>
+  </div>
+  <aside style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:28px">
+    <div>
+      <h2 style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink,#101B27);padding-bottom:10px;border-bottom:2px solid var(--accent,#0B7265)">How proposals are assessed</h2>
+      <ol style="list-style:none;margin:0;padding:0">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <li style="display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--line,#DCE1E6)">
+            <span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent-dark,#095D53);color:var(--accent-dark,#095D53);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ s.n }}</span>
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:var(--ink,#101B27)">{{ s.h }}</span><span style="font-size:13px;line-height:1.5;color:var(--ink-3,#3C4854)">{{ s.t }}</span></span>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+    <div style="border:1px solid var(--line,#DCE1E6);border-top:3px solid var(--warm,#C2410C);border-radius:3px;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:13px;font-weight:600;color:var(--ink,#101B27)">What a strong proposal includes</span>
+      <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--ink-3,#3C4854)">
+        <li>A scope that does not substantially overlap an existing NGIQ journal</li>
+        <li>A credible Editor-in-Chief with editorial experience</li>
+        <li>Evidence of community demand (conferences, preprints, mailing lists)</li>
+        <li>Named candidates for the founding editorial board</li>
+      </ul>
+      <span style="font-size:13px;color:var(--ink-3,#3C4854)">Questions? <a href="mailto:editorial@nextgeniqpress.com">editorial@nextgeniqpress.com</a></span>
+    </div>
+  </aside>
+</main>
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;submitted&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Page state&quot;}}">
+class Component extends DCLogic {
+  state = { f: {}, tried: false, sent: false };
+  componentDidMount() { if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+  set(k) { return e => this.setState(s => ({ f: Object.assign({}, s.f, { [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }) })); }
+  renderVals() {
+    const D = window.NGIQ;
+    const f = this.state.f, tried = this.state.tried;
+    const val = k => f[k] || '';
+    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val('email'));
+    const missing = ['title', 'subject', 'scope', 'eic', 'name'].filter(k => !val(k).trim());
+    const bad = k => tried && (k === 'email' ? !emailOk : !val(k).trim());
+    const B = k => bad(k) ? '#A52A2A' : 'var(--line-strong,#B9C1C9)';
+    const done = this.state.sent || !!this.props.submitted;
+    const subjects = D ? Array.from(new Set(D.journals.map(j => j.subject))) : [];
+    return {
+      done, notDone: !done,
+      subjects,
+      vTitle: val('title'), oTitle: this.set('title'), bTitle: B('title'),
+      vSubject: val('subject'), oSubject: this.set('subject'), bSubject: B('subject'),
+      vScope: val('scope'), oScope: this.set('scope'), bScope: B('scope'),
+      vWhy: val('why'), oWhy: this.set('why'),
+      vVolume: val('volume'), oVolume: this.set('volume'),
+      vEic: val('eic'), oEic: this.set('eic'), bEic: B('eic'),
+      vAff: val('aff'), oAff: this.set('aff'),
+      vOrcid: val('orcid'), oOrcid: this.set('orcid'),
+      vName: val('name'), oName: this.set('name'), bName: B('name'),
+      vEmail: val('email'), oEmail: this.set('email'), bEmail: B('email'),
+      vAgree: !!f.agree, oAgree: this.set('agree'),
+      hasErr: tried && (missing.length > 0 || !emailOk || !f.agree),
+      errText: !tried ? '' : missing.length || !emailOk ? 'Please complete the required fields' + (!emailOk ? ' and enter a valid email address' : '') + '.' : !f.agree ? 'Please confirm the declaration before submitting.' : '',
+      onSubmit: e => { e.preventDefault(); if (missing.length || !emailOk || !f.agree) { this.setState({ tried: true }); return; } this.setState({ sent: true }); window.scrollTo(0, 0); },
+      steps: [
+        { n: 1, h: 'Acknowledgement', t: 'The Editorial Office confirms receipt within 5 working days.' },
+        { n: 2, h: 'Scope and overlap review', t: 'Fit with the portfolio and distance from existing journals.' },
+        { n: 3, h: 'Editorial assessment', t: 'The proposed Editor-in-Chief and board plan are evaluated.' },
+        { n: 4, h: 'Decision', t: 'The publishing committee decides at the next quarterly review.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
