@@ -261,7 +261,7 @@
 </main>
 <dc-import name="Footer" hint-size="100%,320px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;heroImage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Slideshow&quot;,&quot;Image 1&quot;,&quot;Image 2&quot;,&quot;Image 3&quot;,&quot;None&quot;],&quot;default&quot;:&quot;Slideshow&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{}">
 class Component extends DCLogic {
   state = { aud: 0, tick: 0, paused: false, hover: false, flip: null, heroIdx: 0, heroPaused: false };
   DUR = 6000;
@@ -270,16 +270,14 @@ class Component extends DCLogic {
   componentDidMount() {
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) this.setState({ heroPaused: true });
-    this.heroT = setInterval(() => { let m = null; try { m = localStorage.getItem('ngiq-hero'); } catch (e) {} if ((m || this.props.heroImage || 'Slideshow') === 'Slideshow' && !this.state.heroPaused && !document.hidden) this.setState(st => ({ heroIdx: (st.heroIdx + 1) % 3 })); }, 4000);
+    this.heroT = setInterval(() => { if (!this.state.heroPaused && !document.hidden) this.setState(st => ({ heroIdx: (st.heroIdx + 1) % 3 })); }, 4000);
     if (reduce) this.setState({ paused: true });
- this.onHero = () => this.forceUpdate(); window.addEventListener('ngiq-hero', this.onHero); if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
+ if (!window.NGIQ) { const t = setInterval(() => { if (window.NGIQ) { clearInterval(t); this.forceUpdate(); } }, 30); } }
   renderVals() {
     const D = window.NGIQ;
     if (!D) return {};
     const mature = D.isMature();
-    let stored = null; try { stored = localStorage.getItem('ngiq-hero'); } catch (e) {}
-    const hi = stored || this.props.heroImage || 'Slideshow';
-    const slideOn = hi === 'Slideshow', vis = slideOn ? this.state.heroIdx : hi === 'Image 1' ? 0 : hi === 'Image 2' ? 1 : hi === 'Image 3' ? 2 : -1;
+    const slideOn = true, vis = this.state.heroIdx;
     const prev = (this.state.heroIdx + 2) % 3;
     const S = n => { const on = n === vis; return { op: on ? 1 : 0, tf: on ? 'translateX(0) scale(1)' : (slideOn && n === prev ? 'translateX(-6%) scale(1.02)' : 'translateX(6%) scale(1.02)'), pe: on ? 'auto' : 'none', hidden: on ? 'false' : 'true' }; };
     const AUD = [
@@ -301,7 +299,7 @@ class Component extends DCLogic {
     const ok = ['#E7F3EB', '#1E6B3A'], plan = ['var(--line-soft,#EEF1F4)', 'var(--ink-3,#3C4854)'], eva = ['#E8F0FA', '#174C8A'];
     const ix = (s, st, n, c) => ({ s, status: st, n, bg: c[0], fg: c[1] });
     return {
-      mature, s1: S(0), s2: S(1), s3: S(2), hasImg: hi !== 'None', isSlideshow: slideOn,
+      mature, s1: S(0), s2: S(1), s3: S(2), hasImg: true, isSlideshow: true,
       heroDots: [0, 1, 2].map(i => ({ label: 'Show image ' + (i + 1), cur: i === this.state.heroIdx ? 'true' : 'false', w: i === this.state.heroIdx ? '22px' : '8px', bg: i === this.state.heroIdx ? '#fff' : 'rgba(255,255,255,.5)', go: () => this.setState({ heroIdx: i }) })),
       heroPlayText: this.state.heroPaused ? 'Play' : 'Pause', heroPlayLabel: this.state.heroPaused ? 'Play slideshow' : 'Pause slideshow', toggleHero: () => this.setState(st => ({ heroPaused: !st.heroPaused })),
       audTabs: AUD.map((a, i) => ({ who: a.who, sel: i === ai ? 'true' : 'false', weight: i === ai ? 600 : 500, fg: i === ai ? 'var(--ink,#101B27)' : 'var(--muted,#505C68)', pick: () => this.pick(i),

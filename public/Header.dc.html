@@ -11,35 +11,6 @@
   <div style="background:var(--line-soft,#EEF1F4);border-bottom:1px solid var(--line,#DCE1E6)">
     <div style="max-width:1280px;margin:0 auto;padding:6px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink-3,#3C4854)">
       <span style="font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;font-size:11px">Prototype</span>
-      <span>Data state</span>
-      <div style="display:flex;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;overflow:hidden;background:var(--surface,#fff)">
-        <sc-if value="{{ isLaunch }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ setLaunch }}" style="border:0;padding:3px 10px;font:inherit;font-size:12px;background:var(--accent-dark,#0A685C);color:#fff;cursor:pointer">Launch · 0 articles</button>
-          <button onClick="{{ setMature }}" style="border:0;border-left:1px solid var(--line-strong,#B9C1C9);padding:3px 10px;font:inherit;font-size:12px;background:var(--surface,#fff);color:var(--ink-2,#1F2A36);cursor:pointer">Mature · 50+ articles</button>
-        </sc-if>
-        <sc-if value="{{ isMature }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ setLaunch }}" style="border:0;padding:3px 10px;font:inherit;font-size:12px;background:var(--surface,#fff);color:var(--ink-2,#1F2A36);cursor:pointer">Launch · 0 articles</button>
-          <button onClick="{{ setMature }}" style="border:0;border-left:1px solid var(--line-strong,#B9C1C9);padding:3px 10px;font:inherit;font-size:12px;background:var(--accent-dark,#0A685C);color:#fff;cursor:pointer">Mature · 50+ articles</button>
-        </sc-if>
-      </div>
-      <span style="margin-left:12px">Colour theme</span>
-      <div role="radiogroup" aria-label="Colour theme" style="display:flex;gap:6px;align-items:center">
-        <sc-for list="{{ themes }}" as="t" hint-placeholder-count="6">
-          <button role="radio" aria-checked="{{ t.checked }}" onClick="{{ t.pick }}" title="{{ t.name }}" aria-label="{{ t.name }}" style="display:flex;width:30px;height:18px;padding:0;border-radius:3px;overflow:hidden;cursor:pointer;border:1px solid var(--line-strong,#B9C1C9);outline:2px solid {{ t.ring }};outline-offset:1px">
-            <span style="flex:1;background:{{ t.brand }}"></span><span style="flex:1;background:{{ t.accent }}"></span>
-          </button>
-        </sc-for>
-        <span style="font-weight:500;color:var(--ink-2,#1F2A36);min-width:120px">{{ themeName }}</span>
-      </div>
-      <label style="margin-left:12px;display:flex;align-items:center;gap:6px;cursor:pointer">Dark mode
-        <button role="switch" aria-checked="{{ dimAria }}" aria-label="Dark mode" onClick="{{ toggleDim }}" style="width:34px;height:18px;border-radius:9px;border:0;cursor:pointer;position:relative;padding:0;background:{{ dimBg }}"><span style="position:absolute;top:2px;left:{{ dimLeft }};width:14px;height:14px;border-radius:50%;background:#fff"></span></button>
-      </label>
-      <span style="margin-left:12px">Hero image</span>
-      <div role="radiogroup" aria-label="Homepage hero image" style="display:flex;border:1px solid var(--line-strong,#B9C1C9);border-radius:3px;overflow:hidden;background:var(--surface,#fff)">
-        <sc-for list="{{ heroOpts }}" as="h" hint-placeholder-count="4">
-          <button role="radio" aria-checked="{{ h.checked }}" onClick="{{ h.pick }}" style="border:0;border-right:1px solid var(--line,#DCE1E6);padding:3px 10px;font:inherit;font-size:12px;cursor:pointer;background:{{ h.bg }};color:{{ h.fg }}">{{ h.label }}</button>
-        </sc-for>
-      </div>
       <div style="flex:1"></div>
       <a href="Authors.dc.html#reviewers" style="color:var(--ink-3,#3C4854)">For reviewers</a>
       <a href="Authors.dc.html#editors" style="color:var(--ink-3,#3C4854)">For editors</a>
@@ -79,6 +50,7 @@
     </sc-if>
     </div>
     <div style="display:flex;align-items:center;gap:16px">
+      <button onClick="{{ toggleDim }}" aria-pressed="{{ dimAria }}" aria-label="{{ dimLabel }}" title="{{ dimLabel }}" style="width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line-strong,#B9C1C9);background:{{ dimBg }};color:{{ dimFg }};border-radius:3px;font:inherit;font-size:15px;line-height:1;cursor:pointer;transition:background .2s,color .2s,border-color .2s">{{ dimIcon }}</button>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
         <div style="position:relative">
           <button onClick="{{ toggleMenu }}" aria-haspopup="menu" aria-expanded="{{ menuAria }}" style="display:flex;align-items:center;gap:8px;border:1px solid {{ menuBorder }};background:var(--surface,#fff);border-radius:20px;padding:3px 10px 3px 3px;font:inherit;font-size:14px;color:var(--ink-2,#1F2A36);cursor:pointer;transition:border-color .2s">
@@ -125,9 +97,7 @@ class Component extends DCLogic {
   state = { q: new URLSearchParams(location.search).get('q') || '', scope: new URLSearchParams(location.search).get('scope') || 'all' };
   componentDidMount() { this.onDoc = e => { if (this.state.menu && !e.target.closest('[role="menu"]') && !e.target.closest('[aria-haspopup="menu"]')) this.setState({ menu: false }); }; this.onEsc = e => { if (e.key === 'Escape' && this.state.menu) this.setState({ menu: false }); }; document.addEventListener('mousedown', this.onDoc); document.addEventListener('keydown', this.onEsc); }
   componentWillUnmount() { document.removeEventListener('mousedown', this.onDoc); document.removeEventListener('keydown', this.onEsc); }
-  setMode(m) { try { localStorage.setItem('ngiq-mode', m); } catch (e) {} location.reload(); }
   renderVals() {
-    let mature = false; try { mature = localStorage.getItem('ngiq-mode') === 'mature'; } catch (e) {}
     const a = this.props.active || '';
     const nav = [['Journals', 'Journals.dc.html', 'journals'], ['Articles', 'Search.dc.html?scope=articles', 'articles'], ['Books & proceedings', 'Journals.dc.html#series', 'series'], ['Calls for papers', 'Authors.dc.html#cfp', 'cfp'], ['For authors', 'Authors.dc.html', 'authors'], ['Policies', 'Authors.dc.html#policies', 'policies'], ['About', 'Home.dc.html#about', 'about']]
       .map(([label, href, k]) => ({ label, href, active: k === a, inactive: k !== a }));
@@ -135,20 +105,13 @@ class Component extends DCLogic {
     const signedIn = !!this.props.signedIn || authLS;
     const TH = window.NGIQ_THEMES;
     if (!TH && !this.poll) this.poll = setInterval(() => { if (window.NGIQ_THEMES) { clearInterval(this.poll); this.forceUpdate(); } }, 50);
-    const themes = TH ? TH.list.map(t => ({ name: t.name, brand: t.brand, accent: t.accent, checked: TH.current === t.id ? 'true' : 'false', ring: TH.current === t.id ? 'var(--ink,#101B27)' : 'transparent', pick: () => { TH.set(t.id); this.forceUpdate(); } })) : [];
-    const curT = TH ? TH.list.find(t => t.id === TH.current) : null;
-    let hero = 'Slideshow'; try { hero = localStorage.getItem('ngiq-hero') || 'Slideshow'; } catch (e) {}
-    const heroOpts = [['Slideshow', 'Slideshow'], ['Image 1', 'Lab'], ['Image 2', 'Library'], ['Image 3', 'Network'], ['None', 'Off']].map(([v, label]) => ({
-      label, checked: hero === v ? 'true' : 'false', bg: hero === v ? 'var(--brand,#0F2B46)' : 'var(--surface,#fff)', fg: hero === v ? '#fff' : 'var(--ink-2,#1F2A36)',
-      pick: () => { try { localStorage.setItem('ngiq-hero', v); } catch (e) {} window.dispatchEvent(new Event('ngiq-hero')); if (!/Home\.dc\.html/.test(location.pathname)) location.href = 'Home.dc.html'; this.forceUpdate(); }
-    }));
     const dimOn = TH && TH.dim ? TH.dim() : false;
     const D = window.NGIQ, q = (this.state.q || '').trim().toLowerCase(), focus = !!this.state.focus, hi = this.state.hi == null ? -1 : this.state.hi;
     let groupsRaw = [];
     if (D && q.length >= 2) {
       const m = s => s.toLowerCase().includes(q);
       const js = D.journals.filter(j => m(j.title + ' ' + j.code + ' ' + j.subject)).slice(0, 3).map(j => ({ t: j.title, meta: j.code, href: 'Journal.dc.html?j=' + j.slug }));
-      const as = (mature ? D.articles : []).filter(x => m(x.title + ' ' + x.keywords.join(' ') + ' ' + x.authors.join(' '))).slice(0, 3).map(x => ({ t: x.title, meta: D.journal(x.j).code, href: 'Article.dc.html?id=' + x.id }));
+      const as = D.articles.filter(x => m(x.title + ' ' + x.keywords.join(' ') + ' ' + x.authors.join(' '))).slice(0, 3).map(x => ({ t: x.title, meta: D.journal(x.j).code, href: 'Article.dc.html?id=' + x.id }));
       const ps = D.pageGroups.flatMap(g => g.items).filter(([, t]) => m(t)).slice(0, 3).map(([id, t]) => ({ t, meta: 'Guidance', href: D.pageHref(id, 'ijdh') }));
       groupsRaw = [['Journals', js], ['Articles', as], ['Author guidance', ps]].filter(g => g[1].length);
     }
@@ -164,10 +127,10 @@ class Component extends DCLogic {
       toggleMenu: e => { const r = e.currentTarget.getBoundingClientRect(); this.setState(st => ({ menu: !st.menu, menuLeft: r.right < 292 })); },
       menuItems: [{ t: 'My submissions', href: 'Dashboard.dc.html', meta: '5' }, { t: 'Review invitations', href: 'Dashboard.dc.html?tab=reviewer', meta: '2' }, { t: 'Edit profile', href: 'Profile.dc.html', meta: '' }, { t: 'Notifications and alerts', href: 'Profile.dc.html#notifications', meta: '' }, { t: 'Password and security', href: 'Profile.dc.html#security', meta: '' }],
       signOut: () => { try { localStorage.setItem('ngiq-auth', '0'); } catch (e) {} location.href = 'Home.dc.html?signedout=1'; },
-      dimAria: dimOn ? 'true' : 'false', dimBg: dimOn ? 'var(--brand,#0F2B46)' : '#8C98A4', dimLeft: dimOn ? '18px' : '2px',
+      dimAria: dimOn ? 'true' : 'false', dimIcon: dimOn ? '☀' : '☾', dimLabel: dimOn ? 'Switch to light mode' : 'Switch to dark mode',
+      dimBg: dimOn ? 'var(--accent-dark,#0A685C)' : 'var(--surface,#fff)', dimFg: dimOn ? '#fff' : 'var(--ink-2,#1F2A36)',
       toggleDim: () => { if (TH) { TH.setDim(!dimOn); this.forceUpdate(); } },
-      heroOpts, themes, themeName: curT ? curT.name : '',
-      nav, isLaunch: !mature, isMature: mature, signedIn, signedOut: !signedIn,
+      nav, signedIn, signedOut: !signedIn,
       q: this.state.q, scope: this.state.scope,
       onQ: e => this.setState({ q: e.target.value, hi: -1 }),
       onFocusQ: () => this.setState({ focus: true }), onBlurQ: () => setTimeout(() => this.setState({ focus: false }), 150),
@@ -175,8 +138,7 @@ class Component extends DCLogic {
       sBorder: focus ? 'var(--accent,#1D5DA8)' : 'var(--line-strong,#B9C1C9)', sShadow: focus ? '0 0 0 3px color-mix(in srgb,var(--accent,#1D5DA8) 18%,transparent),0 6px 18px rgba(16,27,39,.10)' : 'none', sScale: focus ? 'scale(1.01)' : 'none',
       sugOpen, sugOpenAria: sugOpen ? 'true' : 'false', sugGroups, allHref, goAll: () => { location.href = allHref; },
       onScope: e => this.setState({ scope: e.target.value }),
-      onSearch: e => { e.preventDefault(); location.href = 'Search.dc.html?q=' + encodeURIComponent(this.state.q) + '&scope=' + this.state.scope; },
-      setLaunch: () => this.setMode('launch'), setMature: () => this.setMode('mature')
+      onSearch: e => { e.preventDefault(); location.href = 'Search.dc.html?q=' + encodeURIComponent(this.state.q) + '&scope=' + this.state.scope; }
     };
   }
 }

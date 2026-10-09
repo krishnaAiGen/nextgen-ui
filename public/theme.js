@@ -33,8 +33,6 @@
     Object.keys(DARK).forEach(function (k) { if (dim) s.setProperty(k, DARK[k]); else s.removeProperty(k); });
     return t.id;
   }
-  var cur = 'teal';
-  try { cur = localStorage.getItem('ngiq-theme') || 'teal'; } catch (e) {}
-  window.NGIQ_THEMES = { list: T, current: apply(cur), set: function (id) { try { localStorage.setItem('ngiq-theme', id); } catch (e) {} this.current = apply(id); },
+  window.NGIQ_THEMES = { list: T, current: apply('teal'),
     dim: isDim, setDim: function (on) { try { localStorage.setItem('ngiq-dim', on ? '1' : '0'); } catch (e) {} apply(this.current); } };
 })();
